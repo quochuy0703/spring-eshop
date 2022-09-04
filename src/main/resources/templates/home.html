@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row">
+        <div th:replace="layout/left::left(${listNew})"></div>
+        <div class="col-9">
+          <div th:replace="layout/home-carousel-highlight::carousel"></div>
+          <!-- ---------------------- -->
+          <div class="card card-body my-4">
+            <div class="row">
+              <div th:replace="layout/home-carousel-new(${lists})"></div>
+
+              <!-- ---------------------- -->
+            </div>
+            <div class="row">
+              <th:block
+                th:each="index: ${#numbers.sequence(0,{3 < #lists.size(listNew) ? 2 :#lists.size(listNew) })}"
+              >
+                <div
+                  th:replace="layout/product-card-new::product-card-new(${listNew[index]})"
+                ></div>
+
+                <!-- ------------- -->
+              </th:block>
+            </div>
+          </div>
+
+          <!-- ---------------------- -->
+
+          <div class="card card-body my-4">
+            <h4>
+              Feature Product
+              <span class="float-right"
+                ><a class="btn btn-primary btn-sm">View more</a></span
+              >
+            </h4>
+            <hr style="margin: 10px; background-color: #ddd" />
+            <div class="row">
+              <th:block
+                th:each="index: ${#numbers.sequence(0,{2 < #lists.size(listNew) ? 2 : #lists.size(listNew) })}"
+              >
+                <div
+                  th:replace="layout/product-card-new::product-card-new(${listNew[index]})"
+                ></div>
+              </th:block>
+            </div>
+          </div>
+
+          <!-- ---------------------- -->
+
+          <div class="card card-body my-4 p-1">
+            <p class="p-0 m-0">
+              Popular Products<span class="float-right"
+                ><a class="btn btn-primary btn-sm">View more</a></span
+              >
+            </p>
+          </div>
+          <!-- ---------------------- -->
+
+          <hr />
+          <!-- ---------------------- -->
+
+          <div class="card card-body my-4 p-1">
+            <p class="p-0 m-0">
+              Best selling Products<span class="float-right"
+                ><a class="btn btn-primary btn-sm">View more</a></span
+              >
+            </p>
+          </div>
+          <!-- ---------------------- -->
+        </div>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+  </body>
+</html>

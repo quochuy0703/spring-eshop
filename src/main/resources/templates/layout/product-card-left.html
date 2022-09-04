@@ -1,0 +1,18 @@
+<div
+  th:fragment="product-card-left(product)"
+  class="card thumbnail"
+  style="background-color: white !important"
+>
+  <a th:replace="layout/quickview::quickview(${product})"></a>
+  <img
+    class="card-img-top"
+    th:src="@{${product.imageUrl}}"
+    alt="bootstrap ecommerce templates"
+  />
+  <div class="card-body m-1 py-2 px-4 border rounded caption">
+    <h4>
+      <a class="btn btn-secondary" href="product_details.html">VIEW</a>
+      <span class="float-right" th:text="${'$'+product.price}">$22.00</span>
+    </h4>
+  </div>
+</div>

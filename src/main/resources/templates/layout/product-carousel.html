@@ -1,0 +1,33 @@
+<div th:fragment="image(listImage)" class="col-5">
+  <div id="myCarousel" class="carousel slide cntr">
+    <div class="carousel-inner">
+      <th:block th:each="image: ${listImage}"
+        ><div
+          class="carousel-item"
+          th:classappend="${imageStat.index == 0 ? 'active' : ''}"
+        >
+          <a href="#">
+            <img th:src="@{${image.imageUrl}}" alt="" style="width: 100%"
+          /></a></div
+      ></th:block>
+    </div>
+    <a
+      class="carousel-control-prev"
+      href="#myCarousel"
+      role="button"
+      data-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a
+      class="carousel-control-next"
+      href="#myCarousel"
+      role="button"
+      data-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>

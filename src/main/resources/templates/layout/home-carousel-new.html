@@ -1,0 +1,48 @@
+<div
+  th:fragment="new(lists)"
+  id="carouselNewProducts"
+  class="carousel slide"
+  style="border-radius: 10px !important"
+  data-ride="carousel"
+>
+  <h4 class="p-2">
+    New Product
+
+    <span class="float-right">
+      <a href="#carouselNewProducts" role="button" data-slide="prev">
+        <span
+          class="carousel-control-prev-icon bg-warning"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a href="#carouselNewProducts" role="button" data-slide="next">
+        <span
+          class="carousel-control-next-icon bg-warning"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Next</span>
+      </a></span
+    >
+  </h4>
+  <hr />
+
+  <div class="carousel-inner">
+    <th:block th:each="list: ${lists}">
+      <div
+        class="carousel-item"
+        th:classappend="${listStat.index == 0 ? 'active' : ''}"
+      >
+        <div class="container mb-4">
+          <div class="row">
+            <th:block th:each="product: ${list}">
+              <div
+                th:replace="layout/product-card-new-carousel::product-card-new-carousel(${product})"
+              ></div>
+            </th:block>
+          </div>
+        </div>
+      </div>
+    </th:block>
+  </div>
+</div>

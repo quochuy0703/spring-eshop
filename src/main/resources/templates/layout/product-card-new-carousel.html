@@ -1,0 +1,6 @@
+<div th:fragment="product-card-new-carousel(product)" class="col-3">
+  <div class="card thumbnail">
+    <a th:replace="layout/quickview::quickview(${product})"></a>
+    <img th:src="@{${product.imageUrl}}" class="card-img-top" alt="..." />
+  </div>
+</div>

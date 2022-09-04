@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <ul class="breadcrumb">
+            <li>
+              <a href="index.html">Home</a> <span class="divider">/</span>
+            </li>
+            <li class="active">Check Out</li>
+          </ul>
+          <div class="card card-body">
+            <h1>
+              Check Out
+              <small class="float-right"> 2 Items are in the cart </small>
+            </h1>
+            <hr />
+            <table class="table table-bordered table-condensed">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Ref.</th>
+                  <th>Avail.</th>
+                  <th>Unit price</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="cart : ${user.carts}">
+                  <td>
+                    <img width="100" th:src="${cart.product.imageUrl}" alt="" />
+                  </td>
+                  <td th:text="${cart.product.name}">
+                    Items name here<br />Carate : 22<br />Model : n/a
+                  </td>
+                  <td>-</td>
+                  <td>
+                    <span class="btn btn-primary"
+                      >x<span class="icon-ok"></span
+                    ></span>
+                  </td>
+                  <td th:text="${cart.product.price}">$50.00</td>
+                  <td>
+                    <div class="input-group">
+                      <input
+                        class="col-1 form-control"
+                        style="max-width: 34px"
+                        size="16"
+                        type="text"
+                        th:value="${cart.quantity}"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-secondary btn-sm"
+                          type="button"
+                        >
+                          -</button
+                        ><button
+                          class="btn btn-outline-secondary btn-sm"
+                          type="button"
+                        >
+                          +</button
+                        ><button class="btn btn-sm btn-danger" type="button">
+                          x
+                          <span class="icon-remove"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td th:text="${cart.product.price * cart.quantity}">
+                    $100.00
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="6" class="alignR">Total products:</td>
+                  <td>$448.42</td>
+                </tr>
+                <tr>
+                  <td colspan="6" class="alignR">Total products:</td>
+                  <td>$448.42</td>
+                </tr>
+                <tr>
+                  <td colspan="6" class="alignR">Total products:</td>
+                  <td>$448.42</td>
+                </tr>
+                <tr>
+                  <td colspan="6" class="alignR">Total products:</td>
+                  <td class="label label-primary">$448.42</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>
+                    <form class="form-inline">
+                      <label style="min-width: 159px"> VOUCHERS Code: </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="CODE"
+                      />
+                      <button type="submit" class="btn btn-primary">ADD</button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>ESTIMATE YOUR SHIPPING & TAXES</td>
+                </tr>
+                <tr>
+                  <td>
+                    <form>
+                      <div class="form-group row">
+                        <label class="col-2" for="inputEmail">Country</label>
+                        <div>
+                          <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Country"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-2" for="inputPassword"
+                          >Post Code/ Zipcode</label
+                        >
+                        <div>
+                          <input
+                            class="form-control"
+                            type="password"
+                            placeholder="Password"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div>
+                          <button type="submit" class="btn btn-primary">
+                            Click to check the price
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col-12">
+                <a href="products.html" class="btn btn-primary"
+                  ><span class="icon-arrow-left"></span> Continue Shopping
+                </a>
+                <a href="login.html" class="btn btn-primary float-right"
+                  >Next <span class="icon-arrow-right"></span
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<div th:fragment="left(listNew)" class="col-3">
+  <div class="card card-body bg-light">
+    <nav class="navbar p-0 m-0">
+      <ul class="nav navbar-nav d-block w-100">
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Fashion</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Watches</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Fine Jewelry</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Fashion Jewelry</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Engagement & Wedding</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Men's Jewelry</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Vintage & Antique</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Loose Diamonds
+          </a>
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>Loose Beads</a
+          >
+        </li>
+        <li>
+          <a href="products.html"
+            ><span class="icon-chevron-right"></span>See All Jewelry &
+            Watches</a
+          >
+        </li>
+        <li class="mt-4">
+          <a href="cart.html"
+            ><strong
+              >Total Amount
+              <span
+                class="badge badge-warning float-right"
+                style="line-height: 18px"
+                >$448.42</span
+              ></strong
+            ></a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="card card-body alert alert-warning my-4 text-center">
+    <h2>50% Discount</h2>
+    <p>
+      only valid for online order. <br /><br /><a
+        class="btn btn-secondary"
+        href="#"
+        ><strong>Click here</strong>
+      </a>
+    </p>
+  </div>
+  <a class="btn btn-warning btn-block" href="#"
+    >Upcoming products <br /><small>Click to view</small></a
+  >
+
+  <ul class="nav">
+    <th:block
+      th:each="index: ${#numbers.sequence(0,{2 < #lists.size(listNew) ? 2 : #lists.size(listNew) })}"
+    >
+      <li class="my-2">
+        <th:block
+          th:replace="layout/product-card-left(${listNew[index]})"
+        ></th:block>
+      </li>
+    </th:block>
+  </ul>
+</div>
