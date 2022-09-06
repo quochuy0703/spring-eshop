@@ -13,9 +13,7 @@
         <div th:replace="layout/left::left(${listNew})"></div>
         <div class="col-9">
           <ul class="breadcrumb">
-            <li>
-              <a href="index.html">Home</a> <span class="divider">/</span>
-            </li>
+            <li><a th:href="@{/}">Home</a> <span class="divider">/</span></li>
             <li>
               <a href="products.html">Items</a> <span class="divider">/</span>
             </li>
@@ -77,7 +75,7 @@
                     </div>
                   </div>
 
-                  <h4 th:text="${thisProduct.name+' items in stock'}">
+                  <h4 th:text="${thisProduct.itemInStock+' items in stock'}">
                     100 items in stock
                   </h4>
                   <p>
@@ -131,32 +129,108 @@
                   <div class="">
                     <h4>Product Information</h4>
                     <table class="table table-striped">
-                      <tbody>
-                        <tr class="techSpecRow">
-                          <td class="techSpecTD1">Color:</td>
-                          <td class="techSpecTD2">Black</td>
-                        </tr>
-                        <tr class="techSpecRow">
-                          <td class="techSpecTD1">Style:</td>
-                          <td class="techSpecTD2">Apparel,Sports</td>
-                        </tr>
-                        <tr class="techSpecRow">
-                          <td class="techSpecTD1">Season:</td>
-                          <td class="techSpecTD2">spring/summer</td>
-                        </tr>
-                        <tr class="techSpecRow">
-                          <td class="techSpecTD1">Usage:</td>
-                          <td class="techSpecTD2">fitness</td>
-                        </tr>
-                        <tr class="techSpecRow">
-                          <td class="techSpecTD1">Sport:</td>
-                          <td class="techSpecTD2">122855031</td>
-                        </tr>
-                        <tr class="techSpecRow">
-                          <td class="techSpecTD1">Brand:</td>
-                          <td class="techSpecTD2">Shock Absorber</td>
-                        </tr>
-                      </tbody>
+                      <th:block
+                        th:if="${#strings.equals(thisProduct.productProperty.type, 'W')}"
+                      >
+                        <tbody>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Series:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.series}"
+                            >
+                              Black
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Gender:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.gender}"
+                            >
+                              Apparel,Sports
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Watch Label:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.watchLabel}"
+                            >
+                              spring/summer
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Movement:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.movement}"
+                            >
+                              fitness
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Engine:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.engine}"
+                            >
+                              122855031
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Brand:</td>
+                            <td class="techSpecTD2">Shock Absorber</td>
+                          </tr>
+                        </tbody>
+                      </th:block>
+                      <th:block
+                        th:if="${#strings.equals(thisProduct.productProperty.type, 'S')}"
+                      >
+                        <tbody>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Series:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.series}"
+                            >
+                              Black
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Gender:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.gender}"
+                            >
+                              Apparel,Sports
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Lens:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.lens}"
+                            >
+                              spring/summer
+                            </td>
+                          </tr>
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">UV_Protection:</td>
+                            <td
+                              class="techSpecTD2"
+                              th:text="${thisProduct.productProperty.UVProtection}"
+                            >
+                              fitness
+                            </td>
+                          </tr>
+
+                          <tr class="techSpecRow">
+                            <td class="techSpecTD1">Brand:</td>
+                            <td class="techSpecTD2">Shock Absorber</td>
+                          </tr>
+                        </tbody>
+                      </th:block>
                     </table>
                     <p>
                       Raw denim you probably haven't heard of them jean shorts

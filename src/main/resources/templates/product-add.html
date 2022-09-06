@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row">
+        <div th:replace="layout/left::left(${listNew})"></div>
+        <div class="col-9">
+          <form
+            th:action="@{/add-product}"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="card card-body">
+              <h3>Your Personal Details</h3>
+              <div class="form-group row">
+                <div class="col-3">
+                  <label class="float-right">Type <sup>*</sup></label>
+                </div>
+
+                <div class="col-4">
+                  <select class="form-control" name="days">
+                    <option value="">-</option>
+                    <option value="1">Watch</option>
+                    <option value="2">Jewelry</option>
+                    <option value="3">Sunglasses</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Product Name <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Description <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <textarea
+                        class="form-control"
+                        rows="5"
+                        id="inputLname"
+                        placeholder="Last Name"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Price<sup>*</sup></label>
+                    </div>
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        placeholder="Email"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Item in Stock<sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="number" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Model<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Water Resistance<sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ---------------------------- -->
+
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Series<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Gender<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <select class="form-control" name="days">
+                        <option value="">-</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Watch Label<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <select class="form-control" name="days">
+                        <option value="">-</option>
+                        <option value="1">Swiss made</option>
+                        <option value="2">Japan made</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Movement<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Engine<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Power Reserve<sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Movement<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input class="form-control" type="text" name="doB" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ---------------------------- -->
+            <div class="card card-body">
+              <h3>Case</h3>
+
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Case Size <sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Case Thickness <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Case Material <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ---------------------------- -->
+
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Case Shape <sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Case Back <sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- ----------------- -->
+              </div>
+            </div>
+            <!-- ------------------------ -->
+            <div class="card card-body">
+              <h3>Band</h3>
+
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Band Material <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Band type <sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Band Color <sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ---------------------------- -->
+
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Band Length <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Band Length<sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- ----------------- -->
+              </div>
+            </div>
+            <!-- --------------------------- -->
+            <div class="card card-body">
+              <h3>Dial</h3>
+
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right">Dial type <sup>*</sup></label>
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ---------------------------- -->
+
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="float-right"
+                        >Dial Crystal <sup>*</sup></label
+                      >
+                    </div>
+
+                    <div class="col-8">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFname"
+                        placeholder="First Name"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- ----------------- -->
+              </div>
+            </div>
+            <!-- --------------------------- -->
+            <div class="card card-body">
+              <h3>Image</h3>
+
+              <div class="row">
+                <div class="form-group row">
+                  <div class="col-4">
+                    <label class="float-right">Image <sup>*</sup></label>
+                  </div>
+
+                  <div class="col-8">
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="fileUpload"
+                      multiple
+                    />
+                  </div>
+                </div>
+                <!-- ----------------- -->
+              </div>
+              <div class="row" id="imageHolder">
+                <!-- ----------------- -->
+              </div>
+            </div>
+            <!-- --------------------------- -->
+
+            <div class="control-group">
+              <div class="controls">
+                <input
+                  type="submit"
+                  name="submitAccount"
+                  value="Register"
+                  class="btn btn-primary"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+
+    <script th:src="@{/js/product-add.js}"></script>
+  </body>
+</html>

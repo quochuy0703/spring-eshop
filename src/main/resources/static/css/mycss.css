@@ -6,6 +6,7 @@ body {
 }
 .thumbnail {
   position: relative;
+  height: 100%;
 }
 .zoom-tool {
   position: absolute;
@@ -27,6 +28,12 @@ body {
 
 .thumbnail:hover .zoom-tool {
   visibility: visible;
+}
+
+.text-card-new {
+  line-height: 1.5em;
+  height: 3em; /* height is 2x line-height, so two lines will display */
+  overflow: hidden;
 }
 
 .banner {

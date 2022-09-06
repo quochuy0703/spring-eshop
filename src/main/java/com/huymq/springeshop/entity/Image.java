@@ -1,5 +1,7 @@
 package com.huymq.springeshop.entity;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,6 +62,6 @@ public class Image {
         this.product = product;
     }
 
-
+    
     
 }

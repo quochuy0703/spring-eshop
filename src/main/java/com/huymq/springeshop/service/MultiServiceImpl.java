@@ -42,15 +42,25 @@ public class MultiServiceImpl implements MultiService {
         return productRepository.findAllHighlightProduct();
     }
 
-    @Override
-    public Product findProductById(int theId) {
-        Product product = null;
-        Optional<Product> optional = productRepository.findById(theId);
-        if(optional.isPresent()){
-            product = optional.get();
-        }
+    // @Override
+    // @Transactional
+    // public Product findProductById(int theId) {
+    //     Product product = null;
+    //     Optional<Product> optional = productRepository.findById(theId);
+    //     if(optional.isPresent()){
+    //         product = optional.get();
+    //     }
 
-        return product;
+    //     return product;
+    // }
+    @Override
+    @Transactional
+    public Product findProductById(int theId) {
+
+        List<Product> optional = productRepository.findProductById(theId);
+        
+
+        return optional.get(0);
     }
 
     @Override
@@ -66,6 +76,12 @@ public class MultiServiceImpl implements MultiService {
     @Override
     public void saveCustomer(Customer theCustomer) {
         customerRepository.save(theCustomer);
+        
+    }
+
+    @Override
+    public void saveProduct(Product product) {
+        productRepository.save(product);
         
     }
     

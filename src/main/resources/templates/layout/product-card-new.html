@@ -7,10 +7,14 @@
       alt="bootstrap ecommerce templates"
     />
     <div class="card-body text-center m-1 p-2 border rounded caption">
-      <p class="m-0" th:text="${product.name}">Manicure & Pedicure</p>
-      <p class="m-0" th:text="${'$'+product.price}"><strong> $22.00</strong></p>
-      <h4>
-        <form th:action="@{/products/cart}" method="POST">
+      <p class="m-0 text-card-new" th:text="${product.name}">
+        Manicure & Pedicure
+      </p>
+      <p class="m-0" th:text="${'$'+product.price}">
+        <strong> $22.00</strong>
+      </p>
+      <h4 class="m-0">
+        <form th:action="@{/cart}" method="POST">
           <input type="hidden" name="id" th:value="${product.id}" />
           <button class="btn btn-warning">Add to cart</button>
         </form>

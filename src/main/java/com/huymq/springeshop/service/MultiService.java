@@ -10,6 +10,7 @@ public interface MultiService {
     public List<Product> findAllNewProduct();
     public List<Product> findAllHighlightProduct();
     public Product findProductById(int theId);
+    public void saveProduct(Product product);
 
     //Customer
     public Customer findCustomerById(int theId);
