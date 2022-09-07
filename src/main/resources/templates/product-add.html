@@ -15,6 +15,7 @@
           <form
             th:action="@{/add-product}"
             method="POST"
+            th:object="${productForm}"
             enctype="multipart/form-data"
           >
             <div class="card card-body">
@@ -46,7 +47,7 @@
                       <input
                         class="form-control"
                         type="text"
-                        id="inputFname"
+                        th:field="*{name}"
                         placeholder="First Name"
                       />
                     </div>
@@ -62,8 +63,8 @@
                       <textarea
                         class="form-control"
                         rows="5"
-                        id="inputLname"
-                        placeholder="Last Name"
+                        th:field="*{description}"
+                        placeholder="Description"
                       ></textarea>
                     </div>
                   </div>
@@ -75,7 +76,8 @@
                       <input
                         class="form-control"
                         type="number"
-                        placeholder="Email"
+                        th:field="*{price}"
+                        th:value="*{price}"
                       />
                     </div>
                   </div>
@@ -87,7 +89,12 @@
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="number" />
+                      <input
+                        class="form-control"
+                        type="number"
+                        th:field="*{itemInStock}"
+                        th:value="*{itemInStock}"
+                      />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -96,18 +103,12 @@
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="float-right"
-                        >Water Resistance<sup>*</sup></label
-                      >
-                    </div>
-
-                    <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        th:field="*{model}"
+                        th:value="*{model}"
+                      />
                     </div>
                   </div>
                 </div>
@@ -121,7 +122,12 @@
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        th:field="*{series}"
+                        th:value="*{series}"
+                      />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -130,10 +136,13 @@
                     </div>
 
                     <div class="col-8">
-                      <select class="form-control" name="days">
-                        <option value="">-</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                      <select
+                        class="form-control"
+                        th:field="*{gender}"
+                        th:value="*{gender}"
+                      >
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
                       </select>
                     </div>
                   </div>
@@ -143,10 +152,13 @@
                     </div>
 
                     <div class="col-8">
-                      <select class="form-control" name="days">
-                        <option value="">-</option>
-                        <option value="1">Swiss made</option>
-                        <option value="2">Japan made</option>
+                      <select
+                        class="form-control"
+                        th:field="*{watchLabel}"
+                        th:value="*{watchLabel}"
+                      >
+                        <option value="Swiss made">Swiss made</option>
+                        <option value="Japan made">Japan made</option>
                       </select>
                     </div>
                   </div>
@@ -157,7 +169,12 @@
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        th:field="*{movement}"
+                        th:value="*{movement}"
+                      />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -166,7 +183,12 @@
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        th:field="*{engine}"
+                        th:value="*{engine}"
+                      />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -177,16 +199,26 @@
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="powerReserve"
+                      />
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-4">
-                      <label class="float-right">Movement<sup>*</sup></label>
+                      <label class="float-right"
+                        >Water Resistance<sup>*</sup></label
+                      >
                     </div>
 
                     <div class="col-8">
-                      <input class="form-control" type="text" name="doB" />
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="waterResistance"
+                      />
                     </div>
                   </div>
                 </div>
@@ -207,8 +239,7 @@
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="caseSize"
                       />
                     </div>
                   </div>
@@ -223,8 +254,7 @@
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="caseThickness"
                       />
                     </div>
                   </div>
@@ -239,8 +269,7 @@
                       <input
                         class="form-control"
                         type="text"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="caseMaterial"
                       />
                     </div>
                   </div>
@@ -258,8 +287,7 @@
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="caseShape"
                       />
                     </div>
                   </div>
@@ -272,8 +300,7 @@
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="caseBack"
                       />
                     </div>
                   </div>
@@ -298,8 +325,7 @@
                       <input
                         class="form-control"
                         type="text"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="bandMaterial"
                       />
                     </div>
                   </div>
@@ -309,12 +335,7 @@
                     </div>
 
                     <div class="col-8">
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="inputFname"
-                        placeholder="First Name"
-                      />
+                      <input class="form-control" type="text" name="bandType" />
                     </div>
                   </div>
                   <div class="form-group row">
@@ -323,12 +344,7 @@
                     </div>
 
                     <div class="col-8">
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="inputFname"
-                        placeholder="First Name"
-                      />
+                      <input class="form-control" type="text" id="bandColor" />
                     </div>
                   </div>
                 </div>
@@ -347,22 +363,20 @@
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="bandLength"
                       />
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-4">
-                      <label class="float-right">Band Length<sup>*</sup></label>
+                      <label class="float-right">Band Width<sup>*</sup></label>
                     </div>
 
                     <div class="col-8">
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="bandWidth"
                       />
                     </div>
                   </div>
@@ -382,12 +396,7 @@
                     </div>
 
                     <div class="col-8">
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="inputFname"
-                        placeholder="First Name"
-                      />
+                      <input class="form-control" type="text" name="dialType" />
                     </div>
                   </div>
                 </div>
@@ -406,8 +415,7 @@
                       <input
                         class="form-control"
                         type="number"
-                        id="inputFname"
-                        placeholder="First Name"
+                        name="dialCrystal"
                       />
                     </div>
                   </div>
@@ -430,6 +438,7 @@
                       class="form-control"
                       type="file"
                       id="fileUpload"
+                      name="files"
                       multiple
                     />
                   </div>

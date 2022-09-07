@@ -78,6 +78,48 @@ public abstract class ProductProperty implements WatchPropertyInterface, Sunglas
         return null;
     }
 
+    @Override
+    public void setBrand(int brand) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setEngine(String engine) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setGender(boolean gender) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setMovement(String movement) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setSeries(String series) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setType(char type) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setWatchLabel(String watchLabel) {
+        // TODO Auto-generated method stub
+        
+    }
+
 
     
   
