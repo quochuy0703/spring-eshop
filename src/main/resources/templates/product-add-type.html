@@ -13,28 +13,13 @@
         <div th:replace="layout/left::left(${listNew})"></div>
 
         <div class="col-9">
-          <ul class="breadcrumb">
-            <li><a th:href="@{/}">Home</a> <span class="divider">/</span></li>
-            <li>
-              <a th:href="@{/admin/product/add-type}"> Add Product</a>
-              <span class="divider">/</span>
-            </li>
-            <li class="active" th:text="${' '+productType}"></li>
-          </ul>
-          <th:block th:switch="${productType}">
-            <th:block th:case="${'W'}"
-              ><th:block
-                th:replace="layout/product-add-form-watch::watch-property(${productForm},${modeEdit})"
-              ></th:block
-            ></th:block>
-            <th:block th:case="${'S'}">
-              <th:block
-                th:replace="layout/product-add-form-sunglasses::sunglasses-property(${productForm},${ modeEdit})"
-              ></th:block
-            ></th:block>
-          </th:block>
-
-          <!--  -->
+          <div>
+            <ul>
+              <li><a th:href="@{/admin/product/add/W}">Watch</a></li>
+              <li><a th:href="@{/admin/product/add/J}">Jewelry</a></li>
+              <li><a th:href="@{/admin/product/add/S}">Sunglasses</a></li>
+            </ul>
+          </div>
         </div>
       </div>
 

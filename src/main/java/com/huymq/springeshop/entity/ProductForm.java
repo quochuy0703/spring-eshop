@@ -46,15 +46,24 @@ public class ProductForm {
     private char type;
 
 
+    // ------------------------------
+
+    private String lens;
+
+    private String UVProtection;
+
+
+
+    
 
     @Override
     public String toString() {
-        return "ProductForm [brand=" + brand + ", description=" + description + ", engine=" + engine + ", gender="
-                + gender + ", highlight=" + highlight + ", id=" + id + ", imageUrl=" + imageUrl + ", images=" + images
-                + ", itemInStock=" + itemInStock + ", model=" + model + ", movement=" + movement + ", name=" + name
-                + ", newItem=" + newItem + ", price=" + price + ", productPropertyId=" + productPropertyId
-                + ", productType=" + productType + ", series=" + series + ", type=" + type + ", watchLabel="
-                + watchLabel + "]";
+        return "ProductForm [UVProtection=" + UVProtection + ", brand=" + brand + ", description=" + description
+                + ", engine=" + engine + ", gender=" + gender + ", highlight=" + highlight + ", id=" + id
+                + ", imageUrl=" + imageUrl + ", images=" + images + ", itemInStock=" + itemInStock + ", lens=" + lens
+                + ", model=" + model + ", movement=" + movement + ", name=" + name + ", newItem=" + newItem + ", price="
+                + price + ", productPropertyId=" + productPropertyId + ", productType=" + productType + ", series="
+                + series + ", type=" + type + ", watchLabel=" + watchLabel + "]";
     }
 
     public Product getProduct(){
@@ -74,6 +83,8 @@ public class ProductForm {
         ProductProperty productProperty = null;
         if(this.productType=='W'){
             productProperty = new WatchProperty();
+        }else if(this.productType=='S'){
+            productProperty = new SunglassesProperty();
         }
         productProperty.setId(this.productPropertyId);
         productProperty.setBrand(this.brand);
@@ -84,6 +95,25 @@ public class ProductForm {
         productProperty.setEngine(this.engine);
         productProperty.setType(this.type);
         return productProperty;
+    }
+
+    public ProductForm(Product product){
+        this.setId(product.getId());
+        this.setImageUrl(product.getImageUrl());
+        this.setName(product.getName());
+        this.setDescription(product.getDescription());
+        this.setPrice(product.getPrice());
+        this.setItemInStock(product.getItemInStock());
+        this.setModel(product.getModel());
+
+        ProductProperty productProperty = product.getProductProperty();
+        this.setProductPropertyId(productProperty.getId());
+        this.setBrand(productProperty.getBrand());
+        this.setSeries(productProperty.getSeries());
+        this.setWatchLabel(productProperty.getWatchLabel());
+        this.setMovement(productProperty.getMovement());
+        this.setEngine(productProperty.getEngine());
+        this.setType(productProperty.getType());
     }
     
 
@@ -240,6 +270,22 @@ public class ProductForm {
 
     public void setType(char type) {
         this.type = type;
+    }
+
+    public String getLens() {
+        return lens;
+    }
+
+    public void setLens(String lens) {
+        this.lens = lens;
+    }
+
+    public String getUVProtection() {
+        return UVProtection;
+    }
+
+    public void setUVProtection(String uVProtection) {
+        UVProtection = uVProtection;
     }
 
     

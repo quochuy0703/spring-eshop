@@ -1,0 +1,290 @@
+<th:block th:fragment="sunglasses-property(productForm, modeEdit)">
+  <form
+    th:action="@{/admin/product/add}"
+    method="POST"
+    th:object="${productForm}"
+    enctype="multipart/form-data"
+  >
+    <div class="card card-body">
+      <h3>Product Details</h3>
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Type <sup>*</sup></label>
+        </div>
+
+        <th:block th:with="typeTemp=${'S'}"
+          ><div class="col-4">
+            <input
+              type="text"
+              class="form-control"
+              value="Sunglasses"
+              disabled
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              name="productType"
+              id="productType"
+              th:value="${typeTemp}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              th:field="*{id}"
+              th:value="*{id}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              th:field="*{productPropertyId}"
+              th:value="*{productPropertyId}"
+            /></div
+        ></th:block>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Product Name <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{name}"
+                placeholder="First Name"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Description <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <textarea
+                class="form-control"
+                rows="5"
+                th:field="*{description}"
+                placeholder="Description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Price<sup>*</sup></label>
+            </div>
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{price}"
+                th:value="*{price}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Item in Stock<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{itemInStock}"
+                th:value="*{itemInStock}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Model<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{model}"
+                th:value="*{model}"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Series<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{series}"
+                th:value="*{series}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Gender<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <select
+                class="form-control"
+                th:field="*{gender}"
+                th:value="*{gender}"
+              >
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Lens <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{lens}"
+                th:value="*{lens}"
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">UV Protection<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{UVProtection}"
+                th:value="*{UVProtection}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ---------------------------- -->
+    <div class="card card-body">
+      <h3>Feature</h3>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Len width <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="number" name="lenWidth" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Len Bridge <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="number" name="lenBridge" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Arm Length <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="armLength" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Rim Style <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="number" name="rimStyle" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Frame Shape <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="number" name="frameShape" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Frame Material <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="number" name="frameMaterial" />
+            </div>
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+    </div>
+    <!-- ------------------------ -->
+
+    <div class="card card-body">
+      <h3>Image</h3>
+
+      <div class="row">
+        <div class="form-group row">
+          <div class="col-4">
+            <label class="float-right">Image <sup>*</sup></label>
+          </div>
+
+          <div class="col-8">
+            <input
+              class="form-control"
+              type="file"
+              id="fileUpload"
+              name="files"
+              multiple
+            />
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+      <div class="row" id="imageHolder">
+        <!-- ----------------- -->
+      </div>
+    </div>
+    <!-- --------------------------- -->
+
+    <div class="control-group">
+      <div class="controls">
+        <button
+          type="submit"
+          th:text="${modeEdit? 'Update Product' : 'Add Product'}"
+          class="btn btn-primary"
+        ></button>
+      </div>
+    </div>
+  </form>
+</th:block>

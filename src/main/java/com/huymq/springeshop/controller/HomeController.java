@@ -24,6 +24,7 @@ import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Image;
 import com.huymq.springeshop.entity.Product;
 import com.huymq.springeshop.entity.ProductForm;
+import com.huymq.springeshop.entity.SunglassesProperty;
 import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
 import com.huymq.springeshop.utils.FilesStorageService;
@@ -172,102 +173,5 @@ public class HomeController {
         return "registration";
     }
 
-    @GetMapping("/add-product")
-    public String showAddProductPage(HttpServletRequest request, Model theModel){
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
-        }
-
-        List<Product> theList  = multiService.findAllNewProduct();
-
-        ProductForm productForm = new ProductForm();
-        productForm.setImageUrl("/images/d.jpg");
-        productForm.setName("Dong ho 2");
-        productForm.setDescription("fsdfafsf");
-        productForm.setPrice(245.67);
-        productForm.setItemInStock(99);
-        productForm.setProductType('W');
-        productForm.setModel("model");
-
-
-        productForm.setBrand(1);
-        productForm.setSeries("series");
-        productForm.setWatchLabel("Japan made");
-        productForm.setMovement("movement");
-        productForm.setEngine("engine");
-        productForm.setType('W');
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("listNew", theList);
-        theModel.addAttribute("sumCost", sumCost);
-        theModel.addAttribute("productForm", productForm);
-        return "product-add";
-    }
-
-    @PostMapping("/add-product")
-    public String processAddProductPage(@RequestParam("files") MultipartFile[] files, @ModelAttribute("productForm") ProductForm productForm, HttpServletRequest request, Model theModel){
-
-
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
-        }
-
-        
-        productForm.setType('W');
-        productForm.setProductType('W');
-        System.out.println(productForm);
-        Product product = productForm.getProduct();
-        product.setImageUrl("/images/d.jpg");
-       
-        WatchProperty watch = (WatchProperty) productForm.getProductProperty();
-        watch.setBrand(1);
-        watch.setType('W');
-
-        
-
-
-        try {
-            List<String> fileNames = new ArrayList<>();
-
-
-            Arrays.asList(files).stream().forEach(file -> {
-                String fileNameSave = storageService.save(file, "/"+theCustomer.getId());
-                fileNames.add(file.getOriginalFilename());
-                Image image = new Image();
-                image.setImageUrl("/"+theCustomer.getId()+"/"+fileNameSave );
-                product.addImage(image);
-            });
-            
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        
-        product.setProductProperty(watch);
-
-        multiService.saveProduct(product);
-
-        
-        
-
-        List<Product> theList  = multiService.findAllNewProduct();
-
-
-        
-
-
-
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("listNew", theList);
-        theModel.addAttribute("sumCost", sumCost);
-        return "product-add";
-    }
+    
 }
