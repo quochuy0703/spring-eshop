@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-body">
+            <h4 th:text="${'ĐƠN HÀNG: '+ thisOrder.id}">ĐƠN HÀNG: #58456904</h4>
+
+            <p
+              th:text="${'Người nhận hàng: '+ thisOrder.orderAddress.firstName + ' '+ thisOrder.orderAddress.lastName+ ', ' +thisOrder.orderAddress.phone}"
+            >
+              Anh Dgdfgdsg442, 0778845715
+            </p>
+            <p
+              th:text="${'Giao đến: '+ thisOrder.orderAddress.address + ' '+ thisOrder.orderAddress.city}+ ', ' + thisOrder.orderAddress.state"
+            >
+              Giao đến: ffsfs, Phường 15, Quận Bình Thạnh, Hồ Chí Minh (nhân
+              viên sẽ gọi xác nhận trước khi giao).
+            </p>
+            <p th:text="${'Phí giao hàng: $'}">Phí giao hàng: 20.000₫</p>
+            <p th:text="${'Tổng tiền: $'+ thisOrder.amount}">
+              Tổng tiền: 340.000₫
+            </p>
+            <p></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+
+    <script th:src="@{/js/cart.js}"></script>
+  </body>
+</html>

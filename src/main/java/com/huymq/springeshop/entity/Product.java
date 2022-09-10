@@ -1,5 +1,6 @@
 package com.huymq.springeshop.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.criteria.Fetch;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="product")
-public class Product {
+public class Product implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,17 +62,28 @@ public class Product {
 
 
     //orphanRemoval de co the remove element trong list image
+    //@JsonManagedReference duoc dung khi: Infinite Recursion with Jackson JSON and Hibernate JPA issue
     @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonManagedReference
     private List<Image> images = new ArrayList<>();
 
+    // @JsonIgnoreProperties duoc dung khi bi loi: No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
     @OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
     @JoinColumn(name="product_property")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private ProductProperty productProperty;
 
+    @OneToMany(mappedBy = "product",orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public void addImage(Image image){
         images.add(image);
         image.setProduct(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        orderItems.add(orderItem);
+        orderItem.setProduct(this);
     }
 
     @Override
@@ -176,6 +192,14 @@ public class Product {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     

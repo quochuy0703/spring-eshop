@@ -1,5 +1,7 @@
 package com.huymq.springeshop.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class ProductProperty implements WatchPropertyInterface, SunglassesPropertyInterface {
+public abstract class ProductProperty implements Serializable,WatchPropertyInterface, SunglassesPropertyInterface {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

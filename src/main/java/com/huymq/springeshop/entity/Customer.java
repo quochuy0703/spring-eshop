@@ -1,5 +1,6 @@
 package com.huymq.springeshop.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="customer")
-public class Customer {
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +34,31 @@ public class Customer {
     private String email;
 
 
-    @OneToMany(mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Cart> carts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Address> addresses = new ArrayList<>();
 
 
     public void addCart(Cart cart){
         carts.add(cart);
         cart.setCustomer(this);
     }
+
+    public void addOrder(Order order){
+        orders.add(order);
+        order.setCustomer(this);
+    }
+    public void addAddress(Address address){
+        addresses.add(address);
+        address.setCustomer(this);
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -91,6 +109,24 @@ public class Customer {
     public void setCarts(List<Cart> carts) {
         this.carts = carts;
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Address> getAddresses() {
+        return this.addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    
 
 
 

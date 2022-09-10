@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <th:block th:switch="${#lists.size(user.carts)} == 0">
+          <th:block th:case="${true}">
+            <div class="col-6">
+              <div class="card card-body text-center">
+                <p>Không có sản phẩm nào trong giỏ hàng</p>
+                <a class="btn btn-outline-primary" th:href="@{/}">Back</a>
+              </div>
+            </div>
+          </th:block>
+          <th:block th:case="${false}">
+            <div class="col-12">
+              <ul class="breadcrumb">
+                <li>
+                  <a th:href="@{/}">Home</a> <span class="divider">/</span>
+                </li>
+                <li class="active">Checkout</li>
+              </ul>
+            </div>
+
+            <div class="col-12">
+              <div class="row">
+                <div class="col-8">
+                  <form th:action="@{/order/checkout}" th:object="${checkoutForm}" method="POST">
+                    <div class="card card-body">
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <td>Shipping address</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <form>
+                              <div class="form-group row">
+                                <div class="col-8">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{email}"
+                                    th:value="*{email}"
+                                    placeholder="Email"
+                                  />
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-8">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{phone}"
+                                    th:value="*{phone}"
+                                    placeholder="Phone"
+                                  />
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-4">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{firstName}"
+                                    th:value="*{firstName}"
+                                    placeholder="First Name"
+                                  />
+                                </div>
+                                <div class="col-4">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{lastName}"
+                                    th:value="*{lastName}"
+                                    placeholder="Last Name"
+                                  />
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-8">
+                                  <input
+                                    class="form-control"
+                                    th:field="*{address}"
+                                    th:value="*{address}"
+                                    placeholder="Street Address"
+                                  />
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-8">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{country}"
+                                    th:value="*{country}"
+                                    placeholder="Country"
+                                  />
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-2">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{zipCode}"
+                                    th:value="*{zipCode}"
+                                    placeholder="Zip code"
+                                  />
+                                </div>
+                                <div class="col-3">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{city}"
+                                    th:value="*{city}"
+                                    placeholder="City"
+                                  />
+                                </div>
+                                <div class="col-3">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    th:field="*{state}"
+                                    th:value="*{state}"
+                                    placeholder="State/Province"
+                                  />
+                                </div>
+                              </div>
+                              <!-- <div class="form-group row">
+                            <label class="col-2" for="inputPassword"
+                              >Post Code/ Zipcode</label
+                            >
+                            <div>
+                              <input
+                                class="form-control"
+                                type="password"
+                                placeholder="Password"
+                              />
+                            </div>
+                          </div> -->
+                            </form>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!-- ------------------------------ -->
+
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="form-inline">
+                              <label style="min-width: 159px">
+                                VOUCHERS Code:
+                              </label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="CODE"
+                              />
+                              <button type="submit" class="btn btn-primary">
+                                ADD
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!-- ------------------------ -->
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <td>Delivery</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <form class="form-inline">
+                              <input
+                                type="radio"
+                                class="form-control"
+                                placeholder="CODE"
+                              />
+                              <label style="min-width: 159px">
+                                DHL International
+                              </label>
+                            </form>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <td>Payment</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <form>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Thanh toan khi nhan hang
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                <label class="form-check-label" for="exampleRadios2">
+                                  Qua tai khoan ngan hang
+                                </label>
+                              </div>
+                              
+                            </form>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!-- ------------------------------ -->
+                    <div class="col-12">
+                      <div class="row">
+                        <a class="col-3">Continue Shopping</a>
+                        <button class="btn btn-primary col-9">Confirm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                  
+                </div>
+                <div class="col-4">
+                  <div class="card card-body">
+                    <div class="form-group row">
+                      <div class="col-5">
+                        <label>Price Total: </label>
+                      </div>
+                      <div class="col-5 text-right">
+                        <label>$123.00</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-5">
+                        <label>Saving: </label>
+                      </div>
+                      <div class="col-5 text-right">
+                        <label>$123.00</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-5">
+                        <label>Shipping: </label>
+                      </div>
+                      <div class="col-5 text-right">
+                        <label>$123.00</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-5">
+                        <h4>Grand total:</h4>
+                      </div>
+                      <div class="col-5 text-right">
+                        <h4>$123.00</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </th:block>
+        </th:block>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+  </body>
+</html>

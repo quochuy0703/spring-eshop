@@ -107,55 +107,7 @@ public class HomeController {
         return "product-detail";
     }
 
-    @GetMapping("cart")
-    public String showCart(HttpServletRequest request, Model theModel){
-
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
-        }
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("sumCost", sumCost);
-        return "cart";
-    }
-
-
-    @PostMapping("cart")
-    public String processCart(HttpServletRequest request, Model theModel){
-
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-
-        int productId = Integer.parseInt(request.getParameter("id"));
-        Product product = multiService.findProductById(productId);
-        if(product == null){
-            return null;
-        }
-
-        
-        for(Cart cart : theCustomer.getCarts()){
-            if(cart.getProduct().getId() == productId){
-
-                cart.setQuantity(cart.getQuantity()+1);
-                multiService.saveCustomer(theCustomer);
-                return "cart";
-            }
-        }
-
-        Cart tempCart = new Cart();
-        tempCart.setQuantity(1);
-        tempCart.setProduct(product);
-        theCustomer.addCart(tempCart);
-
-        multiService.saveCustomer(theCustomer);
-
-        
-
-        return "cart";
-    }
-
+    
     @GetMapping("/register")
     public String showRegisterPage(HttpServletRequest request, Model theModel){
         Customer theCustomer = (Customer)request.getAttribute("customer");

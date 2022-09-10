@@ -1,5 +1,6 @@
 package com.huymq.springeshop.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -12,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 @Entity
 @Table(name="image_url")
-public class Image {
+public class Image implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +29,11 @@ public class Image {
     @Column(name="image_url")
     private String imageUrl;
 
+
+    //@JsonBackReference duoc dung khi: Infinite Recursion with Jackson JSON and Hibernate JPA issue
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="product_id")
+    @JsonBackReference
     private Product product;
 
     public Image() {

@@ -2,7 +2,10 @@ package com.huymq.springeshop.service;
 
 import java.util.List;
 
+import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
+import com.huymq.springeshop.entity.Order;
+import com.huymq.springeshop.entity.OrderItem;
 import com.huymq.springeshop.entity.Product;
 
 public interface MultiService {
@@ -15,4 +18,16 @@ public interface MultiService {
     //Customer
     public Customer findCustomerById(int theId);
     public void saveCustomer(Customer theCustomer);
+
+    //cart
+    public Cart findCartById(int theId);
+    public void deleteCartById(int theId);
+    public void saveCart(Cart theCart);
+
+
+    //order
+    public void saveOrder(Order theOrder);
+
+    //orderItem
+    public void saveOrderItem(OrderItem theOrderItem);
 }

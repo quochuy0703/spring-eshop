@@ -9,174 +9,327 @@
     <div th:replace="layout/navigation::navigation"></div>
 
     <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <ul class="breadcrumb">
-            <li><a th:href="@{/}">Home</a> <span class="divider">/</span></li>
-            <li class="active">Check Out</li>
-          </ul>
-          <div class="card card-body">
-            <h1>
-              Check Out
-              <small class="float-right" th:inline="text">
-                [[${#lists.size(user.carts)}]] Items are in the cart
-              </small>
-            </h1>
-            <hr />
-            <table class="table table-bordered table-condensed">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Description</th>
-                  <th>Ref.</th>
-                  <th>Avail.</th>
-                  <th>Unit price</th>
-                  <th>Qty</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="cart : ${user.carts}">
-                  <td>
-                    <img width="100" th:src="${cart.product.imageUrl}" alt="" />
-                  </td>
-                  <td th:text="${cart.product.name}">
-                    Items name here<br />Carate : 22<br />Model : n/a
-                  </td>
-                  <td>-</td>
-                  <td>
-                    <span class="btn btn-primary"
-                      >x<span class="icon-ok"></span
-                    ></span>
-                  </td>
-                  <td th:text="${'$'+cart.product.price}">$50.00</td>
-                  <td>
-                    <div class="input-group">
-                      <input
-                        class="col-1 form-control"
-                        style="max-width: 34px"
-                        size="16"
-                        type="text"
-                        th:value="${cart.quantity}"
-                      />
-                      <div class="input-group-append">
-                        <button
-                          class="btn btn-outline-secondary btn-sm"
-                          type="button"
-                        >
-                          -</button
-                        ><button
-                          class="btn btn-outline-secondary btn-sm"
-                          type="button"
-                        >
-                          +</button
-                        ><button class="btn btn-sm btn-danger" type="button">
-                          x
-                          <span class="icon-remove"></span>
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td th:text="${'$'+cart.product.price * cart.quantity}">
-                    $100.00
-                  </td>
-                </tr>
-
-                <tr>
-                  <td colspan="6" class="alignR">Total products:</td>
-                  <td
-                    th:text="${'$'+#numbers.formatDecimal(sumCost,1, 'DEFAULT', 2, 'DEFAULT')}"
-                  >
-                    $448.42
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="6" class="alignR">Total products:</td>
-                  <td>$448.42</td>
-                </tr>
-                <tr>
-                  <td colspan="6" class="alignR">Total products:</td>
-                  <td>$448.42</td>
-                </tr>
-                <tr>
-                  <td colspan="6" class="alignR">Total products:</td>
-                  <td class="label label-primary">$448.42</td>
-                </tr>
-              </tbody>
-            </table>
-            <br />
-
-            <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <td>
-                    <form class="form-inline">
-                      <label style="min-width: 159px"> VOUCHERS Code: </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="CODE"
-                      />
-                      <button type="submit" class="btn btn-primary">ADD</button>
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <td>ESTIMATE YOUR SHIPPING & TAXES</td>
-                </tr>
-                <tr>
-                  <td>
-                    <form>
-                      <div class="form-group row">
-                        <label class="col-2" for="inputEmail">Country</label>
-                        <div>
-                          <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Country"
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-2" for="inputPassword"
-                          >Post Code/ Zipcode</label
-                        >
-                        <div>
-                          <input
-                            class="form-control"
-                            type="password"
-                            placeholder="Password"
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div>
-                          <button type="submit" class="btn btn-primary">
-                            Click to check the price
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="row">
-              <div class="col-12">
-                <a href="products.html" class="btn btn-primary"
-                  ><span class="icon-arrow-left"></span> Continue Shopping
-                </a>
-                <a href="login.html" class="btn btn-primary float-right"
-                  >Next <span class="icon-arrow-right"></span
-                ></a>
+      <div class="row d-flex justify-content-center">
+        <th:block th:switch="${#lists.size(user.carts)} == 0">
+          <th:block th:case="${true}">
+            <div class="col-6">
+              <div class="card card-body text-center">
+                <p>Không có sản phẩm nào trong giỏ hàng</p>
+                <a class="btn btn-outline-primary" th:href="@{/}">Back</a>
               </div>
             </div>
-          </div>
-        </div>
+          </th:block>
+          <th:block th:case="${false}">
+            <div class="col-12">
+              <ul class="breadcrumb">
+                <li>
+                  <a th:href="@{/}">Home</a> <span class="divider">/</span>
+                </li>
+                <li class="active">Cart</li>
+              </ul>
+              <div class="card card-body">
+                <h1>
+                  Check Out
+                  <small class="float-right" th:inline="text">
+                    [[${#lists.size(user.carts)}]] Items are in the cart
+                  </small>
+                </h1>
+                <hr />
+                <table class="table table-bordered table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Description</th>
+                      <th>Ref.</th>
+                      <th>Avail.</th>
+                      <th>Unit price</th>
+                      <th>Qty</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody">
+                    <tr th:each="cart : ${user.carts}">
+                      <td>
+                        <img
+                          width="100"
+                          th:src="${cart.product.imageUrl}"
+                          alt=""
+                        />
+                      </td>
+                      <td th:text="${cart.product.name}">
+                        Items name here<br />Carate : 22<br />Model : n/a
+                      </td>
+                      <td>-</td>
+                      <td>
+                        <span class="btn btn-primary"
+                          >x<span class="icon-ok"></span
+                        ></span>
+                      </td>
+                      <td
+                        class="price-cart"
+                        th:text="${'$'+cart.product.price}"
+                        th:attr="data-cartId=${cart.id}"
+                      >
+                        $50.00
+                      </td>
+                      <td>
+                        <div class="input-group">
+                          <input
+                            class="col-2 form-control quantity-cart"
+                            style="max-width: 34px"
+                            type="text"
+                            th:attr="data-cartId=${cart.id}"
+                            th:value="${cart.quantity}"
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-secondary btn-sm minus-button"
+                              th:attr="data-cartId=${cart.id}"
+                              type="button"
+                            >
+                              -</button
+                            ><button
+                              class="btn btn-outline-secondary btn-sm plus-button"
+                              th:attr="data-cartId=${cart.id}"
+                              type="button"
+                            >
+                              +</button
+                            ><button
+                              class="btn btn-sm btn-danger delete-button"
+                              type="button"
+                              th:attr="data-cartId=${cart.id}"
+                            >
+                              x
+                              <span class="icon-remove"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="total-cart-item"
+                        th:text="${'$'+cart.product.price * cart.quantity}"
+                        th:attr="data-cartId=${cart.id}"
+                      >
+                        $100.00
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="6" class="alignR">Price Total:</td>
+                      <td
+                        th:text="${'$'+#numbers.formatDecimal(sumCost,1, 'DEFAULT', 2, 'DEFAULT')}"
+                        id="total-cart"
+                      >
+                        $448.42
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <form class="form-inline">
+                          <label style="min-width: 159px">
+                            VOUCHERS Code:
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="CODE"
+                          />
+                          <button type="submit" class="btn btn-primary">
+                            ADD
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Shipping address</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <form>
+                          <div class="form-group row">
+                            <div class="col-6">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Email"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-6">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Phone"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-3">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="First Name"
+                              />
+                            </div>
+                            <div class="col-3">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Last Name"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-6">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Street Address"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-6">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Country"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-2">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Zip code"
+                              />
+                            </div>
+                            <div class="col-2">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="City"
+                              />
+                            </div>
+                            <div class="col-2">
+                              <input
+                                class="form-control"
+                                type="text"
+                                placeholder="State/Province"
+                              />
+                            </div>
+                          </div>
+                          <!-- <div class="form-group row">
+                            <label class="col-2" for="inputPassword"
+                              >Post Code/ Zipcode</label
+                            >
+                            <div>
+                              <input
+                                class="form-control"
+                                type="password"
+                                placeholder="Password"
+                              />
+                            </div>
+                          </div> -->
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- ------------------------------ -->
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Delivery</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <form class="form-inline">
+                          <input
+                            type="radio"
+                            class="form-control"
+                            placeholder="CODE"
+                          />
+                          <label style="min-width: 159px">
+                            DHL International
+                          </label>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- ------------------------------ -->
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Price</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-group row">
+                          <div class="col-3">
+                            <label>Price Total: </label>
+                          </div>
+                          <div class="col-3 text-right">
+                            <label>$123.00</label>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-3">
+                            <label>Saving: </label>
+                          </div>
+                          <div class="col-3 text-right">
+                            <label>$123.00</label>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-3">
+                            <label>Shipping: </label>
+                          </div>
+                          <div class="col-3 text-right">
+                            <label>$123.00</label>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-3">
+                            <h4>Grand total:</h4>
+                          </div>
+                          <div class="col-3 text-right">
+                            <h4>$123.00</h4>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="col-12">
+                    <a href="products.html" class="btn btn-primary"
+                      ><span class="icon-arrow-left"></span> Continue Shopping
+                    </a>
+                    <a
+                      th:href="@{/order/checkout}"
+                      class="btn btn-primary float-right"
+                      >Checkout <span class="icon-arrow-right"></span
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </th:block>
+        </th:block>
       </div>
 
       <!-- ---------------------------------- -->
@@ -194,5 +347,7 @@ Clients
     <!-- Copyright -->
     <div th:replace="layout/copyright::copyright"></div>
     <!-- Copyright -->
+
+    <script th:src="@{/js/cart.js}"></script>
   </body>
 </html>
