@@ -59,7 +59,29 @@ public class Product implements Serializable{
     @Column(name="product_type")
     private char productType;
 
+    @Column(name="count_seen")
+    private int countSeen;
 
+    @Column(name="count_sale")
+    private int countSale;
+
+
+
+    public int getCountSeen() {
+        return countSeen;
+    }
+
+    public void setCountSeen(int countSeen) {
+        this.countSeen = countSeen;
+    }
+
+    public int getCountSale() {
+        return countSale;
+    }
+
+    public void setCountSale(int countSale) {
+        this.countSale = countSale;
+    }
 
     //orphanRemoval de co the remove element trong list image
     //@JsonManagedReference duoc dung khi: Infinite Recursion with Jackson JSON and Hibernate JPA issue
@@ -73,7 +95,7 @@ public class Product implements Serializable{
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private ProductProperty productProperty;
 
-    @OneToMany(mappedBy = "product",orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "product",orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void addImage(Image image){

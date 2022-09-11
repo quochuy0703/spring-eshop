@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -143,5 +145,21 @@ public class MultiServiceImpl implements MultiService {
         orderItemRepository.save(theOrderItem);
         
     }
+
+    @Override
+    @Transactional
+    public Page<Product> findProductByType(char type, Pageable pageable) {
+        
+        return productRepository.findProductByType(type, pageable);
+    }
+
+   
+
+    // @Override
+    // @Transactional
+    // public int getCountByProductType(char type) {
+     
+    //     return productRepository.getCountByProductType(type);
+    // }
     
 }

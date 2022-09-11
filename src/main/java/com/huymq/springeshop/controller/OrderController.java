@@ -1,6 +1,7 @@
 package com.huymq.springeshop.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ import com.huymq.springeshop.entity.Order;
 import com.huymq.springeshop.entity.OrderAddress;
 import com.huymq.springeshop.entity.OrderItem;
 import com.huymq.springeshop.entity.OrderStatus;
+import com.huymq.springeshop.entity.Product;
 import com.huymq.springeshop.service.MultiService;
 import com.huymq.springeshop.utils.CheckoutForm;
 
@@ -76,11 +78,14 @@ public class OrderController {
         
         theCustomer.addOrder(order);
         
+        List<Product> listProduct = new ArrayList<>();
 
         for(Cart cart: theCustomer.getCarts()){
             OrderItem orderItem = new OrderItem();
             // orderItem.setProduct(cart.getProduct());
             cart.getProduct().addOrderItem(orderItem);
+            cart.getProduct().setCountSale(cart.getProduct().getCountSale()+cart.getQuantity());
+            listProduct.add(cart.getProduct());
             orderItem.setPrice(cart.getProduct().getPrice());
             orderItem.setQuantity(cart.getQuantity());
             order.addOrderItem(orderItem);
@@ -88,8 +93,13 @@ public class OrderController {
            
             
         }
+        
         theCustomer.setCarts(new ArrayList<>());
         multiService.saveCustomer(theCustomer);
+
+        for(Product product: listProduct){
+            multiService.saveProduct(product);
+        }
 
 
         theModel.addAttribute("user", theCustomer);

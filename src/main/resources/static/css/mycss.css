@@ -2,11 +2,10 @@ html {
   font-size: 82.5%; /* 1rem = 10px */
 }
 body {
-  background: url(../images/white_leather.png) repeat 0 0;
+  background: url(/images/white_leather.png) repeat 0 0;
 }
 .thumbnail {
   position: relative;
-  height: 100%;
 }
 .zoom-tool {
   position: absolute;

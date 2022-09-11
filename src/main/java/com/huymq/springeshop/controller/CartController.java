@@ -30,6 +30,7 @@ import com.huymq.springeshop.entity.ProductForm;
 import com.huymq.springeshop.entity.SunglassesProperty;
 import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
+import com.huymq.springeshop.utils.AddToCartForm;
 import com.huymq.springeshop.utils.FilesStorageService;
 import com.huymq.springeshop.utils.MessageResponse;
 
@@ -56,7 +57,7 @@ public class CartController {
 
 
     @PostMapping("")
-    public String processCart(HttpServletRequest request, Model theModel){
+    public String processCart(@ModelAttribute("cartForm") AddToCartForm cartForm,HttpServletRequest request, Model theModel){
 
         Customer theCustomer = (Customer)request.getAttribute("customer");
         double sumCost = 0.0;
@@ -64,8 +65,8 @@ public class CartController {
             sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
         }
 
-        int productId = Integer.parseInt(request.getParameter("id"));
-        Product product = multiService.findProductById(productId);
+
+        Product product = multiService.findProductById(cartForm.getProductId());
         if(product == null){
             return null;
         }
@@ -77,16 +78,16 @@ public class CartController {
 
         
         for(Cart cart : theCustomer.getCarts()){
-            if(cart.getProduct().getId() == productId){
+            if(cart.getProduct().getId() == cartForm.getProductId()){
 
-                cart.setQuantity(cart.getQuantity()+1);
+                cart.setQuantity(cart.getQuantity()+cartForm.getQuantity());
                 multiService.saveCustomer(theCustomer);
                 return "redirect:/cart";
             }
         }
 
         Cart tempCart = new Cart();
-        tempCart.setQuantity(1);
+        tempCart.setQuantity(cartForm.getQuantity());
         tempCart.setProduct(product);
         theCustomer.addCart(tempCart);
 

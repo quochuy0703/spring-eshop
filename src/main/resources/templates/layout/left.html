@@ -8,7 +8,7 @@
           >
         </li>
         <li>
-          <a href="products.html"
+          <a th:href="@{/products/type/W}"
             ><span class="icon-chevron-right"></span>Watches</a
           >
         </li>
@@ -18,8 +18,8 @@
           >
         </li>
         <li>
-          <a href="products.html"
-            ><span class="icon-chevron-right"></span>Fashion Jewelry</a
+          <a th:href="@{/products/type/S}"
+            ><span class="icon-chevron-right"></span>Sunglassses</a
           >
         </li>
         <li>
@@ -84,7 +84,7 @@
 
   <ul class="nav">
     <th:block
-      th:each="index: ${#numbers.sequence(0,{2 < #lists.size(listNew) ? 2 : #lists.size(listNew) })}"
+      th:each="index: ${#numbers.sequence(0,{2 < #lists.size(listNew) ? 2 : #lists.size(listNew)-1 })}"
     >
       <li class="my-2">
         <th:block

@@ -1,8 +1,9 @@
-<div th:fragment="product-card-new(product)" class="col-4">
+<th:block th:fragment="product-card-new(product)">
   <div class="card thumbnail" style="background-color: white !important">
     <a th:replace="layout/quickview::quickview(${product})"></a>
     <img
       class="card-img-top"
+      style="min-height: 357px !important "
       th:src="@{${product.imageUrl}}"
       alt="bootstrap ecommerce templates"
     />
@@ -14,8 +15,9 @@
         <strong> $22.00</strong>
       </p>
       <h4 class="m-0">
-        <form th:action="@{/cart}" method="POST">
-          <input type="hidden" name="id" th:value="${product.id}" />
+        <form th:action="@{/cart}" th:object="${cartForm}" method="POST">
+          <input type="hidden" name="productId" th:value="${product.id}" />
+          <input type="hidden" th:field="*{quantity}" th:value="*{quantity}" />
           <button class="btn btn-warning">Add to cart</button>
         </form>
       </h4>
@@ -25,4 +27,4 @@
       </div>
     </div>
   </div>
-</div>
+</th:block>

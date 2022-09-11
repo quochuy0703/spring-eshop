@@ -9,16 +9,15 @@
     <div th:replace="layout/navigation::navigation"></div>
 
     <div class="container">
-      <div class="row">
-        <div th:replace="layout/left::left(${listNew})"></div>
-        <div class="col-9">
-          <div class="card card-body">
-            <th:block th:each="product : ${listNew}">
+      <div class="">
+        <div class="card card-body d-flex flex-row flex-wrap">
+          <th:block th:each="product : ${listNew}">
+            <div class="col-3">
               <th:block
-                th:replace="layout/product-card-list-view::product-card(${product})"
+                th:replace="layout/product-card-new::product-card-new(${product})"
               ></th:block>
-            </th:block>
-          </div>
+            </div>
+          </th:block>
         </div>
       </div>
 

@@ -2,6 +2,9 @@ package com.huymq.springeshop.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Order;
@@ -12,6 +15,9 @@ public interface MultiService {
     public List<Product> findAllProduct();
     public List<Product> findAllNewProduct();
     public List<Product> findAllHighlightProduct();
+    public Page<Product> findProductByType(char type, Pageable pageable);
+
+    // public int getCountByProductType(char type);
     public Product findProductById(int theId);
     public void saveProduct(Product product);
 

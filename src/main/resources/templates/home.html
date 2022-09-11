@@ -24,9 +24,11 @@
               <th:block
                 th:each="index: ${#numbers.sequence(0,{3 < #lists.size(listNew) ? 2 :#lists.size(listNew) })}"
               >
-                <div
-                  th:replace="layout/product-card-new::product-card-new(${listNew[index]})"
-                ></div>
+                <div class="col-4">
+                  <th:block
+                    th:replace="layout/product-card-new::product-card-new(${listNew[index]})"
+                  ></th:block>
+                </div>
 
                 <!-- ------------- -->
               </th:block>
@@ -47,9 +49,11 @@
               <th:block
                 th:each="index: ${#numbers.sequence(0,{2 < #lists.size(listNew) ? 2 : #lists.size(listNew) })}"
               >
-                <div
-                  th:replace="layout/product-card-new::product-card-new(${listNew[index]})"
-                ></div>
+                <div class="col-4">
+                  <th:block
+                    th:replace="layout/product-card-new::product-card-new(${listNew[index]})"
+                  ></th:block>
+                </div>
               </th:block>
             </div>
           </div>

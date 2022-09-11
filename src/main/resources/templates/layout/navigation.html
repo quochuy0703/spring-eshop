@@ -3,23 +3,32 @@
     <div class="container">
       <ul class="navbar-nav">
         <li class="active nav-item">
-          <a class="nav-link" href="index.html">Home </a>
+          <a class="nav-link" th:href="@{/}">Home </a>
+        </li>
+        <li class="">
+          <a class="nav-link" th:href="@{/products/type/W}">Watches</a>
+        </li>
+        <li class="">
+          <a class="nav-link" th:href="@{/products/type/S}">Sunglassses</a>
+        </li>
+        <!-- <li class="active nav-item">
+          <a class="nav-link" th:href="@{/}">Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="list-view.html">List View</a>
+          <a class="nav-link" th:href="@{/list-view}">List View</a>
         </li>
         <li class="">
-          <a class="nav-link" href="grid-view.html">Grid View</a>
+          <a class="nav-link" th:href="@{/}">Grid View</a>
         </li>
         <li class="">
-          <a class="nav-link" href="three-col.html">Three Column</a>
+          <a class="nav-link" th:href="@{/}">Three Column</a>
         </li>
         <li class="">
-          <a class="nav-link" href="four-col.html">Four Column</a>
+          <a class="nav-link" th:href="@{/}">Four Column</a>
         </li>
         <li class="">
-          <a class="nav-link" href="general.html">General Content</a>
-        </li>
+          <a class="nav-link" th:href="@{/}">General Content</a>
+        </li> -->
       </ul>
       <form action="#" class="navbar-search float-right">
         <input type="text" placeholder="Search" class="form-control" />

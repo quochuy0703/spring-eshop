@@ -1,0 +1,41 @@
+<th:block th:fragment="product-card(product)">
+  <div class="row">
+    <div class="col-2">
+      <img class="img-fluid" th:src="${product.imageUrl}" alt="" />
+    </div>
+    <div class="col-6">
+      <h5 th:text="${product.name}">Product Name</h5>
+      <p>
+        Nowadays the lingerie industry is one of the most successful business
+        spheres. We always stay in touch with the latest fashion tendencies -
+        that is why our goods are so popular..
+      </p>
+    </div>
+    <div class="col-4">
+      <form class="text-right float-right w-100">
+        <h3 th:text="${'$'+product.price}">$140.00</h3>
+        <input class="float-left" type="checkbox" />
+        <label class="float-right">Adds product to compair</label>
+        <br />
+        <div class="btn-group">
+          <!-- <a href="product_details.html" class="btn btn-secondary"
+            ><span class="icon-shopping-cart"></span> Add to cart</a
+          > -->
+          <form th:action="@{/cart}" th:object="${cartForm}" method="POST">
+            <input type="hidden" name="productId" th:value="${product.id}" />
+            <input
+              type="hidden"
+              th:field="*{quantity}"
+              th:value="*{quantity}"
+            />
+            <button class="btn btn-secondary">Add to cart</button>
+          </form>
+          <a th:href="@{${'/products/'+product.id}}" class="btn btn-warning"
+            >VIEW</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr />
+</th:block>
