@@ -3,7 +3,7 @@
     <a th:replace="layout/quickview::quickview(${product})"></a>
     <img
       class="card-img-top"
-      style="min-height: 357px !important "
+      style="min-height: 357px !important"
       th:src="@{${product.imageUrl}}"
       alt="bootstrap ecommerce templates"
     />
@@ -15,11 +15,22 @@
         <strong> $22.00</strong>
       </p>
       <h4 class="m-0">
-        <form th:action="@{/cart}" th:object="${cartForm}" method="POST">
-          <input type="hidden" name="productId" th:value="${product.id}" />
-          <input type="hidden" th:field="*{quantity}" th:value="*{quantity}" />
-          <button class="btn btn-warning">Add to cart</button>
-        </form>
+        <th:block sec:authorize="isAuthenticated()"
+          ><form th:action="@{/cart}" th:object="${cartForm}" method="POST">
+            <input type="hidden" name="productId" th:value="${product.id}" />
+            <input
+              type="hidden"
+              th:field="*{quantity}"
+              th:value="*{quantity}"
+            />
+            <button class="btn btn-warning">Add to cart</button>
+          </form></th:block
+        >
+        <th:block sec:authorize="!isAuthenticated()"
+          ><a th:href="@{/login}" class="btn btn-warning">
+            Add to cart
+          </a></th:block
+        >
       </h4>
       <div class="action-product">
         <a class="float-left" href="#">Add to Wish List </a>

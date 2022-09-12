@@ -23,6 +23,7 @@ public interface MultiService {
 
     //Customer
     public Customer findCustomerById(int theId);
+    public Customer findCustomerByEmail(String email);
     public void saveCustomer(Customer theCustomer);
 
     //cart

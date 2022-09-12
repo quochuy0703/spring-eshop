@@ -26,6 +26,7 @@ tbody.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete-button")) {
     const deleteButton = e.target;
     const cartId = deleteButton.dataset.cartid;
+    console.log(cartId);
     const option = {
       method: "PUT",
     };
@@ -86,14 +87,14 @@ tbody.addEventListener("change", (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quantity: textNumber.value, id: cartId }),
     };
-    // fetch("http://localhost:8080/cart/add", option)
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error(`Not found(${res.status}`);
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((json) => console.log(json))
-    //   .catch((err) => console.log);
+    fetch("http://localhost:8080/cart/add", option)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Not found(${res.status}`);
+        }
+        return res.json();
+      })
+      .then((json) => console.log(json))
+      .catch((err) => console.log);
   }
 });

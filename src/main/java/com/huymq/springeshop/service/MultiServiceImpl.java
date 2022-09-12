@@ -153,6 +153,13 @@ public class MultiServiceImpl implements MultiService {
         return productRepository.findProductByType(type, pageable);
     }
 
+    @Override
+    @Transactional
+    public Customer findCustomerByEmail(String email) {
+        
+        return customerRepository.findCustomerByEmail(email);
+    }
+
    
 
     // @Override

@@ -52,13 +52,23 @@
                       th:value="${thisProduct.id}"
                     />
                     <div class="col-6">
-                      <input
-                        type="number"
-                        class="form-control"
-                        th:field="*{quantity}"
-                        th:value="*{quantity}"
-                        placeholder="Qty."
-                      />
+                      <th:block sec:authorize="isAuthenticated()">
+                        <input
+                          type="number"
+                          class="form-control"
+                          th:field="*{quantity}"
+                          th:value="*{quantity}"
+                          placeholder="Qty."
+                        />
+                      </th:block>
+                      <th:block sec:authorize="!isAuthenticated()">
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Qty."
+                          disabled
+                        />
+                      </th:block>
                     </div>
                   </div>
                   <!-- <div class="form-group row">
@@ -99,9 +109,16 @@
                   </p>
 
                   <p>
-                    <button type="submit" class="btn btn-warning">
-                      <span class="icon-shopping-cart"></span> Add to cart
-                    </button>
+                    <th:block sec:authorize="isAuthenticated()">
+                      <button type="submit" class="btn btn-warning">
+                        <span class="icon-shopping-cart"></span> Add to cart
+                      </button>
+                    </th:block>
+                    <th:block sec:authorize="!isAuthenticated()">
+                      <a th:href="@{/login}" class="btn btn-warning">
+                        <span class="icon-shopping-cart"></span> Add to cart
+                      </a>
+                    </th:block>
                   </p>
                 </form>
               </div>

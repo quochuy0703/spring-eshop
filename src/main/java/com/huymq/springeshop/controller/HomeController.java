@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.huymq.springeshop.entity.Cart;
@@ -31,11 +34,16 @@ import com.huymq.springeshop.entity.SunglassesProperty;
 import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
 import com.huymq.springeshop.utils.AddToCartForm;
+import com.huymq.springeshop.utils.CustomAuthentication;
 import com.huymq.springeshop.utils.FilesStorageService;
+import com.huymq.springeshop.utils.MessageResponse;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
+    @Autowired
+    private CustomAuthentication customAuthentication;
 
     @Autowired
     private MultiService multiService;
@@ -44,12 +52,25 @@ public class HomeController {
 
     @GetMapping("")
     public String showHomePage(HttpServletRequest request, Model theModel){
-        Customer theCustomer = (Customer)request.getAttribute("customer");
+        Customer theCustomer = null;
+        Authentication authentication = customAuthentication.getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            theCustomer = multiService.findCustomerByEmail(authentication.getName());
+            double sumCost = 0.0;
+            for(Cart cart: theCustomer.getCarts()){
+                sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            }
+            AddToCartForm cartForm = new AddToCartForm();
+            cartForm.setQuantity(1);
 
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            theModel.addAttribute("user", theCustomer);
+            theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
+            theModel.addAttribute("sumCost", sumCost);
+            theModel.addAttribute("cartForm", cartForm);
         }
+        
+
+        
 
 
         List<Product> theList  = multiService.findAllNewProduct();
@@ -67,17 +88,10 @@ public class HomeController {
             index++;
         }
 
-        AddToCartForm cartForm = new AddToCartForm();
-        cartForm.setQuantity(1);
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("sumCost", sumCost);
+        
         theModel.addAttribute("lists", list);
         theModel.addAttribute("listNew", theList);
-        theModel.addAttribute("cartForm", cartForm);
-
-
+        
 
         return "home";
     }
@@ -85,13 +99,24 @@ public class HomeController {
 
     @GetMapping("/list-view")
     public String showListViewPage(HttpServletRequest request, Model theModel){
-        Customer theCustomer = (Customer)request.getAttribute("customer");
+        Customer theCustomer = null;
+        Authentication authentication = customAuthentication.getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            theCustomer = multiService.findCustomerByEmail(authentication.getName());
+            double sumCost = 0.0;
+            for(Cart cart: theCustomer.getCarts()){
+                sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            }
+            AddToCartForm cartForm = new AddToCartForm();
+            cartForm.setQuantity(1);
 
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            theModel.addAttribute("user", theCustomer);
+            theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
+            theModel.addAttribute("sumCost", sumCost);
+            theModel.addAttribute("cartForm", cartForm);
         }
 
+       
 
         List<Product> theList  = multiService.findAllNewProduct();
 
@@ -108,17 +133,9 @@ public class HomeController {
             index++;
         }
 
-        AddToCartForm cartForm = new AddToCartForm();
-        cartForm.setQuantity(1);
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("sumCost", sumCost);
+    
         theModel.addAttribute("lists", list);
         theModel.addAttribute("listNew", theList);
-        theModel.addAttribute("cartForm", cartForm);
-
-
 
         return "four-col";
     }
@@ -126,10 +143,20 @@ public class HomeController {
     @GetMapping("/products/{productId}")
     public String showDetailPage(@PathVariable("productId") int theId,Model theModel,HttpServletRequest request){
 
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+        Customer theCustomer = null;
+        Authentication authentication = customAuthentication.getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            theCustomer = multiService.findCustomerByEmail(authentication.getName());
+            double sumCost = 0.0;
+            for(Cart cart: theCustomer.getCarts()){
+                sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            }
+            
+
+            theModel.addAttribute("user", theCustomer);
+            theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
+            theModel.addAttribute("sumCost", sumCost);
+            
         }
 
 
@@ -141,19 +168,12 @@ public class HomeController {
         Page<Product> theList  = multiService.findProductByType(thisProduct.getProductType(), PageRequest.of(0, 3));
         
         
-
-
         AddToCartForm cartForm = new AddToCartForm();
-        cartForm.setQuantity(1);
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("sumCost", sumCost);
+            cartForm.setQuantity(1);
+        
         theModel.addAttribute("thisProduct", thisProduct);
-        theModel.addAttribute("cartForm", cartForm);
-        // theModel.addAttribute("thisProductProperty",thisProduct.getProductProperty());
-
         theModel.addAttribute("listNew", theList.getContent());
+        theModel.addAttribute("cartForm", cartForm);
 
 
 
@@ -165,11 +185,21 @@ public class HomeController {
 
     @GetMapping("/products/type/{type}")
     public String showWatchesPage(@PathVariable("type") char type,HttpServletRequest request, Model theModel){
-        Customer theCustomer = (Customer)request.getAttribute("customer");
+        Customer theCustomer = null;
+        Authentication authentication = customAuthentication.getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            theCustomer = multiService.findCustomerByEmail(authentication.getName());
+            double sumCost = 0.0;
+            for(Cart cart: theCustomer.getCarts()){
+                sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            }
+            AddToCartForm cartForm = new AddToCartForm();
+            cartForm.setQuantity(1);
 
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            theModel.addAttribute("user", theCustomer);
+            theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
+            theModel.addAttribute("sumCost", sumCost);
+            theModel.addAttribute("cartForm", cartForm);
         }
 
 
@@ -189,15 +219,10 @@ public class HomeController {
         //     index++;
         // }
 
-        AddToCartForm cartForm = new AddToCartForm();
-        cartForm.setQuantity(1);
-
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("sumCost", sumCost);
+       
         // theModel.addAttribute("lists", list);
         theModel.addAttribute("listNew", theList.getContent());
-        theModel.addAttribute("cartForm", cartForm);
+
 
 
         return "show-type";
@@ -206,19 +231,23 @@ public class HomeController {
 
     @GetMapping("/register")
     public String showRegisterPage(HttpServletRequest request, Model theModel){
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
-        }
-
+       
         List<Product> theList  = multiService.findAllNewProduct();
 
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
         theModel.addAttribute("listNew", theList);
-        theModel.addAttribute("sumCost", sumCost);
+     
         return "registration";
+    }
+
+    @GetMapping("/api/rest")
+    @ResponseBody
+    public ResponseEntity<MessageResponse> getMessage(){
+        MessageResponse message = new MessageResponse();
+        message.setMessage("Hello Client");
+        message.setStatus(HttpStatus.OK.value());
+        message.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
     }
 
 

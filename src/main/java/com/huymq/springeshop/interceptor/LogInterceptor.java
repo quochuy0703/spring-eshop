@@ -16,8 +16,8 @@ import com.huymq.springeshop.service.MultiService;
 @Component
 public class LogInterceptor implements HandlerInterceptor  {
 
-    @Autowired
-    private MultiService multiService;
+    // @Autowired
+    // private MultiService multiService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -31,9 +31,9 @@ public class LogInterceptor implements HandlerInterceptor  {
         
                 request.setAttribute("startTime", startTime);
 
-                Customer theUser = multiService.findCustomerById(1);
+                // Customer theUser = multiService.findCustomerById(1);
 
-                request.setAttribute("customer", theUser);
+                // request.setAttribute("customer", theUser);
                 
 
                 return true;

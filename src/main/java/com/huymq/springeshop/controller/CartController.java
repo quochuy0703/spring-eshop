@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,7 @@ import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
 import com.huymq.springeshop.utils.AddToCartForm;
 import com.huymq.springeshop.utils.FilesStorageService;
+import com.huymq.springeshop.utils.ICustomAuthentication;
 import com.huymq.springeshop.utils.MessageResponse;
 
 @Controller
@@ -40,18 +43,28 @@ public class CartController {
     @Autowired
     private MultiService multiService;
 
+    @Autowired
+    private ICustomAuthentication customAuthentication;
+
     @GetMapping("")
     public String showCart(HttpServletRequest request, Model theModel){
 
-        Customer theCustomer = (Customer)request.getAttribute("customer");
-        double sumCost = 0.0;
-        for(Cart cart: theCustomer.getCarts()){
-            sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+        Customer theCustomer = null;
+        Authentication authentication = customAuthentication.getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            theCustomer = multiService.findCustomerByEmail(authentication.getName());
+            double sumCost = 0.0;
+            for(Cart cart: theCustomer.getCarts()){
+                sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            }
+
+            theModel.addAttribute("user", theCustomer);
+            theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
+            theModel.addAttribute("sumCost", sumCost);
+
         }
 
-        theModel.addAttribute("user", theCustomer);
-        theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
-        theModel.addAttribute("sumCost", sumCost);
+
         return "cart";
     }
 
@@ -59,7 +72,8 @@ public class CartController {
     @PostMapping("")
     public String processCart(@ModelAttribute("cartForm") AddToCartForm cartForm,HttpServletRequest request, Model theModel){
 
-        Customer theCustomer = (Customer)request.getAttribute("customer");
+        Authentication authentication = customAuthentication.getAuthentication();
+        Customer theCustomer = multiService.findCustomerByEmail(authentication.getName());
         double sumCost = 0.0;
         for(Cart cart: theCustomer.getCarts()){
             sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
