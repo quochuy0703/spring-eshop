@@ -24,7 +24,7 @@
           <strong> Support (24/7) : 0800 1234 678 </strong><br />
         </p>
         <span
-          sec:authorize="isAuthenticated()"
+          sec:authorize="hasAuthority('USER')"
           class="btn btn-secondary btn-sm"
           th:text="${'[ '+#lists.size(user.carts)+' ]'}"
           >[ 2 ] <span class="icon-shopping-cart"></span

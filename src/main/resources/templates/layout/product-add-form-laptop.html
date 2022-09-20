@@ -1,0 +1,509 @@
+<th:block th:fragment="laptop-property(productForm, modeEdit,thisProduct)">
+  <form
+    th:action="${modeEdit? '/admin/product/edit' : '/admin/product/add'}"
+    method="POST"
+    th:object="${productForm}"
+    enctype="multipart/form-data"
+  >
+    <div class="card card-body">
+      <h3>Product Details</h3>
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Type <sup>*</sup></label>
+        </div>
+        <th:block th:with="typeTemp=${'L'}"
+          ><div class="col-4">
+            <input type="text" class="form-control" value="Laptop" disabled />
+            <input
+              type="hidden"
+              class="form-control"
+              th:field="*{uuid}"
+              th:value="*{uuid}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              th:field="*{imageUrl}"
+              th:value="*{imageUrl}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              name="productType"
+              id="productType"
+              th:value="${typeTemp}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              name="type"
+              id="type"
+              th:value="${typeTemp}"
+            /></div</th:block>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Product Name <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{name}"
+                placeholder="First Name"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Description <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <textarea
+                class="form-control"
+                rows="5"
+                th:field="*{description}"
+                placeholder="Description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Price<sup>*</sup></label>
+            </div>
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{price}"
+                th:value="*{price}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Item in Stock<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{itemInStock}"
+                th:value="*{itemInStock}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Model<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{model}"
+                th:value="*{model}"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Year Release<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Screen Size<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                th:field="*{screenSize}"
+                th:value="*{screenSize}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Screen Resolution<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                th:field="*{screenResolution}"
+                th:value="*{screenResolution}"
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Touch Screen<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Hybrid display<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Warranty<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="warranty" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ---------------------------- -->
+    <div class="card card-body">
+      <h3>Processor</h3>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Processor brand<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="processorBrand" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Processor type <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{processorType}"
+                th:value="*{processorType}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Processor cores <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{processorCore}"
+                th:value="*{processorCore}"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Processor Speed <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{processorSpeed}"
+                th:value="*{processorSpeed}"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Processor Cache <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{processorCache}"
+                th:value="*{processorCache}"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+    </div>
+    <!-- ------------------------ -->
+    <div class="card card-body">
+      <h3>Ram & Storage</h3>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Ram size <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandMaterial" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Ram type <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandType" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Ram bus <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" id="bandColor" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Max size ram <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" id="bandColor" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Storage type<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandLength" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Storage size<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandWidth" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Storage description<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandWidth" />
+            </div>
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+    </div>
+    <!-- --------------------------- -->
+    <div class="card card-body">
+      <h3>Graphic, audio, input and output</h3>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Graphic card type <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandMaterial" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Graphic card name <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandType" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right"
+                >Graphic card memory size <sup>*</sup></label
+              >
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" id="bandColor" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Audio <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" id="bandColor" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Port<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandLength" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Card Reader<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandWidth" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Webcam<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandWidth" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Bluetooth<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandWidth" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">wifi<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" name="bandWidth" />
+            </div>
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+    </div>
+    <!-- --------------------------- -->
+    <div class="card card-body">
+      <h3>Image</h3>
+
+      <div class="row">
+        <div class="form-group row">
+          <div class="col-4">
+            <label class="float-right">Image <sup>*</sup></label>
+          </div>
+
+          <div class="col-8">
+            <input
+              class="form-control"
+              type="file"
+              id="fileUpload"
+              name="files"
+              multiple
+            />
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+      <div class="row border my-2" id="imageHolder">
+        <div><h4>Image will upload</h4></div>
+        <!-- ----------------- -->
+      </div>
+      <th:block th:if="${modeEdit}">
+        <div class="row border" id="imageIsUploaded">
+          <div class="col-12"><div class="row"><h4>Image on cloud</h4></div>
+          <div class="row">
+            <th:block th:each="img, stat: *{imageOnClouds}">
+              <div class="col-2 thumbnail">
+                <input
+                  type="hidden"
+                  th:field="*{imageOnClouds[__${stat.index}__].id}"
+                />
+                <input
+                  type="hidden"
+                  th:field="*{imageOnClouds[__${stat.index}__].imageUrl}"
+                />
+                <i
+                  class="close-tool fa-solid fa-trash"
+                  th:attr="data-image_id=${img.id}"
+                ></i>
+                <img
+                  th:src="@{${img.imageUrl}}"
+                  style="width: 100%; min-height: 100%"
+                />
+              </div>
+            </th:block>
+          </div></div>
+          
+        </div>
+      </th:block>
+    </div>
+    <!-- --------------------------- -->
+
+    <div class="control-group">
+      <div class="controls">
+        <button
+          type="submit"
+          th:text="${modeEdit? 'Update Product' : 'Add Product'}"
+          class="btn btn-primary"
+        ></button>
+      </div>
+    </div>
+  </form>
+</th:block>

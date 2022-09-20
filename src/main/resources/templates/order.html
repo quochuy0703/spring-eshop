@@ -15,12 +15,12 @@
             <h4 th:text="${'ĐƠN HÀNG: '+ thisOrder.id}">ĐƠN HÀNG: #58456904</h4>
 
             <p
-              th:text="${'Người nhận hàng: '+ thisOrder.orderAddress.firstName + ' '+ thisOrder.orderAddress.lastName+ ', ' +thisOrder.orderAddress.phone}"
+              th:text="${'Người nhận hàng: '+ thisOrder.orderItems[0].firstName + ' '+ thisOrder.orderItems[0].lastName+ ', ' +thisOrder.orderItems[0].phone}"
             >
               Anh Dgdfgdsg442, 0778845715
             </p>
             <p
-              th:text="${'Giao đến: '+ thisOrder.orderAddress.address + ' '+ thisOrder.orderAddress.city}+ ', ' + thisOrder.orderAddress.state"
+              th:text="${'Giao đến: '+ thisOrder.orderItems[0].address + ' '+ thisOrder.orderItems[0].city + ', ' + thisOrder.orderItems[0].state}"
             >
               Giao đến: ffsfs, Phường 15, Quận Bình Thạnh, Hồ Chí Minh (nhân
               viên sẽ gọi xác nhận trước khi giao).

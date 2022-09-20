@@ -1,0 +1,36 @@
+<th:block th:fragment="address(user)">
+  <th:block th:each="address: ${user.addresses}">
+    <div>
+      <div class="row my-2">
+        <div class="col-6">
+          <span
+            class="border-right pr-2 mr-2"
+            th:text="${user.firstName + ' ' + user.lastName}"
+            >Mai quoc Huy</span
+          ><span th:text="${user.phone}">21314242342</span>
+        </div>
+        <div class="col-6"><a href="#" class="float-right">Cap nhat</a></div>
+      </div>
+      <div class="row my-2">
+        <div class="col-6">
+          <span th:text="${address.address+','+address.city+','+address.state}"
+            >738/39, hẻm 738 Phạm Văn Thuận Phường Tam Hiệp, Thành Phố Biên Hòa,
+            Đồng Nai</span
+          >
+        </div>
+        <div class="col-6">
+          <span href="#" class="float-right p-1 border"
+            >Thiet lap mac dinh</span
+          >
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-6">
+          <span class="border p-1 border-danger">Mac dinh</span>
+        </div>
+        <div class="col-6"></div>
+      </div>
+    </div>
+    <hr />
+  </th:block>
+</th:block>

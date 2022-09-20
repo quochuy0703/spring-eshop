@@ -33,6 +33,9 @@ public class Customer implements Serializable {
     @Column(name="email")
     private String email;
 
+    @Column(name="phone")
+    private String phone;
+
 
     @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Cart> carts = new ArrayList<>();
@@ -43,6 +46,15 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Address> addresses = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Review> reviews = new ArrayList<>();
+
+
+    public void addReview(Review review){
+        reviews.add(review);
+        review.setCustomer(this);
+    }
 
     public void addCart(Cart cart){
         carts.add(cart);
@@ -124,6 +136,22 @@ public class Customer implements Serializable {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     

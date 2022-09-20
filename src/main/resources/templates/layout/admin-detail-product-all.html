@@ -1,0 +1,10 @@
+<th:block th:fragment="all"
+  ><div class="card card-body d-flex flex-row flex-wrap">
+    <th:block th:each="product : ${list}">
+      <div class="col-4">
+        <th:block
+          th:replace="layout/product-card-admin::product-card(${product})"
+        ></th:block>
+      </div>
+    </th:block></div
+></th:block>

@@ -30,7 +30,8 @@ public class SecurityConfig {
     SecurityFilterChain FilterChain(HttpSecurity http) throws Exception{
         http.csrf().disable();
         http.authorizeRequests()
-        .antMatchers("/cart").authenticated()
+        .antMatchers("/cart/**","/account/**").authenticated()
+        .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
         .anyRequest().permitAll()
         .and().formLogin().usernameParameter("email").passwordParameter("password").permitAll()
         .and().logout().permitAll();
@@ -40,6 +41,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/css/**","/webjars/**");
+        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/css/**","/webjars/**","/uploads/**");
     }
 }

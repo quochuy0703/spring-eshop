@@ -1,7 +1,10 @@
 package com.huymq.springeshop.utils;
 
+import java.util.UUID;
+
 public class AddToCartForm {
     private int productId;
+    private UUID uuid;
     private int quantity;
 
     
@@ -18,6 +21,12 @@ public class AddToCartForm {
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    public UUID getUuid() {
+        return uuid;
+    }
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     

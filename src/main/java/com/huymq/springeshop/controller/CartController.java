@@ -80,7 +80,7 @@ public class CartController {
         }
 
 
-        Product product = multiService.findProductById(cartForm.getProductId());
+        Product product = multiService.findProductByUUID(cartForm.getUuid());
         if(product == null){
             return null;
         }
@@ -92,7 +92,7 @@ public class CartController {
 
         
         for(Cart cart : theCustomer.getCarts()){
-            if(cart.getProduct().getId() == cartForm.getProductId()){
+            if(cart.getProduct().getUuid().equals(cartForm.getUuid()) ){
 
                 cart.setQuantity(cart.getQuantity()+cartForm.getQuantity());
                 multiService.saveCustomer(theCustomer);

@@ -1,11 +1,17 @@
 package com.huymq.springeshop.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="user_login")
@@ -21,6 +27,19 @@ public class UserLogin {
 
     @Column(name="password")
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+        name="users_roles",
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns =  @JoinColumn(name="role_id")
+    )
+    Set<Role> roles = new HashSet<>();
+
+    private void addRole(Role role){
+        roles.add(role);
+    }
+
 
     public UserLogin() {
     }
@@ -52,6 +71,16 @@ public class UserLogin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     

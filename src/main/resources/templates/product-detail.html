@@ -48,8 +48,8 @@
                     >
                     <input
                       type="hidden"
-                      name="productId"
-                      th:value="${thisProduct.id}"
+                      name="uuid"
+                      th:value="${thisProduct.uuid}"
                     />
                     <div class="col-6">
                       <th:block sec:authorize="isAuthenticated()">
@@ -126,7 +126,7 @@
             <hr />
             <!-- ----------------------------- -->
             <div class="row p-4">
-              <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+              <ul class="col-12 nav nav-tabs" id="nav-tab" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#nav-home"
                     >Product Details</a
@@ -138,8 +138,9 @@
                   >
                 </li>
               </ul>
-
-              <div class="tab-content">
+            </div>
+            <div class="row p-4">
+              <div class="col-12 tab-content">
                 <div class="tab-pane fade show active" id="nav-home">
                   <div class="">
                     <h4>Product Information</h4>
@@ -200,6 +201,13 @@
                         </tbody>
                       </th:block>
                       <th:block
+                        th:if="${#strings.equals(thisProduct.productProperty.type, 'L')}"
+                      >
+                        <th:block
+                          th:replace="layout/product-detail-laptop::laptop(${thisProduct})"
+                        ></th:block>
+                      </th:block>
+                      <th:block
                         th:if="${#strings.equals(thisProduct.productProperty.type, 'S')}"
                       >
                         <tbody>
@@ -247,6 +255,8 @@
                         </tbody>
                       </th:block>
                     </table>
+                    <hr />
+                    <h4>Product Description</h4>
                     <p th:text="${thisProduct.description}">
                       Raw denim you probably haven't heard of them jean shorts
                       Austin. Nesciunt tofu stumptown aliqua, retro synth master
@@ -274,12 +284,114 @@
               </div>
               <!-- ------------------------------ -->
             </div>
+            <hr />
+            <div>
+              <th:block th:switch="${#lists.size(thisProduct.reviews) == 0}">
+                <th:block th:case="${true}"
+                  ><div class="p-3 border-bottom">
+                    <p>
+                      <strong
+                        >Hãy đánh giá sản phẩm để giúp những khách hàng khác
+                        chọn được sản phẩm tốt nhất!
+                      </strong>
+                    </p>
+                    <p>
+                      Bạn cảm thấy sản phẩm này như thế nào?
+
+                      <span
+                        ><a
+                          class="btn btn-primary"
+                          data-toggle="modal"
+                          data-target="#input-review"
+                          >Viet danh gia</a
+                        ></span
+                      >
+                    </p>
+                  </div></th:block
+                >
+                <th:block th:case="${false}">
+                  <div class="border-bottom">
+                    <h4 th:text="${'Reviews '+ thisProduct.name}">Reviews</h4>
+                    <hr />
+                    <div class="border-right" style="width: 35%">
+                      <h4 class="text-warning">
+                        <span th:text="${avgStar}">4</span>
+                        <th:block
+                          th:each="count: ${#numbers.sequence(1,avgStar)}"
+                        >
+                          <i class="fa-solid fa-star text-warning"></i>
+                        </th:block>
+                        <th:block
+                          th:each="count: ${#numbers.sequence(avgStar+1,5)}"
+                        >
+                          <i class="fa-regular fa-star text-warning"></i>
+                        </th:block>
+                        <span
+                          class="small mx-3"
+                          style="color: black"
+                          th:text="${#lists.size(thisProduct.reviews) + ' danh gia'}"
+                        ></span>
+                      </h4>
+                      <p>
+                        5 <i class="fa-solid fa-star text-warning"></i>:
+                        <span th:text="${thisProduct.starOne}">0</span> users
+                      </p>
+                      <p>
+                        4 <i class="fa-solid fa-star text-warning"></i>:
+                        <span th:text="${thisProduct.starTwo}">0</span> users
+                      </p>
+                      <p>
+                        3 <i class="fa-solid fa-star text-warning"></i>:
+                        <span th:text="${thisProduct.starThree}">0</span> users
+                      </p>
+                      <p>
+                        2 <i class="fa-solid fa-star text-warning"></i>:
+                        <span th:text="${thisProduct.starFour}">0</span> users
+                      </p>
+                      <p>
+                        1 <i class="fa-solid fa-star text-warning"></i>:
+                        <span th:text="${thisProduct.starFive}">0</span> users
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <th:block th:each="review: ${thisProduct.reviews}">
+                      <th:block
+                        th:replace="layout/product-detail-review::review(${review})"
+                      ></th:block>
+                    </th:block>
+                  </div>
+                  <div class="d-flex">
+                    <div class="w-50 p-2">
+                      <button
+                        class="btn btn-primary w-100"
+                        data-toggle="modal"
+                        data-target="#input-review"
+                      >
+                        Viet danh gia
+                      </button>
+                    </div>
+                    <div class="w-50 p-2">
+                      <button class="btn btn-primary w-100">
+                        Xem danh gia
+                      </button>
+                    </div>
+                  </div>
+                </th:block>
+              </th:block>
+            </div>
           </div>
 
           <!-- --------------------------------------------- -->
 
           <!-- ------------------------------------ -->
         </div>
+
+        <th:block sec:authorize="isAuthenticated()">
+          <th:block
+            th:replace="layout/product-detail-modal-review::modal(${reviewForm})"
+          ></th:block>
+        </th:block>
       </div>
 
       <!-- ---------------------------------- -->
@@ -297,5 +409,7 @@ Clients
     <!-- Copyright -->
     <div th:replace="layout/copyright::copyright"></div>
     <!-- Copyright -->
+
+    <script th:src="@{/js/product-detail.js}"></script>
   </body>
 </html>

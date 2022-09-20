@@ -3,6 +3,7 @@ package com.huymq.springeshop.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.criteria.Fetch;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -29,6 +32,10 @@ public class Product implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
+
+    @Column(name="uuid")
+    @Type(type="uuid-char")
+    private UUID uuid;
 
     @Column(name="name")
     private String name;
@@ -65,23 +72,21 @@ public class Product implements Serializable{
     @Column(name="count_sale")
     private int countSale;
 
+    @Column(name="star_1")
+    private int starOne;
 
+    @Column(name="star_2")
+    private int starTwo;
 
-    public int getCountSeen() {
-        return countSeen;
-    }
+    @Column(name="star_3")
+    private int starThree;
 
-    public void setCountSeen(int countSeen) {
-        this.countSeen = countSeen;
-    }
+    @Column(name="star_4")
+    private int starFour;
 
-    public int getCountSale() {
-        return countSale;
-    }
+    @Column(name="star_5")
+    private int starFive;
 
-    public void setCountSale(int countSale) {
-        this.countSale = countSale;
-    }
 
     //orphanRemoval de co the remove element trong list image
     //@JsonManagedReference duoc dung khi: Infinite Recursion with Jackson JSON and Hibernate JPA issue
@@ -98,9 +103,18 @@ public class Product implements Serializable{
     @OneToMany(mappedBy = "product",orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
+
+
     public void addImage(Image image){
         images.add(image);
         image.setProduct(this);
+    }
+
+    public void addReview(Review review){
+        reviews.add(review);
+        review.setProduct(this);
     }
 
     public void addOrderItem(OrderItem orderItem){
@@ -224,6 +238,82 @@ public class Product implements Serializable{
         this.orderItems = orderItems;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public int getCountSeen() {
+        return countSeen;
+    }
+
+    public void setCountSeen(int countSeen) {
+        this.countSeen = countSeen;
+    }
+
+    public int getCountSale() {
+        return countSale;
+    }
+
+    public void setCountSale(int countSale) {
+        this.countSale = countSale;
+    }
+
+    public int getStarOne() {
+        return starOne;
+    }
+
+    public void setStarOne(int starOne) {
+        this.starOne = starOne;
+    }
+
+    public int getStarTwo() {
+        return starTwo;
+    }
+
+    public void setStarTwo(int starTwo) {
+        this.starTwo = starTwo;
+    }
+
+    public int getStarThree() {
+        return starThree;
+    }
+
+    public void setStarThree(int starThree) {
+        this.starThree = starThree;
+    }
+
+    public int getStarFour() {
+        return starFour;
+    }
+
+    public void setStarFour(int starFour) {
+        this.starFour = starFour;
+    }
+
+    public int getStarFive() {
+        return starFive;
+    }
+
+    public void setStarFive(int starFive) {
+        this.starFive = starFive;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    
+
+
+    
     
 
 }

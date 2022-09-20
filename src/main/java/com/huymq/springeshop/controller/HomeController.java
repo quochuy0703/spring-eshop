@@ -3,6 +3,7 @@ package com.huymq.springeshop.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +31,7 @@ import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Image;
 import com.huymq.springeshop.entity.Product;
 import com.huymq.springeshop.entity.ProductForm;
+import com.huymq.springeshop.entity.Review;
 import com.huymq.springeshop.entity.SunglassesProperty;
 import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
@@ -37,6 +39,7 @@ import com.huymq.springeshop.utils.AddToCartForm;
 import com.huymq.springeshop.utils.CustomAuthentication;
 import com.huymq.springeshop.utils.FilesStorageService;
 import com.huymq.springeshop.utils.MessageResponse;
+import com.huymq.springeshop.utils.ReviewForm;
 
 @Controller
 @RequestMapping("/")
@@ -47,8 +50,7 @@ public class HomeController {
 
     @Autowired
     private MultiService multiService;
-    @Autowired
-    private FilesStorageService storageService;
+    
 
     @GetMapping("")
     public String showHomePage(HttpServletRequest request, Model theModel){
@@ -70,10 +72,13 @@ public class HomeController {
         }
         
 
+      
         
 
 
         List<Product> theList  = multiService.findAllNewProduct();
+        List<Product> listTop3CountSale = multiService.findProductsTop3ByOrderByCountSaleDesc();
+        List<Product> listTop3CountSeen = multiService.findProductsTop3ByOrderByCountSeenDesc();
 
         List<List<Product>> list = new ArrayList<>();
 
@@ -91,6 +96,8 @@ public class HomeController {
         
         theModel.addAttribute("lists", list);
         theModel.addAttribute("listNew", theList);
+        theModel.addAttribute("listTop3CountSale", listTop3CountSale);
+        theModel.addAttribute("listTop3CountSeen", listTop3CountSeen);
         
 
         return "home";
@@ -107,6 +114,7 @@ public class HomeController {
             for(Cart cart: theCustomer.getCarts()){
                 sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
             }
+            
             AddToCartForm cartForm = new AddToCartForm();
             cartForm.setQuantity(1);
 
@@ -141,40 +149,64 @@ public class HomeController {
     }
 
     @GetMapping("/products/{productId}")
-    public String showDetailPage(@PathVariable("productId") int theId,Model theModel,HttpServletRequest request){
+    public String showDetailPage(@PathVariable("productId") UUID theId,Model theModel,HttpServletRequest request){
 
         Customer theCustomer = null;
         Authentication authentication = customAuthentication.getAuthentication();
+
+
+        Product thisProduct = multiService.findProductByUUID(theId);
+        System.out.println(thisProduct);
+        thisProduct.setCountSeen(thisProduct.getCountSeen()+1);
+        multiService.saveProduct(thisProduct);
+
+
+
         if(!(authentication instanceof AnonymousAuthenticationToken)){
             theCustomer = multiService.findCustomerByEmail(authentication.getName());
             double sumCost = 0.0;
             for(Cart cart: theCustomer.getCarts()){
                 sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
             }
-            
+
+            ReviewForm reviewForm = new ReviewForm();
+            reviewForm.setProductId(thisProduct.getId());
+            reviewForm.setStar(3);
 
             theModel.addAttribute("user", theCustomer);
             theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
             theModel.addAttribute("sumCost", sumCost);
+            theModel.addAttribute("reviewForm", reviewForm);
             
         }
 
 
 
-        Product thisProduct = multiService.findProductById(theId);
-        thisProduct.setCountSeen(thisProduct.getCountSeen()+1);
-        multiService.saveProduct(thisProduct);
+        
 
         Page<Product> theList  = multiService.findProductByType(thisProduct.getProductType(), PageRequest.of(0, 3));
         
         
         AddToCartForm cartForm = new AddToCartForm();
-            cartForm.setQuantity(1);
-        
+        cartForm.setQuantity(1);
+
+        int avgStar = 0;
+
+        if(thisProduct.getReviews().size() != 0){
+            avgStar = (thisProduct.getStarOne()*1+thisProduct.getStarTwo()*2+
+                    thisProduct.getStarThree()*4+thisProduct.getStarFour()*4+
+                    thisProduct.getStarFive()*5)/thisProduct.getReviews().size();
+        }
+
+
+       
+
+
         theModel.addAttribute("thisProduct", thisProduct);
         theModel.addAttribute("listNew", theList.getContent());
         theModel.addAttribute("cartForm", cartForm);
-
+        theModel.addAttribute("avgStar", avgStar);
+        
 
 
 
@@ -250,5 +282,72 @@ public class HomeController {
         return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
     }
 
+    @PostMapping("/products/review/add")
+    public String processAddReview(@ModelAttribute("reviewForm") ReviewForm reviewForm,Model theModel,HttpServletRequest request){
+
+        Customer theCustomer = null;
+        Authentication authentication = customAuthentication.getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            theCustomer = multiService.findCustomerByEmail(authentication.getName());
+            double sumCost = 0.0;
+            for(Cart cart: theCustomer.getCarts()){
+                sumCost = cart.getQuantity()*cart.getProduct().getPrice() + sumCost;
+            }
+
+
+            
+
+            theModel.addAttribute("user", theCustomer);
+            theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
+            theModel.addAttribute("sumCost", sumCost);
+        
+            
+        }
+
+
+        System.out.println("review "+reviewForm.getProductId());
+
+        Product thisProduct = multiService.findProductById(reviewForm.getProductId());
+
+        Review review = new Review();
+        review.setContent(reviewForm.getContent());
+        review.setStar(reviewForm.getStar());
+        switch(reviewForm.getStar()){
+            case 1:
+                thisProduct.setStarOne(thisProduct.getStarOne()+1);
+                break;
+            case 2:
+                thisProduct.setStarTwo(thisProduct.getStarTwo()+1);
+                break;
+            case 3:
+                thisProduct.setStarThree(thisProduct.getStarThree()+1);
+                break;
+            case 4:
+                thisProduct.setStarFour(thisProduct.getStarFour()+1);
+                break;
+            case 5:
+                thisProduct.setStarFive(thisProduct.getStarFive()+1);
+                break;
+   
+            
+        }
+
+    
+        thisProduct.addReview(review);
+        theCustomer.addReview(review);
+        multiService.saveProduct(thisProduct);
+
+        Page<Product> theList  = multiService.findProductByType(thisProduct.getProductType(), PageRequest.of(0, 3));
+        
+        
+        AddToCartForm cartForm = new AddToCartForm();
+            cartForm.setQuantity(1);
+        
+        theModel.addAttribute("thisProduct", thisProduct);
+        theModel.addAttribute("listNew", theList.getContent());
+        theModel.addAttribute("cartForm", cartForm);
+
+        return "redirect:/products/"+thisProduct.getId();
+    }
 
 }

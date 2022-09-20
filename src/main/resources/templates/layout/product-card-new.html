@@ -17,7 +17,7 @@
       <h4 class="m-0">
         <th:block sec:authorize="isAuthenticated()"
           ><form th:action="@{/cart}" th:object="${cartForm}" method="POST">
-            <input type="hidden" name="productId" th:value="${product.id}" />
+            <input type="hidden" name="uuid" th:value="${product.uuid}" />
             <input
               type="hidden"
               th:field="*{quantity}"

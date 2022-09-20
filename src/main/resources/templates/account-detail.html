@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row">
+        <div th:replace="layout/left-side-menu-static::left"></div>
+        <div class="col-9">
+          <div class="card card-body" id="card-wrapper">
+            <th:block th:if="${path =='profile'}"
+              ><th:block
+                th:replace="layout/account-detail-menu::profile(${user})"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${path == 'address'}"
+              ><th:block
+                th:replace="layout/account-detail-menu::address(${user})"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${path =='password'}"
+              ><th:block
+                th:replace="layout/account-detail-menu::password(${passwordForm})"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${path =='order'}">
+              <th:block
+                th:replace="layout/account-detail-product-card-order::product-card(${user.orders})"
+              ></th:block>
+            </th:block>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+    <script th:src="@{/js/account-detail.js}"></script>
+  </body>
+</html>

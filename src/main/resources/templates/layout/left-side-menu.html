@@ -1,0 +1,144 @@
+<div th:fragment="left" class="col-3">
+  <div class="card card-body">
+    <!-- <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          data-toggle="pill"
+          href="#v-pills-home"
+          aria-current="page"
+        >
+          <i class="fa fa-home"></i><span class="ms-2">Home</span>
+        </a>
+      </li>
+      
+      <li>
+        <a class="nav-link" data-toggle="collapse" href="#collapseExample">
+          <i class="fa fa-dashboard"></i><span class="ms-2">Dashboard</span>
+          
+          
+        </a>
+      </li>
+      <div class="collapse" id="collapseExample">
+        <ul class="nav nav-pills flex-column mb-auto"><li>
+            <a class="nav-link active" data-toggle="pill" href="#v-pills-one">
+              </i><span class="ms-2">one</span>
+            </a>
+          </li>
+         
+          <li>
+            <a class="nav-link" data-toggle="pill" href="#v-pills-two">
+             </i><span class="ms-2">two</span>
+            </a>
+          </li></ul>
+        
+            
+        
+      </div>
+    
+      <li>
+        <a class="nav-link" data-toggle="pill" href="#v-pills-messages">
+          <i class="fa fa-first-order"></i><span class="ms-2">My Orders</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" data-toggle="pill" href="#v-pills-settings">
+          <i class="fa fa-cog"></i><span class="ms-2">Settings</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link">
+          <i class="fa fa-bookmark"></i><span class="ms-2">Bookmarks</span>
+        </a>
+      </li>
+    </ul> -->
+    <div class="d-flex flex-column flex-shrink-0 p-3">
+      <a
+        href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none"
+      >
+        <i class="fa fa-home"></i>
+        <span class="fs-4">Sidebar</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto" id="side-menu">
+        <li>
+          <a
+            class="nav-link active tab-panel tab-panel-main"
+            data-toggle="collapse"
+            data-id="1"
+            href="#collapseExample"
+          >
+            <i class="fa fa-home"></i>
+            <span class="mx-2">My Account</span>
+          </a>
+        </li>
+        <div class="collapse" id="collapseExample" data-id="1">
+          <li>
+            <a th:href="@{/account}" class="nav-link tab-panel tab-panel-sub">
+              <i class="fa fa-home invisible"></i>
+              <span class="mx-2">Profile</span>
+            </a>
+          </li>
+          <li>
+            <a
+              th:href="@{/account/address}"
+              class="nav-link tab-panel tab-panel-sub"
+            >
+              <i class="fa fa-home invisible"></i>
+              <span class="mx-2">Address</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link tab-panel tab-panel-sub">
+              <i class="fa fa-home invisible"></i>
+              <span class="mx-2">Password</span>
+            </a>
+          </li>
+        </div>
+
+        <li>
+          <a
+            th:href="@{/account/orders}"
+            class="nav-link tab-panel tab-panel-main"
+          >
+            <i class="fa fa-home"></i>
+            <span class="mx-2">Order</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="nav-link tab-panel tab-panel-main"
+            data-toggle="collapse"
+            data-id="3"
+            href="#collapseExample2"
+          >
+            <i class="fa fa-home"></i>
+            <span class="mx-2">Notification</span>
+          </a>
+        </li>
+        <div class="collapse" id="collapseExample2" data-id="3">
+          <li>
+            <a href="#" class="nav-link tab-panel tab-panel-sub">
+              <i class="fa fa-home invisible"></i>
+              <span class="mx-2">Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link tab-panel tab-panel-sub">
+              <i class="fa fa-home invisible"></i>
+              <span class="mx-2">Address</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link tab-panel tab-panel-sub">
+              <i class="fa fa-home invisible"></i>
+              <span class="mx-2">Password</span>
+            </a>
+          </li>
+        </div>
+      </ul>
+      <hr />
+    </div>
+  </div>
+</div>

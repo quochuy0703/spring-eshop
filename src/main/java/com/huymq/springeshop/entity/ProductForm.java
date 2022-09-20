@@ -1,12 +1,17 @@
 package com.huymq.springeshop.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ProductForm {
     private int id;
+    private UUID uuid;
     private int productPropertyId;
 
     private String name;
+
+    
 
     private String description;
 
@@ -24,11 +29,14 @@ public class ProductForm {
 
     private char productType;
 
+    private List<Image> images = new ArrayList<>();
+    private List<Image> imageOnClouds = new ArrayList<>();;
+
     // -----------------------------
 
     
 
-    private List<Image> images;
+    
 
     private int brand;
 
@@ -53,8 +61,78 @@ public class ProductForm {
     private String UVProtection;
 
 
+    //
 
     
+    private String screenSize;
+
+    
+   
+    private String screenResolution;
+
+   
+    private String processorType;
+
+    
+    private String processorCore;
+
+    
+    private String processorSpeed;
+
+  
+    private String processorCache;
+
+
+
+    
+
+    public String getScreenSize() {
+        return screenSize;
+    }
+
+    public void setScreenSize(String screenSize) {
+        this.screenSize = screenSize;
+    }
+
+    public String getScreenResolution() {
+        return screenResolution;
+    }
+
+    public void setScreenResolution(String screenResolution) {
+        this.screenResolution = screenResolution;
+    }
+
+    public String getProcessorType() {
+        return processorType;
+    }
+
+    public void setProcessorType(String processorType) {
+        this.processorType = processorType;
+    }
+
+    public String getProcessorCore() {
+        return processorCore;
+    }
+
+    public void setProcessorCore(String processorCore) {
+        this.processorCore = processorCore;
+    }
+
+    public String getProcessorSpeed() {
+        return processorSpeed;
+    }
+
+    public void setProcessorSpeed(String processorSpeed) {
+        this.processorSpeed = processorSpeed;
+    }
+
+    public String getProcessorCache() {
+        return processorCache;
+    }
+
+    public void setProcessorCache(String processorCache) {
+        this.processorCache = processorCache;
+    }
 
     @Override
     public String toString() {
@@ -69,6 +147,7 @@ public class ProductForm {
     public Product getProduct(){
         Product product = new Product();
         product.setId(this.id);
+        product.setUuid(this.uuid);
         product.setImageUrl(this.imageUrl);
         product.setName(this.name);
         product.setDescription(this.description);
@@ -76,6 +155,41 @@ public class ProductForm {
         product.setItemInStock(this.itemInStock);
         product.setProductType(this.productType);
         product.setModel(this.model);
+       
+        return product;
+    }
+
+    public Product getProduct(Product product){
+        
+   
+ 
+        product.setImageUrl(this.imageUrl);
+        product.setName(this.name);
+        product.setDescription(this.description);
+        product.setPrice(this.price);
+        product.setItemInStock(this.itemInStock);
+        product.setProductType(this.productType);
+        product.setModel(this.model);
+
+        ProductProperty productProperty = product.getProductProperty();
+
+        
+        productProperty.setBrand(this.brand);
+        productProperty.setSeries(this.series);
+        productProperty.setGender(gender);
+        productProperty.setWatchLabel(this.watchLabel);
+        productProperty.setMovement(this.movement);
+        productProperty.setEngine(this.engine);
+        productProperty.setType(this.type);
+    
+
+        productProperty.setScreenSize(this.screenSize);
+        productProperty.setScreenResolution(this.screenResolution);
+        productProperty.setProcessorCache(this.processorCache);
+        productProperty.setProcessorCore(this.processorCore);
+        productProperty.setProcessorSpeed(this.processorSpeed);
+        productProperty.setProcessorType(this.processorType);
+       
         return product;
     }
 
@@ -83,8 +197,11 @@ public class ProductForm {
         ProductProperty productProperty = null;
         if(this.productType=='W'){
             productProperty = new WatchProperty();
+            
         }else if(this.productType=='S'){
             productProperty = new SunglassesProperty();
+        }else if(this.productType=='L'){
+            productProperty = new LaptopProperty();
         }
         productProperty.setId(this.productPropertyId);
         productProperty.setBrand(this.brand);
@@ -94,17 +211,31 @@ public class ProductForm {
         productProperty.setMovement(this.movement);
         productProperty.setEngine(this.engine);
         productProperty.setType(this.type);
+    
+
+        productProperty.setScreenSize(this.screenSize);
+        productProperty.setScreenResolution(this.screenResolution);
+        productProperty.setProcessorCache(this.processorCache);
+        productProperty.setProcessorCore(this.processorCore);
+        productProperty.setProcessorSpeed(this.processorSpeed);
+        productProperty.setProcessorType(this.processorType);
+     
+
+
         return productProperty;
     }
 
     public ProductForm(Product product){
         this.setId(product.getId());
+        this.setUuid(product.getUuid());
         this.setImageUrl(product.getImageUrl());
         this.setName(product.getName());
         this.setDescription(product.getDescription());
         this.setPrice(product.getPrice());
         this.setItemInStock(product.getItemInStock());
         this.setModel(product.getModel());
+        this.setImages(product.getImages());
+        this.setImageOnClouds(product.getImages());
 
         ProductProperty productProperty = product.getProductProperty();
         this.setProductPropertyId(productProperty.getId());
@@ -114,6 +245,14 @@ public class ProductForm {
         this.setMovement(productProperty.getMovement());
         this.setEngine(productProperty.getEngine());
         this.setType(productProperty.getType());
+
+
+        this.setScreenSize(productProperty.getScreenSize());
+        this.setScreenResolution(productProperty.getScreenResolution());
+        this.setProcessorType(productProperty.getProcessorType());
+        this.setProcessorCore(productProperty.getProcessorCore());
+        this.setProcessorSpeed(productProperty.getProcessorSpeed());
+        this.setProcessorCache(productProperty.getProcessorCache());
     }
     
 
@@ -288,6 +427,21 @@ public class ProductForm {
         UVProtection = uVProtection;
     }
 
+    public List<Image> getImageOnClouds() {
+        return imageOnClouds;
+    }
+
+    public void setImageOnClouds(List<Image> imageOnClouds) {
+        this.imageOnClouds = imageOnClouds;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
     
 
 }

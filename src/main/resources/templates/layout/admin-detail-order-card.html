@@ -1,0 +1,70 @@
+<th:block th:fragment="order(orderitem)">
+  <div>
+    <span
+      class="float-left"
+      th:text="${orderitem.firstName+' '+orderitem.lastName +' - '+orderitem.phone}"
+    ></span>
+    <span class="float-right" th:text="${orderitem.orderStatus}"
+      >Dang giao</span
+    >
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-2">
+      <img class="img-fluid" th:src="${orderitem.product.imageUrl}" alt="" />
+    </div>
+    <div class="col-6">
+      <h5 th:text="${orderitem.product.name}">Product Name</h5>
+      <p th:text="${'x'+orderitem.quantity}"></p>
+      <p th:text="${orderitem.address+','+orderitem.city+','+orderitem.state}">
+        738/39, hẻm 738 Phạm Văn Thuận Phường Tam Hiệp, Thành Phố Biên Hòa, Đồng
+        Nai
+      </p>
+    </div>
+    <div class="col-4">
+      <form class="text-right float-right w-100">
+        <p th:text="${'$'+orderitem.product.price}">$140.00</p>
+
+        <br />
+        <div class="btn-group">
+          <!-- <a href="product_details.html" class="btn btn-secondary"
+                                        ><span class="icon-shopping-cart"></span> Add to cart</a
+                                      > -->
+          <!-- <form th:action="@{/cart}" th:object="${cartForm}" method="POST">
+                                        <input type="hidden" name="productId" th:value="${orderitem.product.id}" />
+                                        <input
+                                          type="hidden"
+                                          th:field="*{quantity}"
+                                          th:value="*{quantity}"
+                                        />
+                                        <button class="btn btn-secondary">Add to cart</button>
+                                      </form> -->
+          <a
+            th:href="@{${'/products/'+orderitem.product.uuid}}"
+            class="btn btn-warning"
+            >VIEW</a
+          >
+          <th:block
+            th:if="${ orderitem.orderStatus.name() != 'COMPLETED'  AND orderitem.orderStatus.name() != 'CANCELLED' }"
+            ><button
+              type="button"
+              th:attr="data-order_id=${orderitem.id}"
+              class="btn btn-warning button-process"
+            >
+              Process order
+            </button></th:block
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="text-right">
+    <p>
+      Order Total: $<span
+        th:text="${orderitem.quantity*orderitem.price}"
+      ></span>
+    </p>
+  </div>
+  <hr />
+</th:block>

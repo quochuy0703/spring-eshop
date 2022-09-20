@@ -2,6 +2,7 @@ package com.huymq.springeshop.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,11 +15,14 @@ import com.huymq.springeshop.dao.CustomerRepository;
 import com.huymq.springeshop.dao.OrderItemRepository;
 import com.huymq.springeshop.dao.OrderRepository;
 import com.huymq.springeshop.dao.ProductRepository;
+import com.huymq.springeshop.dao.UserLoginRepository;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Order;
 import com.huymq.springeshop.entity.OrderItem;
+import com.huymq.springeshop.entity.OrderStatus;
 import com.huymq.springeshop.entity.Product;
+import com.huymq.springeshop.entity.UserLogin;
 
 @Service
 public class MultiServiceImpl implements MultiService {
@@ -37,6 +41,9 @@ public class MultiServiceImpl implements MultiService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private UserLoginRepository userLoginRepository;
 
     @Override
     @Transactional
@@ -141,8 +148,34 @@ public class MultiServiceImpl implements MultiService {
 
     @Override
     @Transactional
+    public int countOrder() {
+       
+        return orderRepository.countOrder();
+    }
+
+    @Override
+    @Transactional
     public void saveOrderItem(OrderItem theOrderItem) {
         orderItemRepository.save(theOrderItem);
+        
+    }
+
+    @Override
+    @Transactional
+    public Page<OrderItem> findOrderItemByStatus(OrderStatus status, Pageable pageable) {
+        
+        return orderItemRepository.findOrderItemByStatus(status, pageable);
+    }
+
+    @Override
+    public OrderItem findOrderItemById(int theId) {
+
+        OrderItem orderItem = null;
+        Optional<OrderItem> optional = orderItemRepository.findById(theId);
+        if(optional.isPresent()){
+            orderItem = optional.get();
+        }
+        return orderItem;
         
     }
 
@@ -155,10 +188,76 @@ public class MultiServiceImpl implements MultiService {
 
     @Override
     @Transactional
+    public Product findProductByUUID(UUID uuid) {
+       
+        return productRepository.findProductByUUID(uuid);
+    }
+
+    @Override
+    @Transactional
+    public List<Product> findProductsTop3ByOrderByCountSaleDesc() {
+        
+        return productRepository.findTop3ByOrderByCountSaleDesc();
+    }
+
+    @Override
+    @Transactional
+    public List<Product> findProductsTop3ByOrderByCountSeenDesc() {
+        
+        return productRepository.findTop3ByOrderByCountSeenDesc();
+    }
+
+
+    @Override
+    @Transactional
+    public Page<Product> findAllProduct(Pageable pageable) {
+        return productRepository.findAllProduct(pageable);
+    }
+    @Override
+    @Transactional
     public Customer findCustomerByEmail(String email) {
         
         return customerRepository.findCustomerByEmail(email);
     }
+
+    @Override
+    @Transactional
+    public UserLogin findUserLoginById(int theId) {
+        UserLogin userLogin = null;
+        Optional<UserLogin> optional = userLoginRepository.findById(theId);
+        if(optional.isPresent()){
+            userLogin= optional.get();
+        }
+        return userLogin;
+    }
+
+    @Override
+    @Transactional
+    public UserLogin findUserLoginByEmail(String email) {
+      
+        return userLoginRepository.findUserLoginByEmail(email);
+    }
+
+    @Override
+    @Transactional
+    public void saveUserLogin(UserLogin userLogin) {
+        userLoginRepository.save(userLogin);
+        
+    }
+
+    
+
+   
+
+    
+
+    
+
+    
+
+    
+
+    
 
    
 

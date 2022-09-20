@@ -30,17 +30,12 @@ public class Order implements Serializable {
     @Column(name="amount")
     private double amount;
 
-    @Column(name="order_status")
-    private int orderStatus;
+    @Column(name="paid")
+    private boolean paid;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="customer_id")
     private Customer customer;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_address_id")
-    private OrderAddress orderAddress;
-
    
 
 
@@ -100,25 +95,18 @@ public class Order implements Serializable {
     }
 
 
-    public OrderAddress getOrderAddress() {
-        return orderAddress;
+
+    public boolean isPaid() {
+        return paid;
     }
 
 
-    public void setOrderAddress(OrderAddress orderAddress) {
-        this.orderAddress = orderAddress;
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
 
-    public int getOrderStatus() {
-        return orderStatus;
-    }
-
-
-    public void setOrderStatus(int orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
+   
 
     
     

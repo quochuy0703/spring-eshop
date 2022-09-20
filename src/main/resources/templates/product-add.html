@@ -10,13 +10,13 @@
 
     <div class="container">
       <div class="row">
-        <div th:replace="layout/left::left(${listNew})"></div>
+        <div th:replace="layout/left-side-menu-admin-static::left"></div>
 
         <div class="col-9">
           <ul class="breadcrumb">
             <li><a th:href="@{/}">Home</a> <span class="divider">/</span></li>
             <li>
-              <a th:href="@{/admin/product/add-type}"> Add Product</a>
+              <a th:href="@{/admin}"> Add Product</a>
               <span class="divider">/</span>
             </li>
             <li class="active" th:text="${' '+productType}"></li>
@@ -24,12 +24,17 @@
           <th:block th:switch="${productType}">
             <th:block th:case="${'W'}"
               ><th:block
-                th:replace="layout/product-add-form-watch::watch-property(${productForm},${modeEdit})"
+                th:replace="layout/product-add-form-watch::watch-property(${productForm},${modeEdit},${thisProduct})"
               ></th:block
             ></th:block>
             <th:block th:case="${'S'}">
               <th:block
-                th:replace="layout/product-add-form-sunglasses::sunglasses-property(${productForm},${ modeEdit})"
+                th:replace="layout/product-add-form-sunglasses::sunglasses-property(${productForm},${ modeEdit},${thisProduct})"
+              ></th:block
+            ></th:block>
+            <th:block th:case="${'L'}">
+              <th:block
+                th:replace="layout/product-add-form-laptop::laptop-property(${productForm},${ modeEdit},${thisProduct})"
               ></th:block
             ></th:block>
           </th:block>
@@ -54,6 +59,13 @@ Clients
     <div th:replace="layout/copyright::copyright"></div>
     <!-- Copyright -->
 
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+
+      var imageOnCloud = /*[[${productForm.images}]]*/ null;
+
+      /*]]>*/
+    </script>
     <script th:src="@{/js/product-add.js}"></script>
   </body>
 </html>

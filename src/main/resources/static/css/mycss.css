@@ -29,6 +29,25 @@ body {
   visibility: visible;
 }
 
+.close-tool {
+  position: absolute;
+  visibility: hidden;
+  font-size: 14px;
+  font-weight: bold;
+
+  text-align: center;
+  color: black;
+  border-radius: 2px;
+  text-decoration: none;
+  transform: translate(50%, -50%);
+  top: 5%;
+  right: 20%;
+}
+
+.thumbnail:hover .close-tool {
+  visibility: visible;
+}
+
 .text-card-new {
   line-height: 1.5em;
   height: 3em; /* height is 2x line-height, so two lines will display */

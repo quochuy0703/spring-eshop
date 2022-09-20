@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <head th:replace="layout/head::head"> </head>
+  <body>
+    <nav th:replace="layout/nav-top::nav-top"></nav>
+
+    <div th:replace="layout/header::header"></div>
+
+    <div th:replace="layout/navigation::navigation"></div>
+
+    <div class="container">
+      <div class="row">
+        <div th:replace="layout/left-side-menu-admin-static::left"></div>
+        <div class="col-9">
+          <div class="card card-body">
+            <th:block th:if="${path == 'add-type'}"
+              ><th:block
+                th:replace="layout/admin-detail-product-add-type::type"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${path == 'all-product'}"
+              ><th:block
+                th:replace="layout/admin-detail-product-all::all"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${#strings.substring(path,0,7) == 'process'}"
+              ><th:block
+                th:replace="layout/admin-detail-order::prepare(${list})"
+              ></th:block
+            ></th:block>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------- -->
+    </div>
+    <!-- 
+Clients 
+-->
+    <div th:replace="layout/manufacture::manufacture"></div>
+
+    <!-- ----------------------------------------------------- -->
+
+    <div th:replace="layout/footer::footer"></div>
+
+    <!-- -------------------------------------------- -->
+    <!-- Copyright -->
+    <div th:replace="layout/copyright::copyright"></div>
+    <!-- Copyright -->
+    <script th:src="@{/js/admin-detail.js}"></script>
+  </body>
+</html>

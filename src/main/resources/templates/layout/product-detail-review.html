@@ -1,0 +1,24 @@
+<th:block th:fragment="review(review)">
+  <div class="p-3 border-bottom">
+    <p>
+      <strong
+        th:text="${review.customer.firstName+' '+review.customer.lastName}"
+        >Nguyễn Thị Kiều Oanh</strong
+      >
+    </p>
+    <p>
+      <th:block th:each="start: ${#numbers.sequence(0,review.star-1)}"
+        ><i class="fa-solid fa-star text-warning"></i
+      ></th:block>
+    </p>
+    <p th:text="${review.content}">Sản phẩm rất tốt xứng đáng được 10 điểm</p>
+    <div>
+      <a href="#" class="px-3"
+        ><i class="fa-solid fa-thumbs-up"></i><span>Huu ich</span></a
+      ><a href="#" class="px-3 border-right"
+        ><i class="fa-solid fa-comment"></i><span>Thao luan</span></a
+      >
+      <span>da dung duoc mot tuan</span>
+    </div>
+  </div>
+</th:block>

@@ -1,0 +1,160 @@
+<div th:fragment="left" class="col-3">
+  <div class="card card-body">
+    <div class="d-flex flex-column flex-shrink-0 p-3">
+      <a
+        href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none"
+      >
+        <i class="fa fa-home"></i>
+        <span class="fs-4">Sidebar</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto" id="side-menu">
+        <li>
+          <a th:href="@{/admin}" class="nav-link">
+            <i class="fa fa-home"></i>
+            <span class="mx-2">Products</span>
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/admin/products}"
+            class="nav-link"
+            th:classappend="${path=='all-product' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">All product</span>
+          </a>
+        </li>
+  
+        <li>
+          <a
+            th:href="@{/admin}"
+            class="nav-link"
+            th:classappend="${path=='add-type' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Add Product</span>
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/account/address}"
+            class="nav-link"
+            th:classappend="${path=='edit-product' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Edit product</span>
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/account/address}"
+            class="nav-link"
+            th:classappend="${path=='edit-product' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Highlight product</span>
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/account/address}"
+            class="nav-link"
+            th:classappend="${path=='edit-product' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">New product</span>
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/admin}" class="nav-link">
+            <i class="fa fa-home"></i>
+            <span class="mx-2">Statistic </span>
+          </a>
+        </li>
+
+        <li>
+          <a
+            th:href="@{/admin/statistic/dashboard}"
+            class="nav-link"
+            th:classappend="${path=='dashboard' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Dashboard</span>
+          </a>
+        </li>
+        
+        <li>
+          <a th:href="@{/admin/orders/process/0}" class="nav-link">
+            <i class="fa fa-home"></i>
+            <span class="mx-2">Orders</span>
+          </a>
+        </li>
+        
+        <li>
+          <a
+            th:href="@{/admin/orders/process/0}"
+            class="nav-link"
+            th:classappend="${path=='process0' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Prepare order</span>
+          </a>
+        </li>
+        
+        <li>
+          <a
+          th:href="@{/admin/orders/process/1}"
+            class="nav-link"
+            th:classappend="${path=='process1' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">To Shipper</span>
+          </a>
+        </li>
+        <li>
+          <a
+          th:href="@{/admin/orders/process/2}"
+            class="nav-link"
+            th:classappend="${path=='process2' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Shipped</span>
+          </a>
+        </li>
+        <li>
+          <a
+          th:href="@{/admin/orders/process/4}"
+            class="nav-link"
+            th:classappend="${path=='process4' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Completed</span>
+          </a>
+        </li>
+        <li>
+          <a
+          th:href="@{/admin/orders/process/5}"
+            class="nav-link"
+            th:classappend="${path=='process5' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Solve cancel</span>
+          </a>
+        </li>
+        <li>
+          <a
+          th:href="@{/admin/orders/process/6}"
+            class="nav-link"
+            th:classappend="${path=='process6' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Canceled</span>
+          </a>
+        </li>
+        
+      <hr />
+    </div>
+  </div>
+</div>

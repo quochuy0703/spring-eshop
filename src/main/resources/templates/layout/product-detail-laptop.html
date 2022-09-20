@@ -1,0 +1,58 @@
+<th:block th:fragment="laptop(thisProduct)">
+  <tbody>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Screen Size:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.screenSize}"
+      >
+        Black
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Screen Resolution:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.screenResolution}"
+      >
+        Apparel,Sports
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Processor type:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.processorType}"
+      >
+        spring/summer
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Processor core:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.processorCore}"
+      >
+        fitness
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Processor speed:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.processorSpeed}"
+      >
+        122855031
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Processor cache:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.processorCache}"
+      >
+        Shock Absorber
+      </td>
+    </tr>
+  </tbody>
+</th:block>

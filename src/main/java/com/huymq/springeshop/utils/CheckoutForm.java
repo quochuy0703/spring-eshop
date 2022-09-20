@@ -1,5 +1,7 @@
 package com.huymq.springeshop.utils;
 
+import com.huymq.springeshop.entity.OrderItem;
+
 public class CheckoutForm {
 
     private int id;
@@ -26,6 +28,23 @@ public class CheckoutForm {
     
     public CheckoutForm() {
     }
+
+    public OrderItem getOrderItem(OrderItem orderItem){
+
+        orderItem.setFirstName(firstName);
+        orderItem.setLastName(lastName);;
+        orderItem.setEmail(email);
+        orderItem.setPhone(phone);
+        orderItem.setAddress(address);
+        orderItem.setCity(city);
+        
+        orderItem.setState(state);
+        orderItem.setCountry(country);
+        orderItem.setZipCode(zipCode);
+
+        return orderItem;
+    }
+    
     public int getId() {
         return id;
     }

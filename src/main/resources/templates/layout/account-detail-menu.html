@@ -1,0 +1,196 @@
+<th:block th:fragment="profile(user)">
+  <div><h3>Your Personal Details</h3></div>
+  <hr />
+  <div>
+    <form th:action="@{/account/profile}" th:object="${user}" method="POST">
+      <input type="hidden" th:field="*{id}" th:value="*{id}" />
+      <!-- <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Title <sup>*</sup></label>
+        </div>
+
+        <div class="col-4">
+          <select class="form-control" name="days">
+            <option value="">-</option>
+            <option value="1">Mr.</option>
+            <option value="2">Mrs</option>
+            <option value="3">Miss</option>
+          </select>
+        </div>
+      </div> -->
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">First name <sup>*</sup></label>
+        </div>
+
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="text"
+            th:field="*{firstName}"
+            th:value="*{firstName}"
+            placeholder="First Name"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Last name <sup>*</sup></label>
+        </div>
+
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="text"
+            th:field="*{lastName}"
+            th:value="*{lastName}"
+            placeholder="Last Name"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Email<sup>*</sup></label>
+        </div>
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="text"
+            th:field="*{email}"
+            th:value="*{email}"
+            placeholder="Email"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Phone<sup>*</sup></label>
+        </div>
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="text"
+            th:field="*{phone}"
+            th:value="*{phone}"
+            placeholder="Phone"
+          />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <input
+            type="submit"
+            name="submitAccount"
+            value="Save"
+            class="btn btn-primary"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</th:block>
+<th:block th:fragment="address(user)">
+  <div><h3>Address</h3></div>
+  <hr />
+  <th:block th:each="address: ${user.addresses}">
+    <div>
+      <div class="row my-2">
+        <div class="col-6">
+          <span
+            class="border-right pr-2 mr-2"
+            th:text="${user.firstName + ' ' + user.lastName}"
+            >Mai quoc Huy</span
+          ><span th:text="${user.phone}">21314242342</span>
+        </div>
+        <div class="col-6"><a href="#" class="float-right">Update</a></div>
+      </div>
+      <div class="row my-2">
+        <div class="col-6">
+          <span th:text="${address.address+','+address.city+','+address.state}"
+            >738/39, hẻm 738 Phạm Văn Thuận Phường Tam Hiệp, Thành Phố Biên Hòa,
+            Đồng Nai</span
+          >
+        </div>
+        <div class="col-6">
+          <a href="#" class="float-right p-1 border">Set to default</a>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-6">
+          <span class="border p-1 border-danger">Default</span>
+        </div>
+        <div class="col-6"></div>
+      </div>
+    </div>
+    <hr />
+  </th:block>
+</th:block>
+<th:block th:fragment="password(passwordForm)">
+  <div><h3>Change Password</h3></div>
+  <hr />
+  <div>
+    <form
+      th:action="@{/account/password}"
+      th:object="${passwordForm}"
+      method="POST"
+    >
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Current Password <sup>*</sup></label>
+        </div>
+
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="password"
+            th:field="*{currentPassword}"
+            th:value="*{currentPassword}"
+            placeholder="Current Passwoed"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Password <sup>*</sup></label>
+        </div>
+
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="password"
+            th:field="*{password}"
+            th:value="*{password}"
+            placeholder="New Password"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <label class="float-right">Confirm Password<sup>*</sup></label>
+        </div>
+        <div class="col-4">
+          <input
+            class="form-control"
+            type="password"
+            th:field="*{confirmPassword}"
+            th:value="*{confirmPassword}"
+            placeholder="Confirm Password"
+          />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <input
+            type="submit"
+            name="submitAccount"
+            value="Save"
+            class="btn btn-primary"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</th:block>

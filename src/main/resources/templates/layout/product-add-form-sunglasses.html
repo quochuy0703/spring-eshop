@@ -1,6 +1,6 @@
-<th:block th:fragment="sunglasses-property(productForm, modeEdit)">
+<th:block th:fragment="sunglasses-property(productForm, modeEdit,thisProduct)">
   <form
-    th:action="@{/admin/product/add}"
+    th:action="${modeEdit? '/admin/product/edit' : '/admin/product/add'}"
     method="POST"
     th:object="${productForm}"
     enctype="multipart/form-data"
@@ -23,6 +23,12 @@
             <input
               type="hidden"
               class="form-control"
+              th:field="*{imageUrl}"
+              th:value="*{imageUrl}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
               name="productType"
               id="productType"
               th:value="${typeTemp}"
@@ -30,8 +36,15 @@
             <input
               type="hidden"
               class="form-control"
-              th:field="*{id}"
-              th:value="*{id}"
+              name="type"
+              id="type"
+              th:value="${typeTemp}"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              th:field="*{uuid}"
+              th:value="*{uuid}"
             />
             <input
               type="hidden"
@@ -271,9 +284,39 @@
         </div>
         <!-- ----------------- -->
       </div>
-      <div class="row" id="imageHolder">
+      <div class="row border my-2" id="imageHolder">
+        <div><h4>Image will upload</h4></div>
         <!-- ----------------- -->
       </div>
+      <th:block th:if="${modeEdit}">
+        <div class="row border" id="imageIsUploaded">
+          <div class="col-12">
+            <div class="row"><h4>Image on cloud</h4></div>
+            <div class="row">
+              <th:block th:each="img, stat: *{imageOnClouds}">
+                <div class="col-2 thumbnail">
+                  <input
+                    type="hidden"
+                    th:field="*{imageOnClouds[__${stat.index}__].id}"
+                  />
+                  <input
+                    type="hidden"
+                    th:field="*{imageOnClouds[__${stat.index}__].imageUrl}"
+                  />
+                  <i
+                    class="close-tool fa-solid fa-trash"
+                    th:attr="data-image_id=${img.id}"
+                  ></i>
+                  <img
+                    th:src="@{${img.imageUrl}}"
+                    style="width: 100%; min-height: 100%"
+                  />
+                </div>
+              </th:block>
+            </div>
+          </div>
+        </div>
+      </th:block>
     </div>
     <!-- --------------------------- -->
 

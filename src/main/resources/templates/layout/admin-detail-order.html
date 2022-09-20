@@ -1,0 +1,17 @@
+<th:block th:fragment="prepare(list)">
+  <h4>Choose order to process:</h4>
+  <hr />
+  <div class="card card-body" id="order-card-admin">
+    <th:block th:switch="${#lists.size(list) == 0}">
+      <th:block th:case="${true}">
+        <p>No order to process</p>
+      </th:block>
+      <th:block th:case="${false}">
+        <th:block th:each="orderitem : ${list}">
+          <th:block
+            th:replace="layout/admin-detail-order-card::order(${orderitem})"
+          ></th:block>
+        </th:block>
+      </th:block>
+    </th:block></div
+></th:block>

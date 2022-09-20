@@ -12,7 +12,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class ProductProperty implements Serializable,WatchPropertyInterface, SunglassesPropertyInterface {
+public abstract class ProductProperty implements Serializable,WatchPropertyInterface, SunglassesPropertyInterface, LaptopPropertyInterface {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -121,6 +121,11 @@ public abstract class ProductProperty implements Serializable,WatchPropertyInter
         // TODO Auto-generated method stub
         
     }
+
+
+    /////
+
+    
 
 
     

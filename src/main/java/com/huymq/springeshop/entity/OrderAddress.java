@@ -46,8 +46,7 @@ public class OrderAddress {
     @Column(name="zip_code")
     private String zipCode;
 
-    @OneToOne(mappedBy = "orderAddress")
-    private Order order;
+  
 
     @Override
     public String toString() {
@@ -154,13 +153,7 @@ public class OrderAddress {
         this.zipCode = zipCode;
     }
 
-    public Order getOrder() {
-        return order;
-    }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
 
 }

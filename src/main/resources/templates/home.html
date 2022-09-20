@@ -63,24 +63,48 @@
 
           <!-- ---------------------- -->
 
-          <div class="card card-body my-4 p-1">
-            <p class="p-0 m-0">
-              Popular Products<span class="float-right"
+          <div class="card card-body my-4">
+            <h4>
+              Popular Products
+              <span class="float-right"
                 ><a class="btn btn-primary btn-sm">View more</a></span
               >
-            </p>
+            </h4>
+            <hr style="margin: 10px; background-color: #ddd" />
+
+            <div class="row">
+              <th:block th:each="product : ${listTop3CountSeen}">
+                <div class="col-4">
+                  <th:block
+                    th:replace="layout/product-card-new::product-card-new(${product})"
+                  ></th:block>
+                </div>
+              </th:block>
+            </div>
           </div>
           <!-- ---------------------- -->
 
           <hr />
           <!-- ---------------------- -->
 
-          <div class="card card-body my-4 p-1">
-            <p class="p-0 m-0">
-              Best selling Products<span class="float-right"
+          <div class="card card-body my-4">
+            <h4>
+              Best selling Products
+              <span class="float-right"
                 ><a class="btn btn-primary btn-sm">View more</a></span
               >
-            </p>
+            </h4>
+            <hr style="margin: 10px; background-color: #ddd" />
+
+            <div class="row">
+              <th:block th:each="product : ${listTop3CountSale}">
+                <div class="col-4">
+                  <th:block
+                    th:replace="layout/product-card-new::product-card-new(${product})"
+                  ></th:block>
+                </div>
+              </th:block>
+            </div>
           </div>
           <!-- ---------------------- -->
         </div>
