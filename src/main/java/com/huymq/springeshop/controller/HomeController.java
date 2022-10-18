@@ -33,13 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
+
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -79,8 +75,6 @@ public class HomeController {
     @Autowired
     private  AmazonS3 client;
 
-    @Autowired
-    private FileStoreS3 fileStoreS3;
     
 
     @GetMapping("")
@@ -130,21 +124,6 @@ public class HomeController {
         theModel.addAttribute("listTop3CountSeen", listTop3CountSeen);
         theModel.addAttribute("path", "home");
 
-
-
-    
-    List<Bucket> buckets = client.listBuckets();
-        System.out.println("Your Amazon S3 buckets are:");
-        for (Bucket b : buckets) {
-            System.out.println("* " + b.getName());
-            ListObjectsV2Result result = client.listObjectsV2(b.getName());
-            List<S3ObjectSummary> objects = result.getObjectSummaries();
-            for (S3ObjectSummary os : objects) {
-                System.out.println("* " + os.getKey());
-            }
-            
-            
-        }
 
         
 
