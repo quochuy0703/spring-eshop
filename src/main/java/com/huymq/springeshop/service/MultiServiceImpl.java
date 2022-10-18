@@ -15,6 +15,7 @@ import com.huymq.springeshop.dao.CustomerRepository;
 import com.huymq.springeshop.dao.OrderItemRepository;
 import com.huymq.springeshop.dao.OrderRepository;
 import com.huymq.springeshop.dao.ProductRepository;
+import com.huymq.springeshop.dao.RoleRepository;
 import com.huymq.springeshop.dao.UserLoginRepository;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
@@ -22,6 +23,8 @@ import com.huymq.springeshop.entity.Order;
 import com.huymq.springeshop.entity.OrderItem;
 import com.huymq.springeshop.entity.OrderStatus;
 import com.huymq.springeshop.entity.Product;
+import com.huymq.springeshop.entity.ProductJsonInterface;
+import com.huymq.springeshop.entity.Role;
 import com.huymq.springeshop.entity.UserLogin;
 
 @Service
@@ -45,6 +48,9 @@ public class MultiServiceImpl implements MultiService {
     @Autowired
     private UserLoginRepository userLoginRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     @Transactional
     public List<Product> findAllProduct() {
@@ -54,16 +60,16 @@ public class MultiServiceImpl implements MultiService {
 
     @Override
     @Transactional
-    public List<Product> findAllNewProduct() {
+    public List<Product> findAllNewProduct(boolean isNew) {
         
-        return productRepository.findAllNewProduct();
+        return productRepository.findByNewItem(isNew);
     }
 
     @Override
     @Transactional
-    public List<Product> findAllHighlightProduct() {
+    public List<Product> findAllHighlightProduct(boolean highlight) {
         
-        return productRepository.findAllHighlightProduct();
+        return productRepository.findByHighlight(highlight);
     }
 
     // @Override
@@ -193,6 +199,12 @@ public class MultiServiceImpl implements MultiService {
         return productRepository.findProductByUUID(uuid);
     }
 
+
+    @Override
+    public List<Product> findAllBannerProduct(boolean isBanner) {
+        
+        return productRepository.findByIsBanner(isBanner);
+    }
     @Override
     @Transactional
     public List<Product> findProductsTop3ByOrderByCountSaleDesc() {
@@ -205,6 +217,70 @@ public class MultiServiceImpl implements MultiService {
     public List<Product> findProductsTop3ByOrderByCountSeenDesc() {
         
         return productRepository.findTop3ByOrderByCountSeenDesc();
+    }
+
+    @Override
+    @Transactional
+    public List<Product> findProductByNewItemOrHighlightOrIsBanner(boolean isNew, boolean highlight, boolean isBanner) {
+        
+        return productRepository.findByNewItemOrHighlightOrIsBanner(isNew, highlight, isBanner);
+    }
+
+    @Override
+    @Transactional
+    public List<Product> findProductByPriceBetween(double minPrice, double maxPrice) {
+       
+        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+
+    @Override
+    @Transactional
+    public List<Product> findProductByProductTypeAndPriceBetween(char type, double minPrice, double maxPrice) {
+        
+        return productRepository.findByProductTypeAndPriceBetween(null, type, minPrice, maxPrice);
+    }
+
+    @Override
+    public List<ProductJsonInterface> findProductJsonByProductTypeAndPriceBetween(char type, double minPrice, double maxPrice) {
+       
+        return productRepository.findByProductTypeAndPriceBetween(ProductJsonInterface.class, type, minPrice, maxPrice);
+    }
+    @Override
+    public List<ProductJsonInterface> findProductJsonByProductTypeAndPriceGreaterThan(char type, double minPrice) {
+        
+        return productRepository.findByProductTypeAndPriceGreaterThan(ProductJsonInterface.class, type, minPrice);
+    }
+
+    @Override
+    @Transactional
+    public List<ProductJsonInterface> findProductJsonByWord(String word) {
+        
+        return productRepository.findByWord(ProductJsonInterface.class,word);
+    }
+
+    @Override
+    public List<ProductJsonInterface> findProductJsonByBrand(int theId) {
+       
+        return productRepository.findByBrand(ProductJsonInterface.class, theId);
+    }
+
+    @Override
+    public int countProductByNewItem(boolean isNew) {
+       
+        return productRepository.countByNewItem(isNew);
+    }
+
+    @Override
+    public int countProductByIsBanner(boolean isBanner) {
+        
+        return productRepository.countByIsBanner(isBanner);
+    }
+
+
+    @Override
+    public int countProductByHighlight(boolean highlight) {
+       
+        return productRepository.countByHighlight(highlight);
     }
 
 
@@ -245,19 +321,15 @@ public class MultiServiceImpl implements MultiService {
         
     }
 
-    
+    @Override
+    @Transactional
+    public Role findRoleByName(String name) {
+        
+        return roleRepository.findByName(name);
+    }
 
-   
 
-    
 
-    
-
-    
-
-    
-
-    
 
    
 

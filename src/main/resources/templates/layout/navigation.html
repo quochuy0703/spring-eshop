@@ -1,5 +1,5 @@
 <div th:fragment="navigation" class="container my-4">
-  <div class="navbar navbar-expand-lg bg-light">
+  <div class="navbar navbar-expand-lg bg-light" id="navigation-wrapper">
     <div class="container">
       <ul class="navbar-nav">
         <li class="active nav-item">
@@ -33,26 +33,48 @@
           <a class="nav-link" th:href="@{/}">General Content</a>
         </li> -->
       </ul>
-      <form action="#" class="navbar-search float-right">
-        <input type="text" placeholder="Search" class="form-control" />
-      </form>
-      <div class="dropdown float-right">
+
+      <div class="form-inline">
+        <input
+          type="text"
+          placeholder="Search"
+          class="form-control"
+          id="search-word"
+        />
         <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          class="btn btn-primary button-search-filter"
+          th:attr="data-filter='search'"
         >
-          Login
+          Search
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
       </div>
+
+      <th:block sec:authorize="!isAuthenticated()">
+        <div class="dropdown float-right">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Login
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <form th:action="@{/user_login}" method="POST">
+              <input type="text" id="username" name="email" class="form-control" placeholder="Username" required autofocus>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">
+                Sign in
+              </button>
+            </form>
+          </div>
+        </div>
+      </th:block>
+      <th:block sec:authorize="isAuthenticated()"
+        ><a class="btn btn-primary" th:href="@{/logout}">Logout</a></th:block
+      >
     </div>
   </div>
 </div>

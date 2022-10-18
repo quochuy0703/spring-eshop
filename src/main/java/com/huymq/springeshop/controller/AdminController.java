@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,6 +44,7 @@ import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
 import com.huymq.springeshop.utils.CustomAuthentication;
 import com.huymq.springeshop.utils.FilesStorageService;
+import com.huymq.springeshop.utils.HighlightProductForm;
 import com.huymq.springeshop.utils.MessageResponse;
 import com.huymq.springeshop.utils.exception.OrderItemNotFoundException;
 
@@ -65,7 +67,6 @@ public class AdminController {
 
         Page<Product> theList  = multiService.findAllProduct(Pageable.unpaged());
 
-        System.out.println(multiService.countOrder());
        
 
        
@@ -73,6 +74,158 @@ public class AdminController {
         theModel.addAttribute("path", "all-product");
         
         return "admin-detail";
+    }
+
+    @GetMapping("/highlight")
+    public String showAllHighlightProductPage(HttpServletRequest request, Model theModel){
+        
+
+
+        List<Product> theList  = multiService.findAllHighlightProduct(true);
+
+       
+
+       
+        theModel.addAttribute("list", theList);
+        theModel.addAttribute("path", "highlight-product");
+        
+        return "admin-detail";
+    }
+
+    @PutMapping("/highlight/save/{productId}")
+    @ResponseBody
+    public ResponseEntity<MessageResponse> processHighlightSave(@PathVariable("productId") UUID productId, @RequestBody HighlightProductForm highlightForm, HttpServletRequest request){
+        
+
+        Product product = multiService.findProductByUUID(productId);
+        if(product == null){
+            
+            throw new OrderItemNotFoundException("Not found "+ productId);
+        }
+
+        System.out.println(highlightForm.isEdit());
+        if(highlightForm.isHighlight()){
+            int count = multiService.countProductByHighlight(true);
+
+            if(count >= 3 && !highlightForm.isEdit()){
+                throw new OrderItemNotFoundException("Not found "+ productId);
+            }
+        }
+
+        product.setHighlightDesc(highlightForm.getHighlightDesc());
+        product.setTitle(highlightForm.getTitle());
+        product.setHighlight(highlightForm.isHighlight());
+
+        multiService.saveProduct(product);
+        
+
+
+        MessageResponse message = new MessageResponse();
+        message.setStatus(HttpStatus.OK.value());
+        message.setMessage("Da xu ly");
+        message.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
+
+       
+    }
+
+    @PutMapping("/new-product/save/{productId}")
+    @ResponseBody
+    public ResponseEntity<MessageResponse> processNewProductSave(@PathVariable("productId") UUID productId, HttpServletRequest request){
+        
+
+        Product product = multiService.findProductByUUID(productId);
+        if(product == null){
+            
+            throw new OrderItemNotFoundException("Not found "+ productId);
+        }
+
+        if(!product.getNewItem()){
+            int count = multiService.countProductByNewItem(true);
+            if(count >= 8){
+                throw new OrderItemNotFoundException("Not found "+ productId);
+            }
+        }
+
+        product.setNewItem(!product.getNewItem());
+
+        multiService.saveProduct(product);
+        
+
+
+        MessageResponse message = new MessageResponse();
+        message.setStatus(HttpStatus.OK.value());
+        message.setMessage("Da xu ly");
+        message.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
+
+       
+    }
+
+    @GetMapping("/new-product")
+    public String showAllNewProductPage(HttpServletRequest request, Model theModel){
+        
+
+
+        List<Product> theList  = multiService.findAllNewProduct(true);
+
+       
+
+       
+        theModel.addAttribute("list", theList);
+        theModel.addAttribute("path", "new-product");
+        
+        return "admin-detail";
+    }
+
+
+    @GetMapping("/banner")
+    public String showAllBannerProductPage(HttpServletRequest request, Model theModel){
+        
+
+
+        List<Product> theList  = multiService.findAllBannerProduct(true);
+
+       
+
+       
+        theModel.addAttribute("list", theList);
+        theModel.addAttribute("path", "banner-product");
+        
+        return "admin-detail";
+    }
+
+    @PutMapping("/banner/save/{productId}")
+    @ResponseBody
+    public ResponseEntity<MessageResponse> processBannerProductSave(@PathVariable("productId") UUID productId, HttpServletRequest request){
+        
+
+        Product product = multiService.findProductByUUID(productId);
+        if(product == null){
+            
+            throw new OrderItemNotFoundException("Not found "+ productId);
+        }
+
+        if(!product.isBanner()){
+            int count = multiService.countProductByIsBanner(true);
+            if(count >= 3){
+                throw new OrderItemNotFoundException("Not found "+ productId);
+            }
+        }
+
+        product.setBanner(!product.isBanner());
+
+        multiService.saveProduct(product);
+        
+
+
+        MessageResponse message = new MessageResponse();
+        message.setStatus(HttpStatus.OK.value());
+        message.setMessage("Da xu ly");
+        message.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
+
+       
     }
 
     @GetMapping("/product/add/{productType}")
@@ -296,10 +449,11 @@ public class AdminController {
 
             if(!empty ){
                 Arrays.asList(files).stream().forEach(file -> {
-                    String fileNameSave = storageService.save(file, "/"+ productUUID);
+                    String fileNameSave = storageService.saveS3(file, "/"+ productUUID);
                     fileNames.add(file.getOriginalFilename());
                     Image image = new Image();
-                    image.setImageUrl("/uploads/"+productUUID+"/"+fileNameSave );
+                    // image.setImageUrl("/uploads/"+productUUID+"/"+fileNameSave );
+                    image.setImageUrl("/"+productUUID+"/"+fileNameSave );
                     product.addImage(image);
                 });
             }

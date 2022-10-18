@@ -1,0 +1,37 @@
+<th:block th:fragment="product-card(product)">
+  <div class="row">
+    <div class="col-2">
+      <img class="img-fluid" th:src="${product.imageUrl}" alt="" />
+    </div>
+    <div class="col-6">
+      <h5 th:text="${product.name}">Product Name</h5>
+      <p>
+        <span>Title: </span
+        ><span
+          th:text="${product.title}"
+          class="title-highlight"
+          th:attr="data-product_id=${product.uuid}"
+        ></span>
+      </p>
+      <p>
+        <span>Desc: </span
+        ><span
+          th:text="${product.highlightDesc}"
+          class="desc-highlight"
+          th:attr="data-product_id=${product.uuid}"
+        ></span>
+      </p>
+    </div>
+    <div class="col-4">
+      <div class="btn-group float-right">
+        <button
+          class="btn btn-warning button-remove-new"
+          th:attr="data-product_id=${product.uuid}"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr />
+</th:block>

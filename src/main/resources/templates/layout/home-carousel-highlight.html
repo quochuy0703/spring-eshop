@@ -1,29 +1,35 @@
 <div
-  th:fragment="carousel"
+  th:fragment="carousel(listHighlight)"
   id="carouselExampleCaptions"
   class="carousel slide"
   style="border-radius: 10px !important"
   data-ride="carousel"
 >
   <ol class="carousel-indicators">
-    <li
-      data-target="#carouselExampleCaptions"
-      data-slide-to="0"
-      class="active"
-    ></li>
-    <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-    <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    <th:block th:each="product, index : ${listHighlight}">
+      <li
+        data-target="#carouselExampleCaptions"
+        th:attr="data-slide-to='${index.index}'"
+        class=""
+        th:appendclass="${index.index == 0 ? 'active': ''}"
+      ></li>
+      <!-- <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="2"></li> -->
+    </th:block>
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active">
+    <!-- <div class="carousel-item active">
       <th:block th:replace="layout/product-card-carousel"></th:block>
-    </div>
-    <div class="carousel-item">
-      <th:block th:replace="layout/product-card-carousel"></th:block>
-    </div>
-    <div class="carousel-item">
-      <th:block th:replace="layout/product-card-carousel"></th:block>
-    </div>
+    </div> -->
+    <th:block th:each="product, index : ${listHighlight}">
+      <div
+        class="carousel-item"
+        th:classappend="${index.index == 0 ? 'active': ''}"
+      >
+        <th:block
+          th:replace="layout/product-card-carousel::product-card-carousel(${product})"
+        ></th:block></div
+    ></th:block>
   </div>
   <a
     class="carousel-control-prev"

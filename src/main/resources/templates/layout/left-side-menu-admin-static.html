@@ -39,7 +39,7 @@
         </li>
         <li>
           <a
-            th:href="@{/account/address}"
+            th:href="@{/admin/products}"
             class="nav-link"
             th:classappend="${path=='edit-product' ? 'active':''}"
           >
@@ -49,9 +49,9 @@
         </li>
         <li>
           <a
-            th:href="@{/account/address}"
+            th:href="@{/admin/highlight}"
             class="nav-link"
-            th:classappend="${path=='edit-product' ? 'active':''}"
+            th:classappend="${path=='highlight-product' ? 'active':''}"
           >
             <i class="fa fa-home invisible"></i>
             <span class="mx-2">Highlight product</span>
@@ -59,12 +59,22 @@
         </li>
         <li>
           <a
-            th:href="@{/account/address}"
+            th:href="@{/admin/new-product}"
             class="nav-link"
-            th:classappend="${path=='edit-product' ? 'active':''}"
+            th:classappend="${path=='new-product' ? 'active':''}"
           >
             <i class="fa fa-home invisible"></i>
             <span class="mx-2">New product</span>
+          </a>
+        </li>
+        <li>
+          <a
+            th:href="@{/admin/banner}"
+            class="nav-link"
+            th:classappend="${path=='banner-product' ? 'active':''}"
+          >
+            <i class="fa fa-home invisible"></i>
+            <span class="mx-2">Banner product</span>
           </a>
         </li>
         <li>

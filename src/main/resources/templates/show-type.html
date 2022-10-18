@@ -10,9 +10,12 @@
 
     <div class="container">
       <div class="row">
-        <div th:replace="layout/left::left(${listNew})"></div>
+        <div th:replace="layout/left::left(${path})"></div>
         <div class="col-9">
-          <div class="card card-body d-flex flex-row flex-wrap">
+          <div
+            class="card card-body d-flex flex-row flex-wrap"
+            id="content-card"
+          >
             <th:block th:each="product : ${listNew}">
               <div class="col-4">
                 <th:block
@@ -39,5 +42,6 @@ Clients
     <!-- Copyright -->
     <div th:replace="layout/copyright::copyright"></div>
     <!-- Copyright -->
+    <script th:src="@{/js/show-type.js}"></script>
   </body>
 </html>

@@ -40,6 +40,10 @@ public class Product implements Serializable{
     @Column(name="name")
     private String name;
 
+    @OneToOne
+    @JoinColumn(name="brand_id")
+    private Brand brand;
+
     @Column(name="description")
     private String description;
 
@@ -54,6 +58,9 @@ public class Product implements Serializable{
 
     @Column(name="highlight")
     private boolean highlight;
+
+    @Column(name="is_banner")
+    private boolean isBanner;
 
     @Column(name="model")
     private String model;
@@ -87,11 +94,21 @@ public class Product implements Serializable{
     @Column(name="star_5")
     private int starFive;
 
+    @Column(name="title")
+    private String title;
+
+    @Column(name="highlight_image")
+    private String highlightImage;
+
+    @Column(name="highlight_desc")
+    private String highlightDesc;
+
 
     //orphanRemoval de co the remove element trong list image
     //@JsonManagedReference duoc dung khi: Infinite Recursion with Jackson JSON and Hibernate JPA issue
     @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Image> images = new ArrayList<>();
 
     // @JsonIgnoreProperties duoc dung khi bi loi: No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
@@ -101,9 +118,12 @@ public class Product implements Serializable{
     private ProductProperty productProperty;
 
     @OneToMany(mappedBy = "product",orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
 
@@ -308,6 +328,46 @@ public class Product implements Serializable{
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getHighlightImage() {
+        return highlightImage;
+    }
+
+    public void setHighlightImage(String highlightImage) {
+        this.highlightImage = highlightImage;
+    }
+
+    public String getHighlightDesc() {
+        return highlightDesc;
+    }
+
+    public void setHighlightDesc(String highlightDesc) {
+        this.highlightDesc = highlightDesc;
+    }
+
+    public boolean isBanner() {
+        return isBanner;
+    }
+
+    public void setBanner(boolean isBanner) {
+        this.isBanner = isBanner;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     

@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,19 +33,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.ListObjectsV2Result;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Image;
 import com.huymq.springeshop.entity.Product;
 import com.huymq.springeshop.entity.ProductForm;
+import com.huymq.springeshop.entity.ProductJsonInterface;
 import com.huymq.springeshop.entity.Review;
+import com.huymq.springeshop.entity.Role;
 import com.huymq.springeshop.entity.SunglassesProperty;
+import com.huymq.springeshop.entity.UserLogin;
 import com.huymq.springeshop.entity.WatchProperty;
 import com.huymq.springeshop.service.MultiService;
 import com.huymq.springeshop.utils.AddToCartForm;
 import com.huymq.springeshop.utils.CustomAuthentication;
+import com.huymq.springeshop.utils.FileStoreS3;
 import com.huymq.springeshop.utils.FilesStorageService;
 import com.huymq.springeshop.utils.MessageResponse;
+import com.huymq.springeshop.utils.RegisterForm;
 import com.huymq.springeshop.utils.ReviewForm;
 
 @Controller
@@ -50,6 +72,15 @@ public class HomeController {
 
     @Autowired
     private MultiService multiService;
+
+    @Autowired
+    private  PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private  AmazonS3 client;
+
+    @Autowired
+    private FileStoreS3 fileStoreS3;
     
 
     @GetMapping("")
@@ -69,22 +100,20 @@ public class HomeController {
             theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
             theModel.addAttribute("sumCost", sumCost);
             theModel.addAttribute("cartForm", cartForm);
+            
         }
         
-
-      
+        List<Product> theList  = multiService.findProductByNewItemOrHighlightOrIsBanner(true,true,true);
         
-
-
-        List<Product> theList  = multiService.findAllNewProduct();
         List<Product> listTop3CountSale = multiService.findProductsTop3ByOrderByCountSaleDesc();
         List<Product> listTop3CountSeen = multiService.findProductsTop3ByOrderByCountSeenDesc();
 
         List<List<Product>> list = new ArrayList<>();
+        List<Product> listNew = theList.stream().filter(product -> (product.getNewItem() == true)).collect(Collectors.toList());
 
         int index = 0;
         List<Product> tempList = new ArrayList<>();
-        for(Product product: theList){
+        for(Product product: listNew){
             if(index%4==0){
                 tempList = new ArrayList<>();
                 list.add(tempList);
@@ -93,11 +122,30 @@ public class HomeController {
             index++;
         }
 
-        
         theModel.addAttribute("lists", list);
-        theModel.addAttribute("listNew", theList);
+        theModel.addAttribute("listNew", theList.stream().filter(product -> (product.getNewItem() == true)).collect(Collectors.toList()));
+        theModel.addAttribute("listHighlight", theList.stream().filter(product -> (product.getHighlight() == true)).collect(Collectors.toList()));
+        theModel.addAttribute("listBanner", theList.stream().filter(product -> (product.isBanner() == true)).collect(Collectors.toList()));
         theModel.addAttribute("listTop3CountSale", listTop3CountSale);
         theModel.addAttribute("listTop3CountSeen", listTop3CountSeen);
+        theModel.addAttribute("path", "home");
+
+
+
+    
+    List<Bucket> buckets = client.listBuckets();
+        System.out.println("Your Amazon S3 buckets are:");
+        for (Bucket b : buckets) {
+            System.out.println("* " + b.getName());
+            ListObjectsV2Result result = client.listObjectsV2(b.getName());
+            List<S3ObjectSummary> objects = result.getObjectSummaries();
+            for (S3ObjectSummary os : objects) {
+                System.out.println("* " + os.getKey());
+            }
+            
+            
+        }
+
         
 
         return "home";
@@ -124,9 +172,7 @@ public class HomeController {
             theModel.addAttribute("cartForm", cartForm);
         }
 
-       
-
-        List<Product> theList  = multiService.findAllNewProduct();
+        List<Product> theList  = multiService.findAllNewProduct(true);
 
         List<List<Product>> list = new ArrayList<>();
 
@@ -141,7 +187,6 @@ public class HomeController {
             index++;
         }
 
-    
         theModel.addAttribute("lists", list);
         theModel.addAttribute("listNew", theList);
 
@@ -154,13 +199,12 @@ public class HomeController {
         Customer theCustomer = null;
         Authentication authentication = customAuthentication.getAuthentication();
 
-
         Product thisProduct = multiService.findProductByUUID(theId);
         System.out.println(thisProduct);
         thisProduct.setCountSeen(thisProduct.getCountSeen()+1);
         multiService.saveProduct(thisProduct);
 
-
+       
 
         if(!(authentication instanceof AnonymousAuthenticationToken)){
             theCustomer = multiService.findCustomerByEmail(authentication.getName());
@@ -177,12 +221,8 @@ public class HomeController {
             theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
             theModel.addAttribute("sumCost", sumCost);
             theModel.addAttribute("reviewForm", reviewForm);
-            
+             
         }
-
-
-
-        
 
         Page<Product> theList  = multiService.findProductByType(thisProduct.getProductType(), PageRequest.of(0, 3));
         
@@ -198,18 +238,11 @@ public class HomeController {
                     thisProduct.getStarFive()*5)/thisProduct.getReviews().size();
         }
 
-
-       
-
-
         theModel.addAttribute("thisProduct", thisProduct);
         theModel.addAttribute("listNew", theList.getContent());
         theModel.addAttribute("cartForm", cartForm);
         theModel.addAttribute("avgStar", avgStar);
-        
-
-
-
+    
 
         return "product-detail";
     }
@@ -232,41 +265,81 @@ public class HomeController {
             theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
             theModel.addAttribute("sumCost", sumCost);
             theModel.addAttribute("cartForm", cartForm);
+
         }
 
 
         Page<Product> theList  = multiService.findProductByType(type, Pageable.unpaged());
        
 
-        // List<List<Product>> list = new ArrayList<>();
-
-        // int index = 0;
-        // List<Product> tempList = new ArrayList<>();
-        // for(Product product: theList){
-        //     if(index%4==0){
-        //         tempList = new ArrayList<>();
-        //         list.add(tempList);
-        //     }
-        //     tempList.add(product);
-        //     index++;
-        // }
-
        
-        // theModel.addAttribute("lists", list);
         theModel.addAttribute("listNew", theList.getContent());
+        theModel.addAttribute("path", "type");
 
 
 
         return "show-type";
     }
 
+    @GetMapping("/products/get")
+    @ResponseBody
+    public ResponseEntity<Object> getProductByType(@RequestParam("type") char type, @RequestParam("value") String value, @RequestParam("filter") String filter){
+        
+        List<ProductJsonInterface> list = null;
+
+        if(filter.equals("price")){
+            if(value.equals("1")){
+                list = multiService.findProductJsonByProductTypeAndPriceBetween(type, 100.0, 200.0);
+            }else if(value.equals("2")){
+                list = multiService.findProductJsonByProductTypeAndPriceBetween(type,200.0, 400.0);
+            }else if(value.equals("3")){
+                list = multiService.findProductJsonByProductTypeAndPriceGreaterThan(type, 400.0);
+            }
+        }else if(filter.equals("brand")){
+            list = multiService.findProductJsonByBrand( Integer.parseInt(value));
+        }else if(filter.equals("search")){
+            list = multiService.findProductJsonByWord( value);
+        }
+        
+        
+
+        return new ResponseEntity<Object>(list, HttpStatus.OK);
+    }
+
 
     @GetMapping("/register")
     public String showRegisterPage(HttpServletRequest request, Model theModel){
        
-        List<Product> theList  = multiService.findAllNewProduct();
+        RegisterForm register = new RegisterForm();
 
-        theModel.addAttribute("listNew", theList);
+        theModel.addAttribute("user", register);
+     
+        return "registration";
+    }
+
+    @PostMapping("/register")
+    public String processRegisterPage(@Valid @ModelAttribute("user") RegisterForm registerForm, BindingResult result, Model theModel ){
+        if (result.hasErrors()) {
+            
+            return "registration";
+        }
+       if(registerForm.getConfirmPassword().equals(registerForm.getPassword())){
+        String encodePassword = bCryptPasswordEncoder.encode(registerForm.getPassword());
+        UserLogin userLogin = new UserLogin();
+        userLogin.setEmail(registerForm.getEmail());
+        userLogin.setPassword(encodePassword);
+        Role role = multiService.findRoleByName("USER");
+        
+        userLogin.getRoles().add(role);
+
+        Customer theCustomer = registerForm.getCustomer();
+
+        multiService.saveUserLogin(userLogin);
+        multiService.saveCustomer(theCustomer);
+        
+       }
+
+       
      
         return "registration";
     }

@@ -1,6 +1,6 @@
 <th:block th:fragment="product-card(product)">
   <div class="card thumbnail" style="background-color: white !important">
-    <a th:replace="layout/quickview::quickview(${product})"></a>
+    <a th:replace="layout/quickview-admin::quickview(${product})"></a>
     <img
       class="card-img-top"
       style="min-height: 357px !important"
@@ -16,10 +16,31 @@
       </p>
       <h4 class="m-0">
         <a
+          class="btn btn-warning button-set-highlight"
+          th:classappend="${product.highlight ? 'disabled' : ''}"
+          th:attr="data-product_id=${product.uuid}"
+        >
+          Highlight
+        </a>
+        <!-- <a
           th:href="@{'/admin/product/edit/'+${product.uuid}}"
           class="btn btn-warning"
         >
           Edit
+        </a> -->
+        <a
+          class="btn btn-warning button-set-banner"
+          th:classappend="${product.isBanner ? 'disabled' : ''}"
+          th:attr="data-product_id=${product.uuid}"
+        >
+          Banner
+        </a>
+        <a
+          class="btn btn-warning button-set-new"
+          th:classappend="${product.newItem ? 'disabled' : ''}"
+          th:attr="data-product_id=${product.uuid}"
+        >
+          New
         </a>
       </h4>
     </div>

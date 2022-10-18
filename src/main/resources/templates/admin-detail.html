@@ -26,6 +26,21 @@
                 th:replace="layout/admin-detail-product-all::all"
               ></th:block
             ></th:block>
+            <th:block th:if="${path == 'highlight-product'}"
+              ><th:block
+                th:replace="layout/admin-detail-product-highlight::highlight"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${path == 'new-product'}"
+              ><th:block
+                th:replace="layout/admin-detail-product-new::new"
+              ></th:block
+            ></th:block>
+            <th:block th:if="${path == 'banner-product'}"
+              ><th:block
+                th:replace="layout/admin-detail-product-banner::banner"
+              ></th:block
+            ></th:block>
             <th:block th:if="${#strings.substring(path,0,7) == 'process'}"
               ><th:block
                 th:replace="layout/admin-detail-order::prepare(${list})"

@@ -33,7 +33,7 @@ public class SecurityConfig {
         .antMatchers("/cart/**","/account/**").authenticated()
         .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
         .anyRequest().permitAll()
-        .and().formLogin().usernameParameter("email").passwordParameter("password").permitAll()
+        .and().formLogin().loginProcessingUrl("/user_login").usernameParameter("email").passwordParameter("password").permitAll()
         .and().logout().permitAll();
 
         return http.build();

@@ -12,17 +12,31 @@ import com.huymq.springeshop.entity.Order;
 import com.huymq.springeshop.entity.OrderItem;
 import com.huymq.springeshop.entity.OrderStatus;
 import com.huymq.springeshop.entity.Product;
+import com.huymq.springeshop.entity.ProductJsonInterface;
+import com.huymq.springeshop.entity.Role;
 import com.huymq.springeshop.entity.UserLogin;
 
 public interface MultiService {
     public List<Product> findAllProduct();
-    public List<Product> findAllNewProduct();
-    public List<Product> findAllHighlightProduct();
+    public List<Product> findAllNewProduct(boolean isNew);
+    public List<Product> findAllHighlightProduct(boolean highlight);
+    public List<Product> findAllBannerProduct(boolean isBanner);
     public Page<Product> findProductByType(char type, Pageable pageable);
     public Page<Product> findAllProduct(Pageable pageable);
     public Product findProductByUUID(UUID uuid);
     List<Product> findProductsTop3ByOrderByCountSaleDesc();
     List<Product> findProductsTop3ByOrderByCountSeenDesc();
+    List<Product> findProductByNewItemOrHighlightOrIsBanner(boolean isNew, boolean highlight, boolean isBanner);
+    List<ProductJsonInterface>  findProductJsonByBrand( int theId);
+    List<ProductJsonInterface> findProductJsonByWord(String word);
+
+    int countProductByNewItem(boolean isNew);
+    int countProductByHighlight(boolean highlight);
+    int countProductByIsBanner(boolean isBanner);
+    List<Product> findProductByPriceBetween(double minPrice, double maxPrice);
+    List<Product> findProductByProductTypeAndPriceBetween(char type,double minPrice, double maxPrice);
+    List<ProductJsonInterface> findProductJsonByProductTypeAndPriceBetween(char type,double minPrice, double maxPrice);
+    List<ProductJsonInterface> findProductJsonByProductTypeAndPriceGreaterThan(char type,double minPrice);
 
     // public int getCountByProductType(char type);
     public Product findProductById(int theId);
@@ -37,6 +51,9 @@ public interface MultiService {
     public UserLogin findUserLoginById(int theId);
     public UserLogin findUserLoginByEmail(String email);
     public void saveUserLogin(UserLogin UserLogin);
+
+    //Role
+    public Role findRoleByName(String name);
 
     //cart
     public Cart findCartById(int theId);

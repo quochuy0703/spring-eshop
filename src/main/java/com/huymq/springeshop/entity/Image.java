@@ -2,6 +2,7 @@ package com.huymq.springeshop.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,8 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.huymq.springeshop.utils.FileStoreS3;
+import com.huymq.springeshop.utils.MyConstants;
 
 
 
@@ -29,6 +33,9 @@ public class Image implements Serializable{
 
     @Column(name="image_url")
     private String imageUrl;
+    
+    @Transient
+    private String imageUrlShow;
 
 
     //@JsonBackReference duoc dung khi: Infinite Recursion with Jackson JSON and Hibernate JPA issue
@@ -53,13 +60,7 @@ public class Image implements Serializable{
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String image_url) {
-        this.imageUrl = image_url;
-    }
+    
 
     public Product getProduct() {
         return product;
@@ -67,6 +68,34 @@ public class Image implements Serializable{
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    
+
+    public String getImageUrlShow() {
+
+        StringTokenizer st = new StringTokenizer(imageUrl, "/");
+        String path = null, filename = null;
+        if(st.hasMoreTokens()){
+             path = st.nextToken();
+        }
+        if(st.hasMoreTokens()){
+            filename = st.nextToken();
+       }
+        
+        return FileStoreS3.getUrlObject(MyConstants.MY_BUCKET_STRING+"/"+path, filename).toExternalForm();
+    }
+
+    public void setImageUrlShow(String imageUrlShow) {
+        this.imageUrlShow = imageUrlShow;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     

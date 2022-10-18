@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.huymq.springeshop.utils.OrderStatusAttributeConverter;
 
 @Entity
@@ -70,10 +71,12 @@ public class OrderItem implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="order_id")
+    @JsonBackReference
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id")
+    @JsonBackReference
     private Product product;
 
     @OneToMany(mappedBy = "orderItem", cascade = CascadeType.ALL)

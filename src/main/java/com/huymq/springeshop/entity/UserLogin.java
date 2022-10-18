@@ -3,6 +3,7 @@ package com.huymq.springeshop.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,18 +29,13 @@ public class UserLogin {
     @Column(name="password")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
         name="users_roles",
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns =  @JoinColumn(name="role_id")
     )
     Set<Role> roles = new HashSet<>();
-
-    private void addRole(Role role){
-        roles.add(role);
-    }
-
 
     public UserLogin() {
     }

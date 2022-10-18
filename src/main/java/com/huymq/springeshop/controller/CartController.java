@@ -116,7 +116,7 @@ public class CartController {
     @GetMapping("/string")
     @ResponseBody
     public List<Product> showString(){
-        List<Product> theList  = multiService.findAllNewProduct();
+        List<Product> theList  = multiService.findAllNewProduct(true);
         return theList;
     }
 

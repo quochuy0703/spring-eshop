@@ -1,0 +1,8 @@
+<th:block th:fragment="highlight"
+  ><div class="card card-body" id="order-card-admin">
+    <th:block th:each="product : ${list}">
+      <th:block
+        th:replace="layout/product-card-list-view-highlight::product-card(${product})"
+      ></th:block>
+    </th:block></div
+></th:block>

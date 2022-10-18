@@ -13,9 +13,11 @@
 
     <div class="container">
       <div class="row">
-        <div th:replace="layout/left::left(${listNew})"></div>
+        <div th:replace="layout/left::left(${path})"></div>
         <div class="col-9">
-          <div th:replace="layout/home-carousel-highlight::carousel"></div>
+          <div
+            th:replace="layout/home-carousel-highlight::carousel(${listHighlight})"
+          ></div>
           <!-- ---------------------- -->
           <div class="card card-body my-4">
             <div class="row">
