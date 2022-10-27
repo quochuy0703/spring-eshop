@@ -1,0 +1,40 @@
+<th:block th:fragment="sunglasses(thisProduct)">
+  <tbody>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Brand:</td>
+      <td class="techSpecTD2" th:text="${thisProduct.brand.name}">Brand</td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Series:</td>
+      <td class="techSpecTD2" th:text="${thisProduct.productProperty.series}">
+        Black
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Gender:</td>
+      <td class="techSpecTD2" th:text="${thisProduct.productProperty.gender}">
+        Apparel,Sports
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Lens:</td>
+      <td class="techSpecTD2" th:text="${thisProduct.productProperty.lens}">
+        spring/summer
+      </td>
+    </tr>
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">UV_Protection:</td>
+      <td
+        class="techSpecTD2"
+        th:text="${thisProduct.productProperty.UVProtection}"
+      >
+        fitness
+      </td>
+    </tr>
+
+    <tr class="techSpecRow">
+      <td class="techSpecTD1">Brand:</td>
+      <td class="techSpecTD2">Shock Absorber</td>
+    </tr>
+  </tbody>
+</th:block>

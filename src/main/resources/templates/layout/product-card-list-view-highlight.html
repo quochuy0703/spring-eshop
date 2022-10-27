@@ -1,7 +1,7 @@
 <th:block th:fragment="product-card(product)">
   <div class="row">
     <div class="col-2">
-      <img class="img-fluid" th:src="${product.imageUrl}" alt="" />
+      <img class="img-fluid" th:src="${product.imageUrlShow}" alt="" />
     </div>
     <div class="col-6">
       <h5 th:text="${product.name}">Product Name</h5>
@@ -21,6 +21,25 @@
           th:attr="data-product_id=${product.uuid}"
         ></span>
       </p>
+      <div class="row" >
+        
+        <div class="col-6 imageHolder"  th:attr="data-product_id=${product.uuid}">
+          <p>Image upload</p>
+        </div>
+
+        <div class="col-6">
+          <p>Image on clouds</p>
+          <img class="img-fluid" th:src="${product.highlightImageShow}"></div>
+      </div>
+      <div class="row"><input
+        class="form-control fileUpload"
+        type="file"
+        th:attr="data-product_id=${product.uuid}"
+        name="files"
+        multiple
+        disabled
+      /></div>
+      
     </div>
     <div class="col-4">
       <div class="btn-group float-right">

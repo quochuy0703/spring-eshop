@@ -27,12 +27,6 @@ public abstract class ProductProperty implements Serializable,WatchPropertyInter
     }
 
     @Override
-    public int getBrand() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
     public String getEngine() {
         // TODO Auto-generated method stub
         return null;
@@ -80,11 +74,7 @@ public abstract class ProductProperty implements Serializable,WatchPropertyInter
         return null;
     }
 
-    @Override
-    public void setBrand(int brand) {
-        // TODO Auto-generated method stub
-        
-    }
+
 
     @Override
     public void setEngine(String engine) {

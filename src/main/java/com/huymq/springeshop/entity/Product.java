@@ -3,6 +3,7 @@ package com.huymq.springeshop.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.criteria.Fetch;
 
 import org.hibernate.annotations.Type;
@@ -23,6 +25,8 @@ import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.huymq.springeshop.utils.FileStoreS3;
+import com.huymq.springeshop.utils.MyConstants;
 
 @Entity
 @Table(name="product")
@@ -62,12 +66,18 @@ public class Product implements Serializable{
     @Column(name="is_banner")
     private boolean isBanner;
 
+    @Column(name="is_delete")
+    private boolean isDelete;
+
+
     @Column(name="model")
     private String model;
 
     @Column(name="image_url")
     private String imageUrl;
 
+    @Transient
+    private String imageUrlShow;
     
 
     @Column(name="product_type")
@@ -99,6 +109,10 @@ public class Product implements Serializable{
 
     @Column(name="highlight_image")
     private String highlightImage;
+
+    @Transient
+    private String highlightImageShow;
+
 
     @Column(name="highlight_desc")
     private String highlightDesc;
@@ -370,8 +384,41 @@ public class Product implements Serializable{
         this.brand = brand;
     }
 
-    
+    public boolean isDelete() {
+        return isDelete;
+    }
 
+    public void setDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getImageUrlShow() {
+
+        StringTokenizer st = new StringTokenizer(imageUrl, "/");
+        String path = null, filename = null;
+        if(st.hasMoreTokens()){
+             path = st.nextToken();
+        }
+        if(st.hasMoreTokens()){
+            filename = st.nextToken();
+       }
+        
+        return FileStoreS3.getUrlObject(MyConstants.MY_BUCKET_STRING+"/"+path, filename).toExternalForm();
+    }
+
+    public String getHighlightImageShow() {
+        
+        StringTokenizer st = new StringTokenizer(this.highlightImage, "/");
+        String path = null, filename = null;
+        if(st.hasMoreTokens()){
+             path = st.nextToken();
+        }
+        if(st.hasMoreTokens()){
+            filename = st.nextToken();
+       }
+        
+        return FileStoreS3.getUrlObject(MyConstants.MY_BUCKET_STRING+"/"+path, filename).toExternalForm();
+    }
 
     
     

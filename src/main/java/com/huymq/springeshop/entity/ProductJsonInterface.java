@@ -23,12 +23,6 @@ public interface ProductJsonInterface {
     public int getItemInStock() ;
 
 
-    public boolean isNewItem() ;
-
-
-    public boolean isHighlight() ;
-
-
     
 
 
@@ -36,6 +30,7 @@ public interface ProductJsonInterface {
 
 
     public String getImageUrl() ;
+    public String getImageUrlShow() ;
 
 
     public char getProductType() ;
@@ -66,7 +61,6 @@ public interface ProductJsonInterface {
 
 
     public String getHighlightImage() ;
-
 
     public String getHighlightDesc() ;
 

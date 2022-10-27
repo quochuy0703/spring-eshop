@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -134,6 +135,18 @@ public class FilesStorageServiceImpl implements FilesStorageService {
       throw new IllegalStateException("Failed to upload file", e);
   }
     return fileNameSave;
+  }
+  @Override
+  public void removeObjectS3(String path, String filename) {
+    String pathSave = String.format("%s%s", BucketName, path);
+    s3.removeObject(pathSave, filename);
+    
+  }
+  @Override
+  public void removeMutiObjectS3(String path, List<String> fileNames) {
+    String pathSave = String.format("%s%s", BucketName, path);
+    s3.removeMutiObject(pathSave, fileNames);
+    
   }
     
 }

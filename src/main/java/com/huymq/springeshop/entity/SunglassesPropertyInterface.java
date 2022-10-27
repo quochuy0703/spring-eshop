@@ -2,8 +2,6 @@ package com.huymq.springeshop.entity;
 
 public interface SunglassesPropertyInterface {
     
-    public int getBrand() ;
-
 
     public String getSeries();
 

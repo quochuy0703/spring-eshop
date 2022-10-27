@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.huymq.springeshop.entity.Brand;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Order;
@@ -23,6 +24,7 @@ public interface MultiService {
     public List<Product> findAllBannerProduct(boolean isBanner);
     public Page<Product> findProductByType(char type, Pageable pageable);
     public Page<Product> findAllProduct(Pageable pageable);
+    public Page<Product> findAllProductIsDeleted(Pageable pageable);
     public Product findProductByUUID(UUID uuid);
     List<Product> findProductsTop3ByOrderByCountSaleDesc();
     List<Product> findProductsTop3ByOrderByCountSeenDesc();
@@ -69,4 +71,8 @@ public interface MultiService {
     public void saveOrderItem(OrderItem theOrderItem);
     public OrderItem findOrderItemById(int theId);
     public Page<OrderItem> findOrderItemByStatus( OrderStatus status, Pageable pageable);
+
+    //Brand
+    public List<Brand> findBrandByType(String type);
+    public Brand findBrandByNameAndType(String name, String type);
 }

@@ -148,57 +148,9 @@
                       <th:block
                         th:if="${#strings.equals(thisProduct.productProperty.type, 'W')}"
                       >
-                        <tbody>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Series:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.series}"
-                            >
-                              Black
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Gender:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.gender}"
-                            >
-                              Apparel,Sports
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Watch Label:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.watchLabel}"
-                            >
-                              spring/summer
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Movement:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.movement}"
-                            >
-                              fitness
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Engine:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.engine}"
-                            >
-                              122855031
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Brand:</td>
-                            <td class="techSpecTD2">Shock Absorber</td>
-                          </tr>
-                        </tbody>
+                        <th:block
+                          th:replace="layout/product-detail-watch::watch(${thisProduct})"
+                        ></th:block>
                       </th:block>
                       <th:block
                         th:if="${#strings.equals(thisProduct.productProperty.type, 'L')}"
@@ -210,62 +162,16 @@
                       <th:block
                         th:if="${#strings.equals(thisProduct.productProperty.type, 'S')}"
                       >
-                        <tbody>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Series:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.series}"
-                            >
-                              Black
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Gender:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.gender}"
-                            >
-                              Apparel,Sports
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Lens:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.lens}"
-                            >
-                              spring/summer
-                            </td>
-                          </tr>
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">UV_Protection:</td>
-                            <td
-                              class="techSpecTD2"
-                              th:text="${thisProduct.productProperty.UVProtection}"
-                            >
-                              fitness
-                            </td>
-                          </tr>
-
-                          <tr class="techSpecRow">
-                            <td class="techSpecTD1">Brand:</td>
-                            <td class="techSpecTD2">Shock Absorber</td>
-                          </tr>
-                        </tbody>
+                        <th:block
+                          th:replace="layout/product-detail-sunglasses::sunglasses(${thisProduct})"
+                        ></th:block>
                       </th:block>
                     </table>
                     <hr />
                     <h4>Product Description</h4>
                     <p th:text="${thisProduct.description}">
                       Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth. Cosby sweater eu banh mi, qui irure
-                      terry richardson ex squid. Aliquip placeat salvia cillum
-                      iphone. Seitan aliquip quis cardigan american apparel,
-                      butcher voluptate nisi qui.
+                      Austin.
                     </p>
                   </div>
                 </div>

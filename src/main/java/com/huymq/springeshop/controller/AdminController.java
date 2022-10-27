@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -26,10 +27,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.huymq.springeshop.entity.Brand;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Image;
@@ -92,9 +95,11 @@ public class AdminController {
         return "admin-detail";
     }
 
-    @PutMapping("/highlight/save/{productId}")
+    // @PostMapping("/highlight/save/{productId}")
+    @RequestMapping(value = "/highlight/save/{productId}", method = RequestMethod.POST, consumes = { "multipart/form-data" })
     @ResponseBody
-    public ResponseEntity<MessageResponse> processHighlightSave(@PathVariable("productId") UUID productId, @RequestBody HighlightProductForm highlightForm, HttpServletRequest request){
+    // public ResponseEntity<MessageResponse> processHighlightSave(@PathVariable("productId") UUID productId, @RequestParam("image") MultipartFile image,@RequestParam("data") HighlightProductForm highlightForm, HttpServletRequest request)
+    public ResponseEntity<MessageResponse> processHighlightSave(@PathVariable("productId") UUID productId, @ModelAttribute HighlightProductForm highlightForm, HttpServletRequest request){
         
 
         Product product = multiService.findProductByUUID(productId);
@@ -115,6 +120,9 @@ public class AdminController {
         product.setHighlightDesc(highlightForm.getHighlightDesc());
         product.setTitle(highlightForm.getTitle());
         product.setHighlight(highlightForm.isHighlight());
+
+        String fileNameSave = storageService.saveS3(highlightForm.getImage(), "/highlight");
+        product.setHighlightImage("/highlight/"+fileNameSave);
 
         multiService.saveProduct(product);
         
@@ -228,31 +236,55 @@ public class AdminController {
        
     }
 
+
+    @PutMapping("/product/delete/{productId}")
+    @ResponseBody
+    public ResponseEntity<MessageResponse> processProductDelete(@PathVariable("productId") UUID productId, HttpServletRequest request){
+        
+
+        Product product = multiService.findProductByUUID(productId);
+        if(product == null){
+            
+            throw new OrderItemNotFoundException("Not found "+ productId);
+        }
+
+       product.setDelete(true);
+
+        multiService.saveProduct(product);
+        
+
+
+        MessageResponse message = new MessageResponse();
+        message.setStatus(HttpStatus.OK.value());
+        message.setMessage("Da xu ly");
+        message.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
+
+       
+    }
+
     @GetMapping("/product/add/{productType}")
     public String showAddProductPage(@PathVariable("productType") char productType,HttpServletRequest request, Model theModel){
         
 
 
         ProductForm productForm = new ProductForm();
-        productForm.setImageUrl("/images/d.jpg");
-        productForm.setName("Dong ho 2");
-        productForm.setDescription("fsdfafsf");
-        productForm.setPrice(245.67);
-        productForm.setItemInStock(99);
-        
-        productForm.setModel("model");
+        if(productType == 'L'){
+            productForm = ProductForm.getProductLaptop();
+        }else if(productType == 'W'){
+            productForm = ProductForm.getProductWatch();
+        }else{
+            productForm = ProductForm.getProductWatch();
+        }
 
-
-        productForm.setBrand(1);
-        productForm.setSeries("series");
-        productForm.setWatchLabel("Japan made");
-        productForm.setMovement("movement");
-        productForm.setEngine("engine");
+        List<Brand> brands = multiService.findBrandByType(String.valueOf(productType));
+    
 
 
         theModel.addAttribute("modeEdit", false);
         theModel.addAttribute("productType", productType);
         theModel.addAttribute("productForm", productForm);
+        theModel.addAttribute("brands", brands);
         theModel.addAttribute("path", "add-type");
         
         return "product-add";
@@ -278,30 +310,29 @@ public class AdminController {
         // productForm.setProductType(request.getParameter("productType").charAt(0));
         
         Product product = productForm.getProduct();
-        product.setImageUrl("/images/d.jpg");
+        // product.setImageUrl("/images/d.jpg");
         product.setUuid(UUID.randomUUID());
-      
-        
-
-        System.out.println(productForm.getId());
+        Brand brand= multiService.findBrandByNameAndType(productForm.getBrand(), String.valueOf(productForm.getProductType()));
+        product.setBrand(brand);
+    
 
         
         if(productForm.getProductType()== 'W'){
            
             WatchProperty propertyProduct = (WatchProperty) productForm.getProductProperty();
-            propertyProduct.setBrand(1);
+           
             
             product.setProductProperty(propertyProduct);
         }else if(productForm.getProductType()== 'S'){
            
             SunglassesProperty propertyProduct = (SunglassesProperty) productForm.getProductProperty();
-            propertyProduct.setBrand(1);
+            // propertyProduct.setBrand(1);
       
             product.setProductProperty(propertyProduct);
         }if(productForm.getProductType()== 'L'){
            
             LaptopProperty propertyProduct = (LaptopProperty) productForm.getProductProperty();
-            propertyProduct.setBrand(1);
+         
       
             product.setProductProperty(propertyProduct);
         }
@@ -320,12 +351,14 @@ public class AdminController {
 
             if(!empty){
                 Arrays.asList(files).stream().forEach(file -> {
-                    String fileNameSave = storageService.save(file, "/"+ productUUID);
+                    // String fileNameSave = storageService.save(file, "/"+ productUUID);
+                    String fileNameSave = storageService.saveS3(file, "/"+ productUUID);
                     fileNames.add(file.getOriginalFilename());
                     Image image = new Image();
                     image.setImageUrl("/"+productUUID+"/"+fileNameSave );
                     product.addImage(image);
                 });
+                product.setImageUrl(product.getImages().get(0).getImageUrl());
             }
             
             
@@ -333,19 +366,7 @@ public class AdminController {
                 e.printStackTrace();
             }
 
-
-        
-        
-
-            
         multiService.saveProduct(product);
-
-        
-        
-
-       
-
-
 
         theModel.addAttribute("path", "add-type");
         return "admin-detail";
@@ -366,12 +387,16 @@ public class AdminController {
 
 
         ProductForm productForm = new ProductForm(thisProduct);
+        productForm.setBrand(thisProduct.getBrand().getName());
+
+        List<Brand> brands = multiService.findBrandByType(String.valueOf(thisProduct.getProductType()));
         
 
         theModel.addAttribute("modeEdit", true);
         theModel.addAttribute("thisProduct", thisProduct);
         theModel.addAttribute("productType", thisProduct.getProductType());
         theModel.addAttribute("productForm", productForm);
+        theModel.addAttribute("brands", brands);
         theModel.addAttribute("path", "edit-product");
         return "product-add";
     }
@@ -398,20 +423,12 @@ public class AdminController {
         Product product = multiService.findProductByUUID(productForm.getUuid());
 
         productForm.getProduct(product);
+        Brand brand= multiService.findBrandByNameAndType(productForm.getBrand(), String.valueOf(productForm.getProductType()));
+        product.setBrand(brand);
         System.out.println(product);
        
         System.out.println(productForm.getImageOnClouds());
 
-        // Predicate<Image> p = (i ) -> { 
-        //     for(Image image : productForm.getImageOnClouds()){
-        //         if(i.getId() == image.getId()){
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // };
-        // List<Image> listImageUpdate = product.getImages().stream().filter(p).collect(Collectors.toList());
-        // product.setImages(listImageUpdate);
 
         //remove image tren cloud
         Iterator<Image> i = product.getImages().iterator();
@@ -427,6 +444,19 @@ public class AdminController {
 
             }
             if(flagDelete){
+
+                //tach phan ten file va phan duong dan file trong imageUrl
+                StringTokenizer st = new StringTokenizer(image.getImageUrl(), "/");
+                String path = null, filename = null;
+                if(st.hasMoreTokens()){
+                    path = st.nextToken();
+                }
+                if(st.hasMoreTokens()){
+                    filename = st.nextToken();
+                }
+                
+                //xoa file tren storage
+                storageService.removeObjectS3("/"+product.getUuid().toString(), filename );
                 i.remove();
             }
 
@@ -456,6 +486,10 @@ public class AdminController {
                     image.setImageUrl("/"+productUUID+"/"+fileNameSave );
                     product.addImage(image);
                 });
+            }
+
+            if(product.getImages().size() !=0){
+                product.setImageUrl(product.getImages().get(0).getImageUrl());
             }
             
             

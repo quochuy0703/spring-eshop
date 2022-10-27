@@ -57,6 +57,21 @@
               />
             </div>
           </div>
+
+          
+
+        <div class="form-group row">
+          <div class="col-4">
+            <label class="float-right">Brand <sup>*</sup></label>
+          </div>
+
+          <div class="col-8">
+            <select class="form-control" id="brand" name="brand">
+              <option value="0">select option</option>
+              <option th:each="option : ${brands}" th:value="${option.name}" th:text="${option.name}" th:selected="${#strings.equals(option.name, productForm.brand)}"></option>
+          </select>
+          </div>
+        </div>
           <div class="form-group row">
             <div class="col-4">
               <label class="float-right">Description <sup>*</sup></label>
@@ -123,7 +138,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" />
+              <input class="form-control" type="text"  th:field="*{yearRelease}"
+              th:value="*{yearRelease}"/>
             </div>
           </div>
           <div class="form-group row">
@@ -159,7 +175,10 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" />
+              <input class="form-control" type="text" 
+              th:field="*{touchScreen}"
+              th:value="*{touchScreen}"/>
+              
             </div>
           </div>
           <div class="form-group row">
@@ -168,7 +187,9 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" />
+              <input class="form-control" type="text" 
+              th:field="*{hybridDisplay}"
+              th:value="*{hybridDisplay}"/>
             </div>
           </div>
           <div class="form-group row">
@@ -177,7 +198,9 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="warranty" />
+              <input class="form-control" type="text" 
+              th:field="*{warranty}"
+              th:value="*{warranty}"/>
             </div>
           </div>
         </div>
@@ -275,7 +298,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandMaterial" />
+              <input class="form-control" type="text"  th:field="*{ramSize}"
+              th:value="*{ramSize}" />
             </div>
           </div>
           <div class="form-group row">
@@ -284,7 +308,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandType" />
+              <input class="form-control" type="text" th:field="*{ramType}"
+              th:value="*{ramType}" />
             </div>
           </div>
           <div class="form-group row">
@@ -293,7 +318,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" id="bandColor" />
+              <input class="form-control" type="text" th:field="*{ramBus}"
+              th:value="*{ramBus}" /> 
             </div>
           </div>
           <div class="form-group row">
@@ -302,7 +328,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" id="bandColor" />
+              <input class="form-control" type="text" th:field="*{ramMaxSize}"
+              th:value="*{ramMaxSize}" />
             </div>
           </div>
         </div>
@@ -316,7 +343,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandLength" />
+              <input class="form-control" type="text" th:field="*{storageType}"
+              th:value="*{storageType}"  />
             </div>
           </div>
           <div class="form-group row">
@@ -325,7 +353,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandWidth" />
+              <input class="form-control" type="text" th:field="*{storageSize}"
+              th:value="*{storageSize}"  />
             </div>
           </div>
           <div class="form-group row">
@@ -334,7 +363,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandWidth" />
+              <input class="form-control" type="text" th:field="*{storageDesc}"
+              th:value="*{storageDesc}"  />
             </div>
           </div>
         </div>
@@ -353,7 +383,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandMaterial" />
+              <input class="form-control" type="text" th:field="*{graphicCardType}"
+              th:value="*{graphicCardType}" />
             </div>
           </div>
           <div class="form-group row">
@@ -362,7 +393,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandType" />
+              <input class="form-control" type="text" th:field="*{graphicCardName}"
+              th:value="*{graphicCardName}" />
             </div>
           </div>
           <div class="form-group row">
@@ -373,7 +405,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" id="bandColor" />
+              <input class="form-control" type="text" th:field="*{graphicCardMemorySize}"
+              th:value="*{graphicCardMemorySize}" />
             </div>
           </div>
           <div class="form-group row">
@@ -382,7 +415,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" id="bandColor" />
+              <input class="form-control" type="text" th:field="*{audioDesc}"
+              th:value="*{audioDesc}" />
             </div>
           </div>
         </div>
@@ -396,7 +430,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandLength" />
+              <input class="form-control" type="text" th:field="*{ioPort}"
+              th:value="*{ioPort}" />
             </div>
           </div>
           <div class="form-group row">
@@ -405,7 +440,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandWidth" />
+              <input class="form-control" type="text" th:field="*{ioCardReader}"
+              th:value="*{ioCardReader}"/>
             </div>
           </div>
           <div class="form-group row">
@@ -414,7 +450,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandWidth" />
+              <input class="form-control" type="text" th:field="*{ioWebcam}"
+              th:value="*{ioWebcam}"/>
             </div>
           </div>
           <div class="form-group row">
@@ -423,7 +460,8 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandWidth" />
+              <input class="form-control" type="text" th:field="*{ioBluetooth}"
+              th:value="*{ioBluetooth}" />
             </div>
           </div>
           <div class="form-group row">
@@ -432,7 +470,103 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandWidth" />
+              <input class="form-control" type="text" th:field="*{ioWifi}"
+              th:value="*{ioWifi}"/>
+            </div>
+          </div>
+        </div>
+        <!-- ----------------- -->
+      </div>
+    </div>
+    <!-- ---------------------------- -->
+    <div class="card card-body">
+      <h3>Physics</h3>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Power Life<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{powerLife}"
+              th:value="*{powerLife}"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Power Battery Type<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{powerBatteryType}"
+              th:value="*{powerBatteryType}"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Power Battery Cell<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{powerBatteryCell}"
+              th:value="*{powerBatteryCell}"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Power Battery Capacity<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{powerBatteryCapacity}"
+              th:value="*{powerBatteryCapacity}"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------- -->
+
+        <div class="col-6">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Software Os<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{softwareOs}"
+              th:value="*{softwareOs}"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Physic Color<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{physicColor}"
+              th:value="*{physicColor}"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Physic Demensions<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{physicDemensions}"
+              th:value="*{physicDemensions}"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Physic Weight<sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <input class="form-control" type="text" th:field="*{physicWeight}"
+              th:value="*{physicWeight}"/>
             </div>
           </div>
         </div>
@@ -440,6 +574,7 @@
       </div>
     </div>
     <!-- --------------------------- -->
+
     <div class="card card-body">
       <h3>Image</h3>
 
@@ -484,7 +619,7 @@
                   th:attr="data-image_id=${img.id}"
                 ></i>
                 <img
-                  th:src="@{${img.imageUrl}}"
+                  th:src="@{${img.imageUrlShow}}"
                   style="width: 100%; min-height: 100%"
                 />
               </div>

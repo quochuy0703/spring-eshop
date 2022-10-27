@@ -97,7 +97,7 @@ const renderCol = (
 <img
   class="card-img-top"
   style="min-height: 357px !important"
-  src="${product.imageUrl}"
+  src="${product.imageUrlShow}"
   alt="bootstrap ecommerce templates"
 />
 <div class="card-body text-center m-1 p-2 border rounded caption">

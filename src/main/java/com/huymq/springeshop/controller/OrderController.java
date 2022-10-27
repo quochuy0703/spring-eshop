@@ -72,9 +72,17 @@ public class OrderController {
             checkoutForm.setCountry(theCustomer.getAddresses().get(0).getCountry());
             checkoutForm.setZipCode(theCustomer.getAddresses().get(0).getZipCode());
 
+            //set discount
+            double discount = 0.0;
+            //set shipCost
+            double shipCost = 0.0;
+
             theModel.addAttribute("user", theCustomer);
             theModel.addAttribute("totalCart", theCustomer.getCarts().size()+1);
             theModel.addAttribute("sumCost", sumCost);
+            theModel.addAttribute("shipCost", shipCost);
+            theModel.addAttribute("discount",discount );
+            theModel.addAttribute("finishPrice", sumCost- discount + shipCost);
             theModel.addAttribute("checkoutForm", checkoutForm);
         }
         
@@ -120,6 +128,7 @@ public class OrderController {
 
                 cart.getProduct().addOrderItem(orderItem);
                 cart.getProduct().setCountSale(cart.getProduct().getCountSale()+cart.getQuantity());
+                cart.getProduct().setItemInStock(cart.getProduct().getItemInStock() - cart.getQuantity());
                 listProduct.add(cart.getProduct());
                 orderItem.setPrice(cart.getProduct().getPrice());
                 orderItem.setQuantity(cart.getQuantity());

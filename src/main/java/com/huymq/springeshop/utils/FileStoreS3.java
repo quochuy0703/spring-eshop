@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,13 +15,18 @@ import org.springframework.stereotype.Service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
+import com.amazonaws.services.s3.model.DeleteObjectsResult;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
 import com.amazonaws.util.IOUtils;
 
 @Service
@@ -49,6 +56,54 @@ public class FileStoreS3 {
             
         } catch (AmazonServiceException e) {
             throw new IllegalStateException("Failed to upload the file", e);
+        }
+    }
+
+    public void removeObject(String path, String fileName){
+        try {
+            System.out.println("Delete object " + fileName);
+            amazonS3.deleteObject(new DeleteObjectRequest(path, fileName));
+        } catch (AmazonServiceException e) {
+            // The call was transmitted successfully, but Amazon S3 couldn't process 
+            // it, so it returned an error response.
+            e.printStackTrace();
+        } catch (SdkClientException e) {
+            // Amazon S3 couldn't be contacted for a response, or the client
+            // couldn't parse the response from Amazon S3.
+            e.printStackTrace();
+        }
+    }
+    public void removeMutiObject(String path, List<String> fileNames){
+
+        try {
+            
+
+            // Upload three sample objects.
+            ArrayList<KeyVersion> keys = new ArrayList<KeyVersion>();
+            
+            
+            for(String s :fileNames){
+                keys.add(new KeyVersion(s));
+            }
+
+            // Delete the sample objects.
+            DeleteObjectsRequest multiObjectDeleteRequest = new DeleteObjectsRequest(path)
+                    .withKeys(keys)
+                    .withQuiet(false);
+
+            // Verify that the objects were deleted successfully.
+            DeleteObjectsResult delObjRes = amazonS3.deleteObjects(multiObjectDeleteRequest);
+            int successfulDeletes = delObjRes.getDeletedObjects().size();
+
+            
+        } catch (AmazonServiceException e) {
+            // The call was transmitted successfully, but Amazon S3 couldn't process 
+            // it, so it returned an error response.
+            e.printStackTrace();
+        } catch (SdkClientException e) {
+            // Amazon S3 couldn't be contacted for a response, or the client
+            // couldn't parse the response from Amazon S3.
+            e.printStackTrace();
         }
     }
 

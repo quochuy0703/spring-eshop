@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.huymq.springeshop.dao.BrandRepository;
 import com.huymq.springeshop.dao.CartRepository;
 import com.huymq.springeshop.dao.CustomerRepository;
 import com.huymq.springeshop.dao.OrderItemRepository;
@@ -17,6 +18,7 @@ import com.huymq.springeshop.dao.OrderRepository;
 import com.huymq.springeshop.dao.ProductRepository;
 import com.huymq.springeshop.dao.RoleRepository;
 import com.huymq.springeshop.dao.UserLoginRepository;
+import com.huymq.springeshop.entity.Brand;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Order;
@@ -50,6 +52,9 @@ public class MultiServiceImpl implements MultiService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private BrandRepository brandRepository;
 
     @Override
     @Transactional
@@ -189,7 +194,7 @@ public class MultiServiceImpl implements MultiService {
     @Transactional
     public Page<Product> findProductByType(char type, Pageable pageable) {
         
-        return productRepository.findProductByType(type, pageable);
+        return productRepository.findProductByType(type, false, pageable);
     }
 
     @Override
@@ -223,7 +228,7 @@ public class MultiServiceImpl implements MultiService {
     @Transactional
     public List<Product> findProductByNewItemOrHighlightOrIsBanner(boolean isNew, boolean highlight, boolean isBanner) {
         
-        return productRepository.findByNewItemOrHighlightOrIsBanner(isNew, highlight, isBanner);
+        return productRepository.findProductByNewItemOrHighlightOrIsBanner(isNew, highlight, isBanner);
     }
 
     @Override
@@ -241,11 +246,13 @@ public class MultiServiceImpl implements MultiService {
     }
 
     @Override
+    @Transactional
     public List<ProductJsonInterface> findProductJsonByProductTypeAndPriceBetween(char type, double minPrice, double maxPrice) {
        
         return productRepository.findByProductTypeAndPriceBetween(ProductJsonInterface.class, type, minPrice, maxPrice);
     }
     @Override
+    @Transactional
     public List<ProductJsonInterface> findProductJsonByProductTypeAndPriceGreaterThan(char type, double minPrice) {
         
         return productRepository.findByProductTypeAndPriceGreaterThan(ProductJsonInterface.class, type, minPrice);
@@ -259,6 +266,7 @@ public class MultiServiceImpl implements MultiService {
     }
 
     @Override
+    @Transactional
     public List<ProductJsonInterface> findProductJsonByBrand(int theId) {
        
         return productRepository.findByBrand(ProductJsonInterface.class, theId);
@@ -287,8 +295,15 @@ public class MultiServiceImpl implements MultiService {
     @Override
     @Transactional
     public Page<Product> findAllProduct(Pageable pageable) {
-        return productRepository.findAllProduct(pageable);
+        return productRepository.findAllProduct(false, pageable);
     }
+
+    @Override
+    @Transactional
+    public Page<Product> findAllProductIsDeleted(Pageable pageable) {
+        return productRepository.findAllProduct(true, pageable);
+    }
+
     @Override
     @Transactional
     public Customer findCustomerByEmail(String email) {
@@ -327,6 +342,22 @@ public class MultiServiceImpl implements MultiService {
         
         return roleRepository.findByName(name);
     }
+
+    @Override
+    @Transactional
+    public List<Brand> findBrandByType(String type) {
+       
+        return brandRepository.findByType(type);
+    }
+
+    @Override
+    @Transactional
+    public Brand findBrandByNameAndType(String name, String type) {
+        
+        return brandRepository.findByNameAndType(name, type);
+    }
+
+    
 
 
 

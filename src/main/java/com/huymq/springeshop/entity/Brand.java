@@ -19,6 +19,9 @@ public class Brand {
     @Column(name="name")
     private String name;
 
+    @Column(name="type")
+    private String type;
+
     
     public int getId() {
         return id;
@@ -31,6 +34,12 @@ public class Brand {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 
     

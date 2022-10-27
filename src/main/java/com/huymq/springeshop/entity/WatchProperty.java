@@ -19,8 +19,6 @@ public class WatchProperty extends ProductProperty {
     // @Column(name="id")
     // private int id;
 
-    @Column(name="brand_id")
-    private int brand;
 
 
 
@@ -42,6 +40,51 @@ public class WatchProperty extends ProductProperty {
     @Column(name="type")
     private char type;
 
+    @Column(name="power_reserve")
+    private String powerReserve;
+
+    @Column(name="case_size")
+    private Double caseSize;
+
+    @Column(name="case_thickness")
+    private Double caseThickness;
+
+    
+    @Column(name="case_material")
+    private String caseMaterial;
+
+    
+    @Column(name="case_shape")
+    private String caseShape;
+
+    @Column(name="case_back")
+    private String caseBack;
+
+    @Column(name="band_material")
+    private String bandMaterial;
+
+    
+    @Column(name="band_type")
+    private String bandType;
+
+    @Column(name="band_color")
+    private String bandColor;
+
+    @Column(name="band_lenght")
+    private Double bandLenght;
+
+    @Column(name="band_width")
+    private Double bandWidth;
+
+    @Column(name="dial_type")
+    private String dialType;
+
+    @Column(name="dial_crystal")
+    private String dialCrystal;
+
+    @Column(name="water_resistance")
+    private String waterResistance;
+
 
     @OneToOne(mappedBy = "productProperty", cascade = CascadeType.ALL,fetch =  FetchType.LAZY)
     private Product product;
@@ -50,7 +93,7 @@ public class WatchProperty extends ProductProperty {
     
     @Override
     public String toString() {
-        return "WatchProperty [brand=" + brand + ", engine=" + engine + ", gender=" + gender + ", id=" + this.getId()
+        return "WatchProperty [ engine=" + engine + ", gender=" + gender + ", id=" + this.getId()
                 + ", movement=" + movement + ", series=" + series + ", type=" + type + ", watchLabel=" + watchLabel
                 + "]";
     }
@@ -62,13 +105,7 @@ public class WatchProperty extends ProductProperty {
 
 
 
-    public int getBrand() {
-        return brand;
-    }
 
-    public void setBrand(int brand) {
-        this.brand = brand;
-    }
 
     public String getSeries() {
         return series;
@@ -126,6 +163,120 @@ public class WatchProperty extends ProductProperty {
         this.product = product;
     }
 
+    public String getPowerReserve() {
+        return powerReserve;
+    }
+
+    public void setPowerReserve(String powerReserve) {
+        this.powerReserve = powerReserve;
+    }
+
+    public Double getCaseSize() {
+        return caseSize;
+    }
+
+    public void setCaseSize(Double caseSize) {
+        this.caseSize = caseSize;
+    }
+
+    public Double getCaseThickness() {
+        return caseThickness;
+    }
+
+    public void setCaseThickness(Double caseThickness) {
+        this.caseThickness = caseThickness;
+    }
+
+    public String getCaseMaterial() {
+        return caseMaterial;
+    }
+
+    public void setCaseMaterial(String caseMaterial) {
+        this.caseMaterial = caseMaterial;
+    }
+
+    public String getCaseShape() {
+        return caseShape;
+    }
+
+    public void setCaseShape(String caseShape) {
+        this.caseShape = caseShape;
+    }
+
+    public String getCaseBack() {
+        return caseBack;
+    }
+
+    public void setCaseBack(String caseBack) {
+        this.caseBack = caseBack;
+    }
+
+    public String getBandMaterial() {
+        return bandMaterial;
+    }
+
+    public void setBandMaterial(String bandMaterial) {
+        this.bandMaterial = bandMaterial;
+    }
+
+    public String getBandType() {
+        return bandType;
+    }
+
+    public void setBandType(String bandType) {
+        this.bandType = bandType;
+    }
+
+    public String getBandColor() {
+        return bandColor;
+    }
+
+    public void setBandColor(String bandColor) {
+        this.bandColor = bandColor;
+    }
+
+    public Double getBandLenght() {
+        return bandLenght;
+    }
+
+    public void setBandLenght(Double bandLenght) {
+        this.bandLenght = bandLenght;
+    }
+
+    public Double getBandWidth() {
+        return bandWidth;
+    }
+
+    public void setBandWidth(Double bandWidth) {
+        this.bandWidth = bandWidth;
+    }
+
+    public String getDialType() {
+        return dialType;
+    }
+
+    public void setDialType(String dialType) {
+        this.dialType = dialType;
+    }
+
+    public String getDialCrystal() {
+        return dialCrystal;
+    }
+
+    public void setDialCrystal(String dialCrystal) {
+        this.dialCrystal = dialCrystal;
+    }
+
+    public String getWaterResistance() {
+        return waterResistance;
+    }
+
+    public void setWaterResistance(String waterResistance) {
+        this.waterResistance = waterResistance;
+    }
+
+
+    
 
     
 }

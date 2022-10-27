@@ -11,8 +11,7 @@ import javax.persistence.Table;
 @Table(name="sunglasses_property")
 public class SunglassesProperty extends ProductProperty {
     
-    @Column(name="brand_id")
-    private int brand;
+  
 
     @Column(name="series_number")
     private String series;
@@ -31,20 +30,13 @@ public class SunglassesProperty extends ProductProperty {
 
     @Override
     public String toString() {
-        return "SunglassesProperty [UVProtection=" + UVProtection + ", brand=" + brand + ", gender=" + gender
+        return "SunglassesProperty [UVProtection=" + UVProtection + ", gender=" + gender
                 + ", lens=" + lens + ", series=" + series + ", type=" + type + "]";
     }
 
     public SunglassesProperty() {
     }
 
-    public int getBrand() {
-        return brand;
-    }
-
-    public void setBrand(int brand) {
-        this.brand = brand;
-    }
 
     public String getSeries() {
         return series;

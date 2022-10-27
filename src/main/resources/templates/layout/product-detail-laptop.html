@@ -1,6 +1,10 @@
 <th:block th:fragment="laptop(thisProduct)">
   <tbody>
     <tr class="techSpecRow">
+      <td class="techSpecTD1">Brand:</td>
+      <td class="techSpecTD2" th:text="${thisProduct.brand.name}">Brand</td>
+    </tr>
+    <tr class="techSpecRow">
       <td class="techSpecTD1">Screen Size:</td>
       <td
         class="techSpecTD2"

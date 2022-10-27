@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.BindResult;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +41,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.huymq.springeshop.entity.Brand;
 import com.huymq.springeshop.entity.Cart;
 import com.huymq.springeshop.entity.Customer;
 import com.huymq.springeshop.entity.Image;
@@ -249,10 +252,12 @@ public class HomeController {
 
 
         Page<Product> theList  = multiService.findProductByType(type, Pageable.unpaged());
+        List<Brand> brands = multiService.findBrandByType(String.valueOf(type));
        
 
        
         theModel.addAttribute("listNew", theList.getContent());
+        theModel.addAttribute("brands", brands);
         theModel.addAttribute("path", "type");
 
 

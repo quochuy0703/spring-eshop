@@ -1,5 +1,5 @@
 <th:block th:fragment="product-card-carousel(product)">
-  <img th:src="@{${product.highlightImage}}" class="d-block w-100" alt="..." />
+  <img th:src="@{${product.highlightImageShow}}" class="d-block w-100" alt="..." />
   <div class="carousel-caption d-none d-md-block banner">
     <h4 class="bg-warning" th:text="${product.title}">Second slide label</h4><br>
     <p th:text="${product.highlightDesc}">

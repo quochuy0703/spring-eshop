@@ -1,7 +1,7 @@
 <th:block th:fragment="product-card(product)">
   <div class="row">
     <div class="col-2">
-      <img class="img-fluid" th:src="${product.imageUrl}" alt="" />
+      <img class="img-fluid" th:src="${product.imageUrlShow}" alt="" />
     </div>
     <div class="col-6">
       <h5 th:text="${product.name}">Product Name</h5>
@@ -30,7 +30,7 @@
             />
             <button class="btn btn-secondary">Add to cart</button>
           </form>
-          <a th:href="@{${'/products/'+product.id}}" class="btn btn-warning"
+          <a th:href="@{${'/products/'+product.uuid}}" class="btn btn-warning"
             >VIEW</a
           >
         </div>

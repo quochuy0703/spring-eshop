@@ -62,6 +62,24 @@
               />
             </div>
           </div>
+
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="float-right">Brand <sup>*</sup></label>
+            </div>
+
+            <div class="col-8">
+              <select class="form-control" id="brand" name="brand">
+                <option value="0">select option</option>
+                <option
+                  th:each="option : ${brands}"
+                  th:value="${option.name}"
+                  th:text="${option.name}"
+                  th:selected="${#strings.equals(option.name, productForm.brand)}"
+                ></option>
+              </select>
+            </div>
+          </div>
           <div class="form-group row">
             <div class="col-4">
               <label class="float-right">Description <sup>*</sup></label>
@@ -203,7 +221,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="powerReserve" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{powerReserve}"
+                th:value="*{powerReserve}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -212,7 +235,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="waterResistance" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{waterResistance}"
+                th:value="*{waterResistance}"
+              />
             </div>
           </div>
         </div>
@@ -230,7 +258,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="caseSize" />
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{caseSize}"
+                th:value="*{caseSize}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -239,7 +272,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="caseThickness" />
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{caseThickness}"
+                th:value="*{caseThickness}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -248,7 +286,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="caseMaterial" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{caseMaterial}"
+                th:value="*{caseMaterial}"
+              />
             </div>
           </div>
         </div>
@@ -262,7 +305,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="caseShape" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{caseShape}"
+                th:value="*{caseShape}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -271,7 +319,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="caseBack" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{caseBack}"
+                th:value="*{caseBack}"
+              />
             </div>
           </div>
         </div>
@@ -290,7 +343,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandMaterial" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{bandMaterial}"
+                th:value="*{bandMaterial}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -299,7 +357,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="bandType" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{bandType}"
+                th:value="*{bandType}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -308,7 +371,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" id="bandColor" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{bandColor}"
+                th:value="*{bandColor}"
+              />
             </div>
           </div>
         </div>
@@ -322,7 +390,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="bandLength" />
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{bandLenght}"
+                th:value="*{bandLenght}"
+              />
             </div>
           </div>
           <div class="form-group row">
@@ -331,7 +404,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="bandWidth" />
+              <input
+                class="form-control"
+                type="number"
+                th:field="*{bandWidth}"
+                th:value="*{bandWidth}"
+              />
             </div>
           </div>
         </div>
@@ -350,7 +428,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="text" name="dialType" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{dialType}"
+                th:value="*{dialType}"
+              />
             </div>
           </div>
         </div>
@@ -364,7 +447,12 @@
             </div>
 
             <div class="col-8">
-              <input class="form-control" type="number" name="dialCrystal" />
+              <input
+                class="form-control"
+                type="text"
+                th:field="*{dialCrystal}"
+                th:value="*{dialCrystal}"
+              />
             </div>
           </div>
         </div>

@@ -75,18 +75,16 @@
         </a>
         <div id="collapse2a" class="panel-collapse collapse" role="tabpanel">
           <div class="panel-body">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="brand" id="exampleRadios1" value="1" checked>
-              <label class="form-check-label" for="exampleRadios1">
-                Tissot
-              </label>
+            <div th:each="brand : ${brands}">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="brand" id="exampleRadios1" th:value="${brand.id}">
+                <label class="form-check-label" for="exampleRadios1" th:text="${brand.name}">
+                  Tissot
+                </label>
+              </div>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="brand" id="exampleRadios2" value="2">
-              <label class="form-check-label" for="exampleRadios2">
-                  Seiko
-              </label>
-            </div>
+            
+            
             
             <div class="row">
               <div class="col-12"><button class="form-control btn btn-primary button-apply-filter" th:attr="data-filter='brand'" >Apply</button></div>
