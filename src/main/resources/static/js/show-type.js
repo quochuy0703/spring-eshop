@@ -17,7 +17,8 @@ wrapper.addEventListener("click", (e) => {
     };
 
     fetch(
-      "http://localhost:8080/products/get?type=" +
+      server_name +
+        "/products/get?type=" +
         window.location.href[window.location.href.length - 1] +
         "&value=" +
         value +
@@ -57,7 +58,8 @@ wrapperNav.addEventListener("click", (e) => {
     };
 
     fetch(
-      "http://localhost:8080/products/get?type=" +
+      server_name +
+        "/products/get?type=" +
         "W" +
         "&value=" +
         value +

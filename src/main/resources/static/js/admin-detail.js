@@ -15,7 +15,7 @@ wrapper.addEventListener("click", (e) => {
     const option = {
       method: "PUT",
     };
-    fetch("http://localhost:8080/admin/orders/prepare/" + orderId, option)
+    fetch(server_name + "/admin/orders/prepare/" + orderId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -129,7 +129,7 @@ wrapper.addEventListener("click", (e) => {
       // }),
       body: formData,
     };
-    fetch("http://localhost:8080/admin/highlight/save/" + productId, option)
+    fetch(server_name + "/admin/highlight/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -151,7 +151,7 @@ wrapper.addEventListener("click", (e) => {
       },
       body: JSON.stringify({ highlight: false }),
     };
-    fetch("http://localhost:8080/admin/highlight/save/" + productId, option)
+    fetch(server_name + "/admin/highlight/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -168,7 +168,7 @@ wrapper.addEventListener("click", (e) => {
       method: "PUT",
       credentials: "same-origin", // include, *same-origin, omit
     };
-    fetch("http://localhost:8080/admin/new-product/save/" + productId, option)
+    fetch(server_name + "/admin/new-product/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -185,7 +185,7 @@ wrapper.addEventListener("click", (e) => {
       method: "PUT",
       credentials: "same-origin", // include, *same-origin, omit
     };
-    fetch("http://localhost:8080/admin/new-product/save/" + productId, option)
+    fetch(server_name + "/admin/new-product/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -207,7 +207,7 @@ wrapper.addEventListener("click", (e) => {
       },
       body: JSON.stringify({ highlight: true, edit: false }),
     };
-    fetch("http://localhost:8080/admin/highlight/save/" + productId, option)
+    fetch(server_name + "/admin/highlight/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -224,7 +224,7 @@ wrapper.addEventListener("click", (e) => {
       method: "PUT",
       credentials: "same-origin", // include, *same-origin, omit
     };
-    fetch("http://localhost:8080/admin/banner/save/" + productId, option)
+    fetch(server_name + "/admin/banner/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -241,7 +241,7 @@ wrapper.addEventListener("click", (e) => {
       method: "PUT",
       credentials: "same-origin", // include, *same-origin, omit
     };
-    fetch("http://localhost:8080/admin/banner/save/" + productId, option)
+    fetch(server_name + "/admin/banner/save/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -258,7 +258,7 @@ wrapper.addEventListener("click", (e) => {
       method: "PUT",
       credentials: "same-origin", // include, *same-origin, omit
     };
-    fetch("http://localhost:8080/admin/product/delete/" + productId, option)
+    fetch(server_name + "/admin/product/delete/" + productId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);

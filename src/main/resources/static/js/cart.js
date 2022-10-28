@@ -30,7 +30,7 @@ tbody.addEventListener("click", (e) => {
     const option = {
       method: "PUT",
     };
-    fetch("http://localhost:8080/cart/delete/" + cartId, option)
+    fetch(server_name + "/cart/delete/" + cartId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -87,7 +87,7 @@ tbody.addEventListener("change", (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quantity: textNumber.value, id: cartId }),
     };
-    fetch("http://localhost:8080/cart/add", option)
+    fetch(server_name + "/cart/add", option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);

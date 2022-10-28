@@ -45,7 +45,7 @@ wrapper.addEventListener("click", (e) => {
     const option = {
       method: "PUT",
     };
-    fetch("http://localhost:8080/order/receive/" + orderId, option)
+    fetch(server_name + "/order/receive/" + orderId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);
@@ -61,7 +61,7 @@ wrapper.addEventListener("click", (e) => {
     const option = {
       method: "PUT",
     };
-    fetch("http://localhost:8080/order/receive/" + orderId, option)
+    fetch(server_name + "/order/receive/" + orderId, option)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Not found(${res.status}`);

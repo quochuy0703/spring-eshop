@@ -7,4 +7,12 @@
   <a class="text-reset fw-bold" href="https://mdbootstrap.com/"
     >MDBootstrap.com</a
   >
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var server_name =
+      /*[[${@environment.getProperty('config.server.name')}]]*/ "localhost:8080";
+
+    /*]]>*/
+  </script>
 </div>
